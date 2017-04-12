@@ -6,12 +6,11 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 15:43:54 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 19:21:51 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
-#include "hash.h"
 #include "list.h"
 #include "io.h"
 
