@@ -9,7 +9,6 @@ INCS = 42sh.h		\
 	   completion.h	\
 	   globbing.h	\
 		job.h	\
-	  	hash.h	\
 	  	list.h	\
 	  	io.h
 INCC = $(addprefix $(IDIR), $(INCS))
@@ -80,7 +79,6 @@ SRCS = 	ft_builtin_cd.c		\
 		job_redir.c			\
 		is_local_var.c		\
 		ft_print.c			\
-		hash.c				\
 		list.c				\
 		io.c				\
 		handle_jobs.c		\

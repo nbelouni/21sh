@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 04:19:12 by llaffile         ###   ########.fr       */
+/*   Updated: 2017/04/12 15:52:18 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ int 	main(int argc, char **argv, char **envp)
 	struct termios termio;
 
 	tcgetattr(0, &termio);
-	if (termio.c_lflag & TOSTOP)
-		dprintf(2, "%s Dam it's there\n", __func__);
 	ast = NULL;
 	list = NULL;
 	core = ft_creat_core(envp);
@@ -149,8 +147,8 @@ int 	main(int argc, char **argv, char **envp)
 		return (-1);
 	if (!(buf = init_buf()))
 		return (ft_print_error("42sh", ERR_MALLOC, ERR_EXIT));
-//	if (!isatty(0))
-//		buf->istty = 1;
+	if (!isatty(0))
+		buf->istty = 1;
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
 	if (read_ext(buf, &completion, core, list) == 1)
@@ -159,7 +157,6 @@ int 	main(int argc, char **argv, char **envp)
 		while ((ret_read = read_line(buf, &completion, core->hist)) != ERR_EXIT)
 		{
 			close_termios();
-			investigate((char *)__func__);
 			job_list_bis = NULL;
 			if (ret_read != TAB)
 			{
@@ -182,7 +179,6 @@ int 	main(int argc, char **argv, char **envp)
 //					test_func(ast);
 					export_job(ast, &job_list_bis);
 //					printJobList(job_list_bis);
-					investigate((char *)__func__);
 					list_iter(job_list_bis, (void *)launch_job);
 					delete_list(&job_list_bis, NULL);
 					free_ast(ast);
