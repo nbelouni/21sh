@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/22 18:44:52 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:08:36 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int			print_err_message(char *s)
 {
 	ft_putstr_fd("42sh: syntax error near unexpected token `", 2);
-	ft_putstr_fd(s, 2);
+	if (s)
+		ft_putstr_fd(s, 2);
 	ft_putstr_fd("'\n", 2);
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	return (ERR_NEW_CMD);

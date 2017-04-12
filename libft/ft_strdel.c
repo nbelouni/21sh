@@ -6,14 +6,17 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 17:49:47 by alallema          #+#    #+#             */
-/*   Updated: 2015/11/28 13:07:34 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:12:31 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **as)
+void		ft_strdel(char **as)
 {
-	if (as)
-		ft_memdel((void **)as);
+	if (as && *as)
+	{
+		free(*as);
+		*as = NULL;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 15:52:18 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:51:21 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static t_builtin_array builtin_array[] =
 	{"history", &ft_builtin_history},
 	{"unset", &ft_builtin_unset},
 	{"export", &ft_builtin_export},
-	{"jobs", &ft_builtin_jobs},
-	{"fg", &ft_builtin_fg},
-	{"bg", &ft_builtin_bg},
+//	{"jobs", &ft_builtin_jobs},
+//	{"fg", &ft_builtin_fg},
+//	{"bg", &ft_builtin_bg},
 	{NULL, NULL}
 };
 
@@ -115,7 +115,7 @@ int 	read_ext(t_buf *buf, t_completion *comp, t_core *core, t_token *list)
 	}
 	return (1);
 }
-
+/*
 int		investigate(char *func)
 {
 	struct termios termio;
@@ -125,7 +125,7 @@ int		investigate(char *func)
 		dprintf(2, "%s Dam it's there\n", func);
 	return (0);
 }
-
+*/
 int 	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -143,10 +143,10 @@ int 	main(int argc, char **argv, char **envp)
 	ast = NULL;
 	list = NULL;
 	core = ft_creat_core(envp);
-	if (init_completion(&completion, core) == ERR_EXIT)
-		return (-1);
 	if (!(buf = init_buf()))
 		return (ft_print_error("42sh", ERR_MALLOC, ERR_EXIT));
+	if (init_completion(&completion, core) == ERR_EXIT)
+		return (-1);
 	if (!isatty(0))
 		buf->istty = 1;
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
@@ -192,7 +192,7 @@ int 	main(int argc, char **argv, char **envp)
 **
 */
 				}
-				if (ret != ERR_NEW_PROMPT)
+				if (ret != ERR_NEW_PROMPT && buf->final_line)
 					ft_strdel(&(buf->final_line));
 				else
 					complete_final_line(buf, list);

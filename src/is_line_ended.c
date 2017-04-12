@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 16:50:08 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/10 21:59:35 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:18:12 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		complete_final_line(t_buf *buf, t_token *lst)
 	t_token	*tmp;
 	char	*tmp2;
 
+	tmp2 = NULL;
 	if (!lst || !buf->line[0])
 		return (0);
 	tmp = lst;

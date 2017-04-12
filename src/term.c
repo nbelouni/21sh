@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 20:30:33 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 15:40:36 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 18:50:26 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,13 @@ int			init_termios(void)
 	return (0);
 }
 
-int			investigate(char *func);
-
 int			close_termios(void)
 {
 	t_term			*st_term;
-	sigset_t	set,oset;
-
-	block_signal(SIGTTOU, &set, &oset);
+	
 	st_term = get_term();
-	st_term->old.c_lflag &= ~TOSTOP;
+//	st_term->old.c_lflag &= ~TOSTOP;
 	if (tcsetattr(0, TCSADRAIN, &st_term->old) == -1)
 		return (perror(__func__), -1);
-	unblock_signal(&oset);
 	return (0);
 }

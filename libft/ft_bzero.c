@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 16:46:34 by alallema          #+#    #+#             */
-/*   Updated: 2017/01/19 23:08:05 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:42:36 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,17 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	ft_memset(s, 0, n);
+	unsigned char	*str;
+	size_t			i;
+
+	str = (unsigned char *)s;
+	i = 0;
+	if (n != 0)
+	{
+		while (i < n)
+		{
+			*(str + i) = 0;
+			i++;
+		}
+	}
 }

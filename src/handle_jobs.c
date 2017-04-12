@@ -6,83 +6,17 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 15:56:38 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:37:30 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
 #include "io.h"
+#include "job.h"
 #include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-
-int		investigate(char *func);
-
-void	sigchldhandler(int sig)
-{
-	(void)sig;
-	dprintf(2, "in handler\n");
-}
 
 extern	t_list	*job_list;
 int last = 0;
-
-t_job	*find_job(pid_t pgid)
-{
-	t_job		*j;
-	t_list		*ptr;
-
-	ptr = job_list;
-	while (ptr)
-	{
-		j = ptr->content;
-		if (j->pgid == pgid)
-			return (j);
-		ptr = ptr->next;
-	}
-	return (NULL);
-}
-
-/*
-** Return true if all processes in the job have stopped or completed
-*/
-
-int	job_is_stopped(t_job *j)
-{
-	t_process_p	p;
-	t_list		*ptr;
-
-	ptr = j->wait_process_list;
-	while (ptr)
-	{
-		p = ptr->content;
-		if (!p->completed && !p->stopped)
-			return (0);
-		ptr = ptr->next;
-	}
-	return (1);
-}
-
-/*
-** Return true if all processes in the job have completed.
-*/
-
-int	job_is_completed(t_job *j)
-{
-	t_process_p	p;
-	t_list		*ptr;
-
-	ptr = j->wait_process_list;
-	while (ptr)
-	{
-		p = ptr->content;
-		if (!p->completed)
-			return (0);
-		ptr = ptr->next;
-	}
-	return (1);
-}
 
 /*
 ** Store the status of the process pid that was returned by waitpid.
@@ -169,23 +103,6 @@ int	mark_process_status(pid_t pid, int status)
 }
 
 /*
-** Check for processes that have status information available,without blocking.
-*/
-
-void	update_status(void)
-{
-	int		status;
-	pid_t	pid;
-
-	while (true)
-	{
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-		if (mark_process_status(pid, status))
-			break ;
-	}
-}
-
-/*
 ** Check for processes that have status information available,
 ** blocking until all processes in the given job have reported.
 */
@@ -194,138 +111,24 @@ void	wait_for_job(t_job *j)
 {
 	int			status;
 	pid_t		pid;
-	sigset_t	set;
-	sigset_t	oset;
 
-	block_signal(SIGCHLD, &set, &oset);
-//	signal (SIGCHLD, SIG_DFL);
+	(void)j;
+	signal(SIGCHLD, SIG_DFL);
 	while (true)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
-		if (mark_process_status(pid, status) || job_is_stopped(j)
-			|| job_is_completed(j))
+		last = WEXITSTATUS(status);
+		if (mark_process_status(pid, status))
 			break ;
 	}
-	unblock_signal(&oset);
 }
-
-/*
-** Format information about job status for the user to look at.
-*/
-
-void	format_job_info(t_job *j, const char *status)
-{
-	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
-}
-
-/*
-** Notify the user about stopped or terminated jobs.
-** Delete terminated jobs from the active job list.
-*/
-
-void		do_job_notification(void)
-{
-	t_job	*j;
-	t_list	**ptr;
-
-	update_status();
-	ptr = &job_list;
-	while (*ptr)
-	{
-		j = (*ptr)->content;
-		if (job_is_completed(j))
-		{
-			format_job_info(j, "completed");
-			delete_job(POP(ptr));
-		}
-		else if (job_is_stopped(j) && !j->notified)
-		{
-			format_job_info(j, "stopped");
-			j->notified = 1;
-		}
-		if (*ptr)
-			ptr = &(*ptr)->next;
-	}
-}
-
-extern t_job *last_job;
-
-t_job			*get_last_job(void)
-{
-	return (last_job = ((last_job) ? last_job : job_list->content));
-}
-
-static void		put_job_in_background(t_job *j, int cont)
-{
-	last_job = j;
-	if (cont)
-		if (kill(-j->pgid, SIGCONT) < 0)
-			perror("kill (SIGCONT)");
-}
-
-static void		put_job_in_foreground(t_job *j, int cont)
-{
-	if (!(j->flag & WAIT))
-		return ;
-	last_job = j;
-	tcsetpgrp(g_sh_tty, j->pgid);
-	if (cont)
-	{
-//		tcsetattr (g_sh_tty, TCSADRAIN, &j->tmodes);
-		if (kill(-j->pgid, SIGCONT) < 0)
-			perror("kill (SIGCONT)");
-	}
-	wait_for_job(j);
-	tcsetpgrp(g_sh_tty, g_sh_pgid);
-//	tcgetattr (g_sh_tty, &j->tmodes);
-//	tcsetattr (g_sh_tty, TCSADRAIN, &shell_tmodes);
-}
-
-void			mark_job_as_running(t_job *j)
-{
-	t_process_p	p;
-	t_list		*ptr;
-
-	ptr = j->wait_process_list;
-	while (ptr)
-	{
-		p = ptr->content;
-		p->stopped = 0;
-		ptr = ptr->next;
-	}
-	j->notified = 0;
-}
-
-/*
-** Continue the job J.
-*/
-
-void	continue_job(t_job *j, int foreground)
-{
-	mark_job_as_running(j);
-	if (foreground)
-		put_job_in_foreground(j, 1);
-	else
-		put_job_in_background(j, 1);
-}
-
-extern sig_t	*g_originals;
-
-sig_t	*getOriginals();
 
 void	launch_process(t_process_p process, int dofork)
 {
 	list_iter(process->io_list, (void *)apply_redir);
-	if (dofork)
-	{
-		restore_originals_handler();
-//		signal(SIGTTOU, SIG_IGN);
-	}
 	ft_check_exec(&process->argv);
 	if (dofork)
 		exit(1);
-	else
-		process->completed = 1;
 }
 
 t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
@@ -403,33 +206,19 @@ int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 	return (io_pipe[1]);
 }
 
-void	give_term(int pgid, int foreground)
-{
-	sigset_t	set;
-
-	sigemptyset(&set);
-	sigaddset(&set, SIGTTOU);
-	sigaddset(&set, SIGTTIN);
-	sigaddset(&set, SIGTSTP);
-	sigaddset(&set, SIGCHLD);
-	sigemptyset(&set);
-	if (foreground)
-		tcsetpgrp(g_sh_tty, pgid);
-}
-
-int		make_children(t_process_p p, int *pgid, int foreground)
+int		make_children(t_process_p p)
 {
 	int	pid;
-	int	fpid;
 
 	pid = fork();
 	if (pid == 0)
 	{
-//		restore_originals_handler();
-		fpid = getpid();
-		if (*pgid == 0) *pgid = fpid;
-		setpgid(fpid, *pgid);
-		give_term(*pgid, foreground);
+//		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGCHLD, SIG_DFL);
 	}
 	else if (pid < 0)
 	{
@@ -439,16 +228,14 @@ int		make_children(t_process_p p, int *pgid, int foreground)
 	else
 	{
 		p->pid = pid;
-		if (*pgid == 0) *pgid = pid;
-		setpgid(pid, *pgid);
 	}
 	return (pid);
 }
 
-void	exec_simple_command(t_process_p p, int fg, int dofork, int *pgid)
+void	exec_simple_command(t_process_p p, int dofork)
 {
 	if (dofork)
-		if (make_children(p, pgid, fg))
+		if (make_children(p))
 			return ;
 	launch_process(p, dofork);
 }
@@ -460,7 +247,7 @@ int		shouldfork(t_job *j, t_list *pipeline)
 
 	dofork = 0;
 	p = pipeline->content;
-	if (j->foreground == 0 || pipeline->next || !(p->flag & BUILTIN))
+	if (pipeline->next || !(p->flag & BUILTIN))
 	{
 		dofork = 1;
 		j->flag = WAIT;
@@ -480,7 +267,7 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 	while (pipeline)
 	{
 		out = (pipeline->next)? do_pipe(pipeline->content, pipeline->next->content, io_pipe) : STDOUT_FILENO;
-		exec_simple_command(pipeline->content, job->foreground, dofork, &(job->pgid));
+		exec_simple_command(pipeline->content, dofork);
 		list_iter_int(((t_process_p)pipeline->content)->io_list, (void *)restore_fd, dofork);
 		if (out != STDOUT_FILENO)
 			close(out);
@@ -492,8 +279,6 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 		pipeline = pipeline->next;
 	}
 }
-
-extern int gc;
 
 void	launch_job(t_job *j)
 {
@@ -513,9 +298,6 @@ void	launch_job(t_job *j)
 		}
 	}
 	insert_link_bottom(&job_list, new_link(j, sizeof(*j)));
-	if (j->foreground)
-		put_job_in_foreground(j, 0);
-	else
-		put_job_in_background(j, 0);
-	do_job_notification();
+	wait_for_job(j);
+	PUT2("===== SEG ======");
 }
