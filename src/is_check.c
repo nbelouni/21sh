@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:26:10 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 19:21:44 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/12 19:55:45 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,15 @@ int		is_or_and(char *s, int i)
 {
 	if (i == 0 || s[i - 1] != '\\')
 	{
+		if (s[i] == '&' || s[i] == '|')
+			{
+				if (!ft_strncmp(s + i, "&&", 2))
+					return (AND);
+				if (!ft_strncmp(s + i, "||", 2))
+					return (OR);
+				if (s[i] == '|')
+					return (PIPE);
+}
 		if (s[i] == '|')
 			return (PIPE);
 	}
