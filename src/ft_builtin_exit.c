@@ -14,15 +14,15 @@
 
 void	ft_del_core(t_core *core)
 {
-	if (g_core)
+	if (core)
 	{
-		if (g_core->set)
+		if (core->set)
 			ft_del_list(core->set);
-		if (g_core->exp)
+		if (core->exp)
 			ft_del_list(core->exp);
-		if (g_core->env)
+		if (core->env)
 			ft_del_list(core->env);
-		if (g_core->hist)
+		if (core->hist)
 			ft_del_list(core->hist);
 		ft_memdel((void*)&core);
 	}
@@ -35,7 +35,7 @@ void	ft_del_core(t_core *core)
 **	contenu dans args[0] (plus d'arguments provoque une erreur).
 */
 
-int		ft_builtin_exit(t_core *g_core, char **args)
+int		ft_builtin_exit(t_core *core, char **args)
 {
 	int	ret;
 
@@ -53,8 +53,8 @@ int		ft_builtin_exit(t_core *g_core, char **args)
 		ret = (unsigned char)ret;
 		ret = ft_atoi(args[0]);
 	}
-	ft_histopt_w(g_core->set, g_core->hist, NULL);
-	ft_del_core(g_core);
+	ft_histopt_w(core->set, core->hist, NULL);
+	ft_del_core(core);
 	clean_pos_curs();
 	close_termios();
 	exit(ret);

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:22:01 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:05 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:20:36 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_unsetenv(t_lst *env, char *var)
 **	et appelle la fonction ft_unsetenv en boucle sur les arguments args.
 */
 
-int		ft_builtin_unsetenv(t_core *g_core, char **args)
+int		ft_builtin_unsetenv(t_core *core, char **args)
 {
 	int	i;
 
@@ -44,11 +44,11 @@ int		ft_builtin_unsetenv(t_core *g_core, char **args)
 	{
 		return (ft_print_error("unsetenv", ERR_TOO_FEW_ARGS, ERR_NEW_CMD));
 	}
-	if (g_core->env != NULL)
+	if (core->env != NULL)
 	{
-		while (g_core->env != NULL && args[i] != NULL && args[i][0] != '\0')
+		while (core->env != NULL && args[i] != NULL && args[i][0] != '\0')
 		{
-			ft_unsetenv(g_core->env, args[i]);
+			ft_unsetenv(core->env, args[i]);
 			++i;
 		}
 	}

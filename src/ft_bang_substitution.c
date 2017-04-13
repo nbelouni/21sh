@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 18:15:57 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:04 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:18:53 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		switch_bang(t_lst *hist, char **s, int *i)
 	return (ret);
 }
 
-int		bang_substitution(char **s, t_core *g_core)
+int		bang_substitution(char **s, t_core *core)
 {
 	int		i;
 	int		squote;
@@ -59,10 +59,10 @@ int		bang_substitution(char **s, t_core *g_core)
 			if (is_char(*s, i, '!'))
 			{
 				++i;
-				ret = switch_bang(g_core->hist, s, &i);
+				ret = switch_bang(core->hist, s, &i);
 			}
 			else if (is_char(*s, i, '^'))
-				ret = ft_exec_quick_sub(g_core->hist->tail, s, &i);
+				ret = ft_exec_quick_sub(core->hist->tail, s, &i);
 			if (ret < 0)
 				break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:47:51 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 18:00:26 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:24:14 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void				init_signal(void);
 /*
 **	ft_init.c
 */
-t_core				*ft_init_core(void);
+int					ft_init_core(void);
 t_lst				*ft_default_env(void);
 t_lst				*ft_init_list(void);
 t_elem				*ft_init_elem(void);

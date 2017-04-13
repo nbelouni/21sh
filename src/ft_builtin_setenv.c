@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:22:07 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:38:54 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ static int	ft_exec_setenv(t_lst *env, char **args)
 **	s'il n'y a pas d'arguments, le builtin setenv affiche la liste env.
 */
 
-int			ft_builtin_setenv(t_core *g_core, char **args)
+int			ft_builtin_setenv(t_core *core, char **args)
 {
 	if (args != NULL && args[0] != NULL)
-		return (ft_exec_setenv(g_core->env, args));
-	if (g_core->env != NULL && g_core->env->head != NULL)
+		return (ft_exec_setenv(core->env, args));
+	if (core->env != NULL && core->env->head != NULL)
 	{
-		ft_print_lst(g_core->env);
+		ft_print_lst(core->env);
 	}
 	return (0);
 }

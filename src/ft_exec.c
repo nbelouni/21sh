@@ -24,13 +24,13 @@ static char		*ft_cut_path(char **s, char *av)
 
 	i = 0;
 	s1 = *s;
-	while (s1[i] != ':')
+	while (s1[i] && s1[i] != ':')
 		i++;
 	s2 = ft_memalloc(sizeof(char *) * (i + 2 + ft_strlen(av)));
 	s2 = ft_strncpy(s2, s1, i);
 	ft_strncpy(&s2[i], "/", 1);
 	ft_strncpy(&s2[i + 1], av, ft_strlen(av));
-	if (s1[i] == ':')
+	if (s1[i] && s1[i] == ':')
 		i++;
 	s1 = ft_strdup(&s1[i]);
 	free(*s);
@@ -86,7 +86,7 @@ void			ft_exec(char **av)
 
 	close_termios();
 	envp = ft_env_to_tab(g_core->env);
-	if (!(tmp = ft_find_elem("PATH", g_core->env)))
+	if (!(tmp = ft_find_elem("PATH", g_core->env)) || !tmp->value)
 		s = ft_strdup("");
 	else
 		s = ft_strdup(tmp->value);
