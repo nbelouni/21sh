@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 14:46:22 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/20 16:55:37 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 12:51:19 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <dirent.h>
 
 # include "error.h"
-# include "color.h"
 # include "option.h"
 
 # define BUFF_SIZE 2048
