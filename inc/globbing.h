@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 15:31:30 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:20:55 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,12 @@ int						is_begin(char *s, int *i, char c);
 **	sinon renvoie le type de quotes (e_flag dans lexer_parser.h)
 */
 int						which_quotes(char *s, int len);
+
+/*
+**	remplace les variables d'environnement,
+**	supprime les quotes,
+**	supprime les backslashs si necessaire
+*/
+int		edit_cmd(char ***args, t_core *core);
 
 #endif

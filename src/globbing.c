@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:31:05 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,24 @@ int		replace_env_var(char **s, t_core *core)
 	return (FALSE);
 }
 
+int		replace_tild(char **s, t_core *core)
+{
+	t_elem	*tmp;
+	char	*new;
+
+	if (!(tmp = ft_find_elem("HOME", core->env)))
+		return (0);
+	if (!tmp->value)
+		return (0);
+	if (!(new = ft_strnew(ft_strlen(*s) - 1 + ft_strlen(tmp->value))))
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
+	ft_strncpy(new, tmp->value, ft_strlen(tmp->value));
+	ft_strncpy(new + ft_strlen(tmp->value), *s + 1, ft_strlen(*s) - 1);
+	ft_strdel(s);
+	*s = new;
+	return (0);
+}
+
 int		globb(char **s, t_core *core)
 {
 	int			i;
@@ -173,6 +191,11 @@ int		globb(char **s, t_core *core)
 
 	i = 0;
 	ret = FALSE;
+	if (*s[0] == '~')
+	{
+		if (replace_tild(s, core) == ERR_EXIT)
+			return (ERR_EXIT);
+	}
 	while (ret == FALSE)
 	{
 		is_end(*s, &i, '\'');
