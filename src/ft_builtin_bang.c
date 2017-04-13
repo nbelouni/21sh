@@ -6,13 +6,13 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 15:32:23 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:49:22 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-char		*find_number(char *s)
+char	*find_number(char *s)
 {
 	int		i;
 
@@ -32,7 +32,7 @@ char		*find_number(char *s)
 	return (NULL);
 }
 
-char		*find_replace_cmd(char *s)
+char	*find_replace_cmd(char *s)
 {
 	int		i;
 
@@ -40,7 +40,7 @@ char		*find_replace_cmd(char *s)
 	while (s[i])
 	{
 		if (is_space(s, i) || is_char(s, i, ';') || is_char(s, i, '|') ||
-		is_char(s, i, '<') || is_char(s, i, '>') || is_char(s, i, '&'))
+				is_char(s, i, '<') || is_char(s, i, '>') || is_char(s, i, '&'))
 			return (ft_strsub(s, 0, i));
 		i++;
 	}
@@ -108,7 +108,7 @@ char	*ft_gets_until_now(char *s, char *ptr)
 	while (s[++i] != ptr[0])
 		++j;
 	if (j != 0)
-	{		
+	{
 		if ((buf = ft_strnew(j)) == NULL)
 			return (NULL);
 		ft_strncpy(buf, s, (ft_strlen(s) - ft_strlen(ptr)));
@@ -148,15 +148,6 @@ char	*ft_gets_lastword(char *str)
 		return (NULL);
 	ptr = ft_strrchr(tmp, ' ');
 	ret = (ptr != NULL) ? ft_strdup(&(ptr[1])) : ft_strdup(tmp);
-	// if ((ptr = ft_strrchr(tmp, ' ')) == NULL)
-	// {
-	// 	ret = ft_strdup(tmp);
-	// }
-	// else
-	// {
-	// 	++ptr;
-	// 	ret = ft_strdup(ptr);
-	// }
 	ft_strdel(&tmp);
 	return (ret);
 }

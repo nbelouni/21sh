@@ -6,15 +6,15 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 15:22:49 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:55:58 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /*
- **    va suprimmer un variable dans n'importe quel list
- */
+**    va suprimmer un variable dans n'importe quel list
+*/
 
 int		ft_unset(t_core *set, char **args)
 {

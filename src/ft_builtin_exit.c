@@ -6,28 +6,27 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:21:52 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:50:47 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void 	ft_del_core(t_core *g_core)
+void	ft_del_core(t_core *core)
 {
 	if (g_core)
 	{
 		if (g_core->set)
-			ft_del_list(g_core->set);
+			ft_del_list(core->set);
 		if (g_core->exp)
-			ft_del_list(g_core->exp);
+			ft_del_list(core->exp);
 		if (g_core->env)
-			ft_del_list(g_core->env);
+			ft_del_list(core->env);
 		if (g_core->hist)
-			ft_del_list(g_core->hist);
-		ft_memdel((void*)&g_core);
+			ft_del_list(core->hist);
+		ft_memdel((void*)&core);
 	}
 }
-
 
 /*
 **	la fonction ft_builtin_exit gere les erreurs des arguments (s'il y en a),
