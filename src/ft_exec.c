@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 21:46:39 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 	if (!ft_strchr(s, ':'))
 	{
 		if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
-			ft_putstr_fd("42sh: exec format error: ", 2);
+			ft_putstr_fd("21sh: exec format error: ", 2);
 		else if (lstat(av[0], &st) == 0)
-			ft_putstr_fd("42sh: permission denied: ", 2);
+			ft_putstr_fd("21sh: permission denied: ", 2);
 		else if (!ft_strchr(s2, ':'))
 		{
-			ft_putstr_fd("42sh: command not found: ", 2);
+			ft_putstr_fd("21sh: command not found: ", 2);
 			ft_putendl_fd(av[0], 2);
 			exit(127);
 		}
 		else
-			ft_putstr_fd("42sh: no such file or directory: ", 2);
+			ft_putstr_fd("21sh: no such file or directory: ", 2);
 		ft_putendl_fd(av[0], 2);
 		free(s);
 		s = NULL;

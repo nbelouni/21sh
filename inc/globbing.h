@@ -6,14 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 15:31:30 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 21:58:36 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBBING_H
 # define GLOBBING_H
 
-# include "42sh.h"
+# include "21sh.h"
 
 /*
 **	find_quote_end.c

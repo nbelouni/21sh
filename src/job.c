@@ -6,11 +6,11 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/13 13:21:51 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 #include "list.h"
 #include "io.h"
 
@@ -146,12 +146,6 @@ int			is_builtin(char **args)
 			return (TRUE);
 		else if (!ft_strcmp(args[0], "cd"))
 			return (TRUE);
-//		else if (!ft_strcmp(args[0], "fg"))
-//			return (TRUE);
-//		else if (!ft_strcmp(args[0], "jobs"))
-//			return (TRUE);
-//		else if (!ft_strcmp(args[0], "bg"))
-//			return (TRUE);
 	}
 	return (FALSE);
 }

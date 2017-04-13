@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 20:00:04 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/03/29 12:55:41 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 /*
 **	Ft_print_lst print une liste

@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 18:15:57 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/03/24 20:23:12 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int		switch_bang(t_lst *hist, char **s, int *i)
 {
@@ -18,7 +18,7 @@ int		switch_bang(t_lst *hist, char **s, int *i)
 	char	*n;
 
 	if (!(*s)[*i])
-		return (ft_print_error("42sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
 	n = NULL;
 	ret = 0;
 	if ((*s)[*i] == '!')

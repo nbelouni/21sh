@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:08:51 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 12:24:10 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 void		init_signal(void)
 {

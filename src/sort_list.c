@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 17:14:54 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/02 22:25:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 t_sort_list	*create_sort_list(char *s)
 {

@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 23:40:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/10 20:22:15 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:03:37 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 void		insert_in_buf(t_buf *buf, int cursor, char *s, size_t len)
 {

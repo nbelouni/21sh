@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 18:11:03 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:03:11 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 #include "read.h"
 
 int		cpy_cut_paste(t_buf *buf, int x)
@@ -20,7 +20,7 @@ int		cpy_cut_paste(t_buf *buf, int x)
 		if (vb_copy(buf, x) < 0)
 		{
 			m_right(calc_len(buf, END));
-			return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 		}
 	}
 	if (x == CTRL_B || x == CTRL_E || x == CTRL_K || x == CTRL_W)
@@ -28,7 +28,7 @@ int		cpy_cut_paste(t_buf *buf, int x)
 		if (vb_cut(buf, x) < 0)
 		{
 			m_right(calc_len(buf, END));
-			return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 		}
 	}
 	if (x == CTRL_P)
@@ -36,7 +36,7 @@ int		cpy_cut_paste(t_buf *buf, int x)
 		if (vb_paste(buf) < 0)
 		{
 			m_right(calc_len(buf, END));
-			return (ft_print_error("\n42sh", ERR_CMD_TOO_LONG, ERR_NEW_CMD));
+			return (ft_print_error("\n21sh", ERR_CMD_TOO_LONG, ERR_NEW_CMD));
 		}
 	}
 	return (0);
@@ -49,7 +49,7 @@ int 	read_modul(int x, t_buf *buf)
 		if (vb_insert(buf, (char *)&x) < 0)
 		{
 			m_right(calc_len(buf, END));
-			return (ft_print_error("\n42sh", ERR_CMD_TOO_LONG, ERR_NEW_CMD));
+			return (ft_print_error("\n21sh", ERR_CMD_TOO_LONG, ERR_NEW_CMD));
 		}
 		return (1);
 	}
@@ -59,7 +59,7 @@ int 	read_modul(int x, t_buf *buf)
 int		mv_and_read(t_buf *buf, int x, int ret)
 {
 	if (ret < 0)
-		return (ft_print_error("\n42sh", ERR_READ, ERR_EXIT));
+		return (ft_print_error("\n21sh", ERR_READ, ERR_EXIT));
 	if (x == CTRL_D && buf->size == 0)
 		return (ERR_EXIT);
 	//if (read_modul(x, buf) == 1)
@@ -94,17 +94,17 @@ void	init_line(t_buf *buf)
 
 int		classic_read(t_buf *buf, int x)
 {
-  int tmp;
+	int tmp;
 
-  	tmp = x & 0xff;
- 	if (tmp < 31 || tmp > 127)
- 		return (1);
- 	while (x)
- 	{
- 		tmp = x & 0xff;
- 		x >>= 8;
- 		read_modul(tmp, buf);
- 	}
+	tmp = x & 0xff;
+	if (tmp < 31 || tmp > 127)
+		return (1);
+	while (x)
+	{
+		tmp = x & 0xff;
+		x >>= 8;
+		read_modul(tmp, buf);
+	}
 	return (1);
 }
 

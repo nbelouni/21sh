@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:22:07 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/03/29 15:46:14 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 /*
 **	ft_setenv est une fonction qui va attribué la valeur de var a name et

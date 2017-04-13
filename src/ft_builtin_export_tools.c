@@ -6,11 +6,11 @@
 /*   By: dogokar <dogokar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 18:19:12 by dogokar           #+#    #+#             */
-/*   Updated: 2017/03/15 18:19:59 by dogokar          ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 /*
 **		extrais l'element et l'insert dans une autre liste
@@ -59,7 +59,7 @@ int			ft_export(t_lst *lst, char *arg)
 		return (ERR_EXIT);
 	ret = 0;
 	if (name == NULL || name[0] == '\0' || name[0] == '=')
-		return (ft_print_error("42sh", ERR_ARG_INVALID, ERR_NEW_CMD));
+		return (ft_print_error("21sh", ERR_ARG_INVALID, ERR_NEW_CMD));
 	val = NULL;
 	if ((ft_strlen(name) + 1) < ft_strlen(arg))
 	{

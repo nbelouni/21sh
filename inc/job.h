@@ -6,14 +6,14 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:03:19 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 19:03:14 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef JOB_H
 # define JOB_H
 # include "list.h"
-# include "42sh.h"
+# include "21sh.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/uio.h>
@@ -63,12 +63,10 @@ typedef struct s_process *t_process_p;
 
 typedef struct		s_process
 {
-	t_process_p		next;
 	int				token;
 	int				flag;
 	char			**argv;
 	t_list			*io_list;
-	char			*temp_redir;
 	pid_t			pid;
 	char			completed;
 	char			stopped;
@@ -89,10 +87,8 @@ typedef struct		s_process
 typedef struct		s_job
 {
 	int				status;
-	struct s_job	*next;
 	char			*command;
 	t_node_p		process_tree;
-	pid_t			pgid;
 	char			notified;
 	struct termios	s_term;
 	int				flag;

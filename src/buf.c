@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:43:38 by alallema          #+#    #+#             */
-/*   Updated: 2017/03/31 16:57:06 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:44:16 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 t_buf		*init_buf(void)
 {
@@ -26,7 +26,6 @@ t_buf		*init_buf(void)
 	buf->last_cmd = NULL;
 	buf->to_paste_size = 0;
 	buf->final_line = NULL;
-	core->buf = buf;
 	return (buf);
 }
 

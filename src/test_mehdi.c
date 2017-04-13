@@ -1,4 +1,4 @@
-#include "42sh.h"
+#include "21sh.h"
 
 // step 1 : parse options
 // step 2 : check args
@@ -12,7 +12,7 @@
 
 static void	put_error_job(char *bad_job)
 {
-	write(2, "42sh: jobs: ", 12);
+	write(2, "21sh: jobs: ", 12);
 	write(2, bad_job, ft_strlen(bad_job));
 	write(2, ": No such job\n", 14);
 }

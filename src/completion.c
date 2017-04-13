@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 15:10:02 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 13:35:32 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int		is_any_quote(char *s, int i)
 {
@@ -179,7 +179,7 @@ int		open_abs_path(char *s, DIR **dirp, int *bg)
 
 	len = (g_curs.win_col * g_curs.row + g_curs.col) - get_prompt_len() - *bg;
 	if (!(extend_path = ft_strsub(s, *bg, len)))
-		return (ft_print_error("42sh: ", ERR_MALLOC, 0));
+		return (ft_print_error("21sh: ", ERR_MALLOC, 0));
 	final_path = extend_path;
 	if ((*dirp = opendir(final_path)) == NULL)
 	{
@@ -190,7 +190,7 @@ int		open_abs_path(char *s, DIR **dirp, int *bg)
 		}
 		free(*dirp);
 		if ((*dirp = opendir(final_path)) == NULL)
-			return (ft_print_error("42sh: ", "No directory.", 0));
+			return (ft_print_error("21sh: ", "No directory.", 0));
 	}
 	if (ft_strlen(final_path) > 0)
 		*bg += ft_strlen(final_path);
@@ -244,12 +244,12 @@ int		open_rel_path(char *s, DIR **dirp, int *bg)
 
 	len = (g_curs.win_col * g_curs.row + g_curs.col) - get_prompt_len() - *bg;
 	if (!(curr_path = getcwd(NULL, 1024)))
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	if (!(extend_path = ft_strsub(s, *bg, len)))
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	final_len = ft_strlen(curr_path) + ft_strlen(extend_path) + 2;
 	if (!(final_path = ft_strnew(final_len)))
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	ft_multi_concat(final_path, curr_path, "/", extend_path);
 	if (!(*dirp = can_open_path(final_path, curr_path, extend_path, bg)))
 		return (0);

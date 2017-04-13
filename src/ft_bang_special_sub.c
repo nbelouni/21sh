@@ -6,11 +6,11 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 18:15:12 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/03/24 18:15:33 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int		bang_doll_sub(char *name, char **s)
 {
@@ -19,7 +19,7 @@ int		bang_doll_sub(char *name, char **s)
 	char	*tmp2;
 
 	if ((tmp2 = ft_gets_lastword(name)) == NULL)
-		return (ft_print_error("42sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
 	tmp = *s;
 	ret = 0;
 	if ((*s = ft_strreplace(tmp, "!$", tmp2)) == NULL)
@@ -36,7 +36,7 @@ int		dbang_sub(t_lst *hist, char **s)
 	char	*tmp2;
 
 	if ((tmp2 = ft_gets_lastcmd(hist)) == NULL)
-		return (ft_print_error("42sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
 	tmp = *s;
 	ret = 0;
 	if ((*s = ft_strreplace(tmp, "!!", tmp2)) == NULL)
@@ -53,7 +53,7 @@ int		bang_wildcard_sub(char *name, char **s)
 	char	*tmp2;
 
 	if ((tmp2 = ft_gets_cmd_except_firstword(name)) == NULL)
-		return (ft_print_error("42sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
 	tmp = *s;
 	ret = 0;
 	if ((*s = ft_strreplace(tmp, "!*", tmp2)) == NULL)

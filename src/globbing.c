@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 21:54:31 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int			which_quotes(char *s, int len)
 {
@@ -126,7 +126,7 @@ int		init_new_value(char *var_name, t_core *core, char **new_value)
 	t_elem	*tmp;
 
 	if (!var_name)
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	if (!(tmp = ft_find_elem(var_name, core->set)))
 	{
 		if (!(tmp = ft_find_elem(var_name, core->env)))
@@ -151,7 +151,7 @@ int		replace_env_var(char **s, t_core *core)
 	if (init_new_value(ft_strsub(*s, bg, end), core, &new_val) == ERR_EXIT)
 		return (ERR_EXIT);
 	if (!(new_s = ft_strnew(ft_strlen(*s) - end + ft_strlen(new_val))))
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	ft_strncpy(new_s, *s, bg - 1);
 	if (new_val)
 		ft_strncpy(new_s + bg - 1, new_val, ft_strlen(new_val));

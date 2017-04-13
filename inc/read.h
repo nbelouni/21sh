@@ -6,13 +6,13 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:01:52 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/08 19:16:52 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef READ_H
 # define READ_H
-# include "42sh.h"
+# include "21sh.h"
 # include <termios.h>
 # include <term.h>
 # include <curses.h>
@@ -98,7 +98,7 @@
 # define E(x) (ft_putnbr_fd(x, 2));
 # define X(x) (ft_putchar_fd(x, 2));
 
-# define PROMPT1	"42sh.$ "
+# define PROMPT1	"21sh.$ "
 # define PROMPT2	"> "
 
 typedef struct	s_win

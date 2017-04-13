@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 19:31:44 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 14:27:42 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 void		reset_int_pt(t_pt *pt)
 {
@@ -26,11 +26,11 @@ int			parse_list(t_token **list, char *s, t_pt *p)
 	t_token	*new;
 
 	if (!s)
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	if (find_quote_end(s) == FALSE)
 		return (ERR_NEW_PROMPT);
 	if (!(new = ft_tokenew(p->type, s)))
-		return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	if (!(*list))
 		*list = new;
 	else

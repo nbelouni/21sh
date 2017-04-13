@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 19:55:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 20:57:42 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int		join_lines(t_buf *buf)
 {
@@ -20,11 +20,11 @@ int		join_lines(t_buf *buf)
 	if (buf->final_line)
 	{
 		if (!(tmp = ft_strjoin(buf->final_line, "\n")))
-			return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 		free(buf->final_line);
 	}
 	if (!(buf->final_line = ft_strjoin(tmp, buf->line)))
-		return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 	if (tmp)
 		ft_strdel(&tmp);
 	ft_bzero(buf->line, BUFF_SIZE);
@@ -45,7 +45,7 @@ int		read_here_doc(t_buf *buf, t_completion *completion, t_token *elem, t_lst *h
 			if (buf->final_line)
 			{
 				if (!(elem->word = ft_strdup(buf->final_line)))
-					return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+					return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 			}
 			break ;
 		}
@@ -66,13 +66,13 @@ int		here_doc(t_token *elem, t_completion *completion, t_lst *hist)
 	set_prompt(PROMPT2, ft_strlen(PROMPT2));
 	clean_pos_curs();
 	if (!(buf = init_buf()))
-		return (ft_print_error("42sh", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	if (read_here_doc(buf, completion, elem, hist) == ERR_EXIT)
 		return (ERR_EXIT);
 	if (!elem->word)
 	{
 		if (!(elem->word = ft_strdup("")))
-			return (ft_print_error("\n42sh", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 	}
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	close_termios();

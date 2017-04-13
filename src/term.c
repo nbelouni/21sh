@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 20:30:33 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 18:50:26 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 #include "read.h"
 
 int			t_putchar(int i)
@@ -56,8 +56,10 @@ int			close_termios(void)
 	t_term			*st_term;
 	
 	st_term = get_term();
-//	st_term->old.c_lflag &= ~TOSTOP;
 	if (tcsetattr(0, TCSADRAIN, &st_term->old) == -1)
-		return (perror(__func__), -1);
+	{
+//		ft_putstr_fd("21sh: error term\n", 2);
+		return (-1);
+	}
 	return (0);
 }

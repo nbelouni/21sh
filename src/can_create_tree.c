@@ -6,15 +6,15 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 14:37:06 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 int			print_err_message(char *s)
 {
-	ft_putstr_fd("42sh: syntax error near unexpected token `", 2);
+	ft_putstr_fd("21sh: syntax error near unexpected token `", 2);
 	if (s)
 		ft_putstr_fd(s, 2);
 	ft_putstr_fd("'\n", 2);

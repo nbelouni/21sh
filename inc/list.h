@@ -6,14 +6,14 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 19:57:37 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/10 07:12:13 by llaffile         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIST_H
 # define LIST_H
 
-# include "42sh.h"
+# include "21sh.h"
 
 # define PUSH(x, elem)	(insert_link_top(x, new_link(elem, sizeof(elem))))
 # define TOP(x)			(x->content)

@@ -6,11 +6,11 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 20:56:31 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 #include "io.h"
 #include "job.h"
 #include <errno.h>
@@ -88,18 +88,21 @@ int	mark_process_status(pid_t pid, int status)
 				p->completed = 1;
 				last = WEXITSTATUS(status);
 				if (WIFSIGNALED(status))
-					fprintf (stderr, "%d: Terminated by signal %d.\n",
-							(int) pid, WTERMSIG(p->status));
+				{
+					ft_putstr_fd("21sh: Terminated by signal ", 2);
+					ft_putnbr_fd(WTERMSIG(status), 2);
+					ft_putchar_fd('\n', 2);
+				}
 			}
 			return (0);
 		}
 		else
-			return (fprintf (stderr, "No child process %d.\n", pid), -1);
+			return (-1);
 	}
 	else if (pid == 0 || errno == ECHILD)
 		return (-1);
 	else
-		return (perror("waitpid"), -1);
+		return (-1);
 }
 
 /*
@@ -156,7 +159,7 @@ void	apply_redir(t_io *io)
 			io->dup_src = open(io->str, io->mode, DEF_FILE);
 		if (io->dup_src < 0)
 		{
-			ft_putstr_fd("42sh: No such file or directory (a placer dans les error)\n", 2);
+			ft_putstr_fd("21sh: No such file or directory (a placer dans les error)\n", 2);
 			exit(1);
 		}
 	}
@@ -171,7 +174,7 @@ void	apply_redir(t_io *io)
 	{
 		if (fcntl(io->dup_src, F_GETFL) < 0/* && errno == EBADF (Bad file descriptor)*/)
 		{
-			ft_putstr_fd("42sh: Bad file descriptor (a placer dans les error)\n", 2);
+			ft_putstr_fd("21sh: Bad file descriptor (a placer dans les error)\n", 2);
 			exit(1);
 		}
 		else
@@ -188,7 +191,7 @@ int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 
 	if (pipe(io_pipe) == -1)
 	{
-		perror("pipe");
+		ft_putstr_fd("21sh: error pipe \n", 2);
 		exit(1);
 	}
 	io_in = new_io();
@@ -222,7 +225,7 @@ int		make_children(t_process_p p)
 	}
 	else if (pid < 0)
 	{
-		perror("fork");
+		ft_putstr_fd("21sh: error fork\n", 2);
 		exit(1);
 	}
 	else

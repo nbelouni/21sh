@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 16:50:08 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 14:26:10 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 /*
 **	C'est en chantier, je mets au propre apres le push
@@ -21,7 +21,7 @@ int			is_line_ended(t_buf *buf)
 	char	*tmp;
 
 	if (!(tmp = ft_strjoin(buf->final_line, buf->line)))
-		return (ft_print_error("42sh", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	free(buf->final_line);
 	buf->final_line = tmp;
 	return (0);
@@ -43,12 +43,12 @@ int		complete_final_line(t_buf *buf, t_token *lst)
 /*	if ((tmp->bt_level || tmp->bc_level) && !is_separator_type(tmp->type))
 	{
 		if (!(tmp2 = ft_strjoin(buf->final_line, "; ")))
-			return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	}
 	else
 */	{
 		if (!(tmp2 = ft_strjoin(buf->final_line, " ")))
-			return (ft_print_error("42sh: ", ERR_MALLOC, ERR_EXIT));
+			return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	}
 	free(buf->final_line);
 	buf->final_line = tmp2;

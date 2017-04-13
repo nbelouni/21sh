@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 13:42:29 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 15:40:34 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42sh.h"
+#include "21sh.h"
 
 void	launch_job(t_job *j);
 void	export_job(t_tree *root, t_list **job_list);
@@ -109,26 +109,27 @@ int 	main(int argc, char **argv, char **envp)
 	list = NULL;
 	core = ft_creat_core(envp);
 	if (!(buf = init_buf()))
-		return (ft_print_error("42sh", ERR_MALLOC, ERR_EXIT));
+		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	if (init_completion(&completion, core) == ERR_EXIT)
 		return (-1);
 	if (!isatty(0))
 		buf->istty = 1;
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
-	if (read_ext(buf, &completion, core, list) == 1)
+	core->buf = buf;
+	if (read_ext(core->buf, &completion, core, list) == 1)
 	{
 		init_curs();
-		while ((ret_read = read_line(buf, &completion, core->hist)) != ERR_EXIT)
+		while ((ret_read = read_line(core->buf, &completion, core->hist)) != ERR_EXIT)
 		{
 			close_termios();
 			job_list_bis = NULL;
 			if (ret_read != TAB)
 			{
-				if (is_line_ended(buf) < 0)
+				if (is_line_ended(core->buf) < 0)
 					return (-1);
-				bang_substitution(&(buf->final_line), core);
-				ret = parse_buf(&list, buf->final_line, &completion, core->hist);
+				bang_substitution(&(core->buf->final_line), core);
+				ret = parse_buf(&list, core->buf->final_line, &completion, core->hist);
 				if (ret > 0 && list)
 				{
 /*
@@ -154,15 +155,15 @@ int 	main(int argc, char **argv, char **envp)
 **
 */
 				}
-				ft_print_token_list(&list);
-				if (ret != ERR_NEW_PROMPT && buf->final_line)
-					ft_strdel(&(buf->final_line));
+//				ft_print_token_list(&list);
+				if (ret != ERR_NEW_PROMPT && core->buf->final_line)
+					ft_strdel(&(core->buf->final_line));
 				else
-					complete_final_line(buf, list);
+					complete_final_line(core->buf, list);
 				if (list)
 					ft_tokendestroy(&list); //clean la list a mettre a la fin
-				ft_bzero(buf->line, BUFF_SIZE);
-				buf->size = 0;
+				ft_bzero(core->buf->line, BUFF_SIZE);
+				core->buf->size = 0;
 				clean_pos_curs();
 				if (init_completion(&completion, core) == ERR_EXIT)
 					return (-1);
@@ -172,6 +173,6 @@ int 	main(int argc, char **argv, char **envp)
 		}
 		close_termios();
 	}
-	free_buf(buf);
+	free_buf(core->buf);
 	return (0);
 }
