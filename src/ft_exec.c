@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 16:27:11 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void			ft_exec(char **av)
 	t_elem		*tmp;
 
 	close_termios();
-	envp = ft_env_to_tab(core->env);
-	if (!(tmp = ft_find_elem("PATH", core->env)))
+	envp = ft_env_to_tab(g_core->env);
+	if (!(tmp = ft_find_elem("PATH", g_core->env)))
 		s = ft_strdup("");
 	else
 		s = ft_strdup(tmp->value);
@@ -106,9 +106,9 @@ int				ft_check_exec(char ***cmd)
 	int			ret;
 
 	ret = TRUE;
-	if (edit_cmd(cmd, core) == ERR_EXIT)
+	if (edit_cmd(cmd, g_core) == ERR_EXIT)
 		return (ERR_EXIT);
-	if ((ret = parse_builtins(core, *cmd[0], *cmd + 1)) == 1)
+	if ((ret = parse_builtins(g_core, *cmd[0], *cmd + 1)) == 1)
 		ft_exec(*cmd);
 	return (ret);
 }

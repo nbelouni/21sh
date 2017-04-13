@@ -6,13 +6,13 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:01:52 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:07:23 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef READ_H
 # define READ_H
-# include "21sh.h"
+# include "ft_21sh.h"
 # include <termios.h>
 # include <term.h>
 # include <curses.h>
@@ -139,9 +139,10 @@ typedef struct	s_buf
 	char		*to_paste;
 	int			to_paste_size;
 	char		*final_line;
-	int 		istty;
+	int			istty;
 }				t_buf;
 
+typedef _Bool t_bool;
 /*
 **	*********************************************************************
 */

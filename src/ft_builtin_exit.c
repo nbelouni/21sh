@@ -6,25 +6,25 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:21:52 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
-void 	ft_del_core(t_core *core)
+void 	ft_del_core(t_core *g_core)
 {
-	if (core)
+	if (g_core)
 	{
-		if (core->set)
-			ft_del_list(core->set);
-		if (core->exp)
-			ft_del_list(core->exp);
-		if (core->env)
-			ft_del_list(core->env);
-		if (core->hist)
-			ft_del_list(core->hist);
-		ft_memdel((void*)&core);
+		if (g_core->set)
+			ft_del_list(g_core->set);
+		if (g_core->exp)
+			ft_del_list(g_core->exp);
+		if (g_core->env)
+			ft_del_list(g_core->env);
+		if (g_core->hist)
+			ft_del_list(g_core->hist);
+		ft_memdel((void*)&g_core);
 	}
 }
 
@@ -36,7 +36,7 @@ void 	ft_del_core(t_core *core)
 **	contenu dans args[0] (plus d'arguments provoque une erreur).
 */
 
-int		ft_builtin_exit(t_core *core, char **args)
+int		ft_builtin_exit(t_core *g_core, char **args)
 {
 	int	ret;
 
@@ -54,8 +54,8 @@ int		ft_builtin_exit(t_core *core, char **args)
 		ret = (unsigned char)ret;
 		ret = ft_atoi(args[0]);
 	}
-	ft_histopt_w(core->set, core->hist, NULL);
-	ft_del_core(core);
+	ft_histopt_w(g_core->set, g_core->hist, NULL);
+	ft_del_core(g_core);
 	clean_pos_curs();
 	close_termios();
 	exit(ret);

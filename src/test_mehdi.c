@@ -1,4 +1,4 @@
-#include "21sh.h"
+#include "ft_21sh.h"
 
 // step 1 : parse options
 // step 2 : check args

@@ -6,14 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 15:31:30 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 16:20:55 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:03:45 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBBING_H
 # define GLOBBING_H
 
-# include "21sh.h"
+# include "ft_21sh.h"
 
 /*
 **	find_quote_end.c
@@ -38,6 +38,6 @@ int						which_quotes(char *s, int len);
 **	supprime les quotes,
 **	supprime les backslashs si necessaire
 */
-int		edit_cmd(char ***args, t_core *core);
+int						edit_cmd(char ***args, t_core *core);
 
 #endif

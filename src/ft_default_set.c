@@ -6,11 +6,11 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 14:39:57 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 /*
 ** env par defaut
@@ -60,7 +60,7 @@ t_lst	*ft_init_lstset(void)
 	if ((histfilepath = ft_strnew((ft_strlen(pwd) + 15))) == NULL)
 		return (NULL);
 	ft_strcpy(histfilepath, pwd);
-	histfilepath = ft_strcat(histfilepath, "/.21sh_history");
+	histfilepath = ft_strcat(histfilepath, "/.ft_21sh_history");
 	ft_setenv(set, "HISTFILE", histfilepath);
 	ft_multi_free(pwd, histfilepath, NULL, NULL);
 	ft_setenv(set, "HISTSIZE", "500");

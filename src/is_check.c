@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:26:10 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 int		find_bracket_end(char *s, int i)
 {
@@ -68,16 +68,14 @@ int		is_or_and(char *s, int i)
 	if (i == 0 || s[i - 1] != '\\')
 	{
 		if (s[i] == '&' || s[i] == '|')
-			{
-				if (!ft_strncmp(s + i, "&&", 2))
-					return (AND);
-				if (!ft_strncmp(s + i, "||", 2))
-					return (OR);
-				if (s[i] == '|')
-					return (PIPE);
-}
-		if (s[i] == '|')
-			return (PIPE);
+		{
+			if (!ft_strncmp(s + i, "&&", 2))
+				return (AND);
+			if (!ft_strncmp(s + i, "||", 2))
+				return (OR);
+			if (s[i] == '|')
+				return (PIPE);
+		}
 	}
 	return (0);
 }

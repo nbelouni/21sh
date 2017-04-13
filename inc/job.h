@@ -6,14 +6,14 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:03:19 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:37:27 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:05:12 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef JOB_H
 # define JOB_H
 # include "list.h"
-# include "21sh.h"
+# include "ft_21sh.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/uio.h>
@@ -23,8 +23,6 @@
 # define IS ==
 # define TOKEN(x) (((t_tree *)x)->token)
 # define DEF_FILE 0644
-
-typedef struct s_list *List_p;
 
 typedef struct s_node *t_node_p;
 
