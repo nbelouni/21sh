@@ -6,11 +6,30 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/03/30 13:40:32 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/12 21:54:31 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42sh.h"
+
+int			which_quotes(char *s, int len)
+{
+	int		w_quotes;
+	int		i;
+
+	w_quotes = 0;
+	i = -1;
+	while (++i < len)
+	{
+		if (is_char(s, i, '"'))
+			w_quotes = (w_quotes == NO_QUOTE) ? D_QUOTE : NO_QUOTE;
+		if (is_char(s, i, '\''))
+			w_quotes = (w_quotes == NO_QUOTE) ? S_QUOTE : NO_QUOTE;
+		if (is_char(s, i, '`'))
+			w_quotes = (w_quotes == NO_QUOTE) ? BT_QUOTE : NO_QUOTE;
+	}
+	return (w_quotes);
+}
 
 int		supp_char(char *s, int i, int c)
 {
@@ -147,37 +166,10 @@ int		replace_env_var(char **s, t_core *core)
 	return (FALSE);
 }
 
-int		insert_new_args(char **s, t_reg_path **new_args, t_reg_path *tmp)
-{
-	t_reg_path	*tmp2;
-
-	if (*new_args)
-	{
-		tmp2 = *new_args;
-		while (tmp2->next)
-			tmp2 = tmp2->next;
-		tmp2->next = tmp;
-		tmp->prev = tmp2;
-	}
-	else
-		*new_args = tmp;
-	ft_strdel(s);
-	if (!(*s = ft_strdup("")))
-		return (FALSE);
-	tmp2 = tmp;
-	while (tmp2)
-	{
-		supp_quotes(*s);
-		tmp2 = tmp2->next;
-	}
-	return (TRUE);
-}
-
-int		globb(char **s, t_core *core, t_reg_path **new_args)
+int		globb(char **s, t_core *core)
 {
 	int			i;
 	int			ret;
-	t_reg_path	*tmp;
 
 	i = 0;
 	ret = FALSE;
@@ -188,87 +180,19 @@ int		globb(char **s, t_core *core, t_reg_path **new_args)
 			return (ERR_EXIT);
 		i++;
 	}
-	if ((tmp = replace_regex(*s)))
-	{
-		if (insert_new_args(s, new_args, tmp) == FALSE)
-			return (FALSE);
-	}
-	else
 		supp_quotes(*s);
 	return (TRUE);
 }
 
-int		args_len(char **args, t_reg_path *reg_args)
-{
-	int			len;
-	int			i;
-	t_reg_path	*tmp;
-
-	i = -1;
-	len = 0;
-	while (args[++i])
-	{
-		if (args[i][0])
-			len += 1;
-	}
-	tmp = reg_args;
-	while (tmp)
-	{
-		len += 1;
-		tmp = tmp->next;
-	}
-	return (len);
-}
-
-char	**add_in_args(char **args, t_reg_path *reg_args)
-{
-	t_reg_path	*tmp;
-	char		**new;
-	int			i;
-	int			j;
-
-	if (!reg_args)
-		return (args);
-	if (!(new = ft_memalloc(sizeof(char *) * (args_len(args, reg_args) + 1))))
-		return (NULL);
-	i = -1;
-	j = -1;
-	while (++i < (int)ft_tablen(args))
-	{
-		if (args[i][0])
-			if (!(new[++j] = ft_strdup(args[i])))
-				return (NULL);
-	}
-	tmp = reg_args;
-	while (tmp)
-	{
-		if (!(new[++j] = ft_strdup(tmp->out)))
-			return (NULL);
-		tmp = tmp->next;
-	}
-	return (new);
-}
-
 int		edit_cmd(char ***args, t_core *core)
 {
-	t_reg_path	*new_args;
-	char		**tmp;
 	int			i;
 
-	new_args = NULL;
 	i = -1;
 	while ((*args)[++i])
 	{
-		if (globb(&(*args)[i], core, &new_args) == ERR_EXIT)
+		if (globb(&(*args)[i], core) == ERR_EXIT)
 			return (ERR_EXIT);
-	}
-	if (new_args)
-	{
-		if (!(tmp = add_in_args(*args, new_args)))
-			return (ERR_EXIT);
-		ft_tabdel(*args);
-		*args = tmp;
-		ft_reg_pathdestroy(&new_args);
 	}
 	return (0);
 }

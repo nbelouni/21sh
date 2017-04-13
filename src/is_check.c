@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:26:10 by alallema          #+#    #+#             */
-/*   Updated: 2017/03/22 18:38:20 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 19:55:45 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int		is_agreg(char *s, int i)
 			return (DIR_L_AMP);
 		if (!ft_strncmp(s + i, ">&", 2))
 			return (DIR_R_AMP);
-		if (s[i] == '&')
-			return (AMP);
 	}
 	return (0);
 }
@@ -70,26 +68,23 @@ int		is_or_and(char *s, int i)
 	if (i == 0 || s[i - 1] != '\\')
 	{
 		if (s[i] == '&' || s[i] == '|')
-		{
-			if (!ft_strncmp(s + i, "&&", 2))
-				return (AND);
-			if (!ft_strncmp(s + i, "||", 2))
-				return (OR);
-			if (s[i] == '|')
-				return (PIPE);
-		}
+			{
+				if (!ft_strncmp(s + i, "&&", 2))
+					return (AND);
+				if (!ft_strncmp(s + i, "||", 2))
+					return (OR);
+				if (s[i] == '|')
+					return (PIPE);
+}
+		if (s[i] == '|')
+			return (PIPE);
 	}
 	return (0);
 }
 
 int		is_bracket(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
-	{
-		if (s[i] == '(')
-			return (O_BRACKET);
-		if (s[i] == ')')
-			return (C_BRACKET);
-	}
+	(void)s;
+	(void)i;
 	return (0);
 }
