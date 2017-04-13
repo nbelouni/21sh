@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/12 20:51:21 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 12:29:16 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ static t_builtin_array builtin_array[] =
 	{"history", &ft_builtin_history},
 	{"unset", &ft_builtin_unset},
 	{"export", &ft_builtin_export},
-//	{"jobs", &ft_builtin_jobs},
-//	{"fg", &ft_builtin_fg},
-//	{"bg", &ft_builtin_bg},
 	{NULL, NULL}
 };
 
@@ -49,32 +46,9 @@ int		parse_builtins(t_core *core, char *cmd, char **cmd_args)
 	return (1);
 }
 
-int		parse(t_core *core, char *line, char **envp)
-{
-	char	**args;
-	int		ret;
-
-	(void)envp;
-	ret = 0;
-	if ((ft_cmd_to_history(core->hist, line)) == ERR_EXIT)
-		return (ERR_EXIT);
-	args = NULL;
-	args = ft_strsplit(line, ' ');
-	if (args != NULL && args[0] != NULL)
-	{
-//		if ((ret = parse_builtins(core, args[0], args + 1)) == 1)
-//			ft_waitchild(args, envp);
-		ft_tabdel(args);
-	}
-	if ((ft_check_history_var(core->set, core->hist)) == ERR_EXIT)
-		return (ERR_EXIT);
-	return (0);
-}
-
-
 /*
- **	  init_core initialisation des liste d'env
- */
+**	  init_core initialisation des liste d'env
+*/
 
 t_core 		*ft_creat_core(char **envp)
 {
@@ -92,8 +66,9 @@ t_core 		*ft_creat_core(char **envp)
 }
 
 /*
- **   si l'entree est different du terminal va lire ligne par ligne GNL
- */
+**   si l'entree est different du terminal va lire ligne par ligne GNL
+*/
+
 int 	read_ext(t_buf *buf, t_completion *comp, t_core *core, t_token *list)
 {
 	int i;
@@ -115,17 +90,7 @@ int 	read_ext(t_buf *buf, t_completion *comp, t_core *core, t_token *list)
 	}
 	return (1);
 }
-/*
-int		investigate(char *func)
-{
-	struct termios termio;
 
-	tcgetattr(g_sh_tty, &termio);
-	if (termio.c_lflag & TOSTOP)
-		dprintf(2, "%s Dam it's there\n", func);
-	return (0);
-}
-*/
 int 	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -166,7 +131,6 @@ int 	main(int argc, char **argv, char **envp)
 				ret = parse_buf(&list, buf->final_line, &completion, core->hist);
 				if (ret > 0 && list)
 				{
-//					parse(core, buf->final_line, envp);
 //					ft_push_ast(list, &ast);
 
 /*

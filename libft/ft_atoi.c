@@ -3,37 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <alallema@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/07/29 12:48:59 by alallema          #+#    #+#             */
-/*   Updated: 2016/04/28 19:45:26 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/05 18:31:47 by nbelouni          #+#    #+#             */
+/*   Updated: 2014/12/29 18:34:36 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
-{
-	int i;
-	int nb;
-	int neg;
+#include "libft.h"
 
-	neg = 1;
-	nb = 0;
+static int		white(const char *str)
+{
+	int			i;
+
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' ||
-	str[i] == '\v' || str[i] == '\r' || str[i] == '\f')
-		i++;
-	if (str[i] == '-')
-		neg = -1;
+	if (str[i] == '\n' || str[i] == '\f' || str[i] == '\v' ||
+		str[i] == '\r' || str[i] == '\t' || str[i] == ' ')
+		while (str[i] == '\n' || str[i] == '\f' || str[i] == '\v' ||
+				str[i] == '\r' || str[i] == '\t' || str[i] == ' ')
+			i++;
+	return (i);
+}
+
+int				ft_atoi(const char *str)
+{
+	int			nbr;
+	int			i;
+	int			ref;
+
+	nbr = 0;
+	ref = 0;
+	i = white(str);
 	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
 	{
-		if (str[i] >= 48 && str[i] <= 57)
-			nb = (str[i] - 48) + (10 * nb);
-		else
-			return (nb * neg);
+		if (str[i] == '-')
+			ref = 1;
 		i++;
 	}
-	nb = nb * neg;
-	return (nb);
+	while (str[i] != '\0' && (str[i] >= '0' && str[i] <= '9'))
+	{
+		nbr = (nbr * 10) + (str[i] - '0');
+		i++;
+	}
+	if (ref != 0)
+		nbr *= -1;
+	return (nbr);
 }

@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fr.c                                     :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 11:12:16 by alallema          #+#    #+#             */
-/*   Updated: 2017/01/12 16:04:47 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/06 18:40:35 by nbelouni          #+#    #+#             */
+/*   Updated: 2014/11/07 04:56:03 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-void	ft_putstr_fd(char const *s, int fd)
+void				ft_putstr_fd(const char *s, int fd)
 {
-	int i;
+	unsigned int	i;
 
-	i = 0;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	i = ft_strlen(s);
+	write(fd, s, i);
 }

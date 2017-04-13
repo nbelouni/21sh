@@ -3,74 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/22 16:42:43 by alallema          #+#    #+#             */
-/*   Updated: 2016/09/14 14:01:25 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/06 04:45:10 by nbelouni          #+#    #+#             */
+/*   Updated: 2016/06/15 21:45:07 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int		ft_count_words(const char *str, char c)
+static int	ft_parser(char const *s, int c, int i)
 {
-	int	word;
-	int	i;
-
-	i = 0;
-	word = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == c && str[i + 1] != c)
-			word++;
+	while (s[i] && s[i] != c)
 		i++;
-	}
-	if (str[0] != '\0')
-		word++;
-	return (word);
+	return (i);
 }
 
-static	char	*ft_word(const char *str, char c, int *i)
-{
-	char	*s;
-	int		k;
-
-	if (!(s = (char *)malloc(sizeof(s) * (ft_strlen(str)))))
-		return (NULL);
-	k = 0;
-	while (str[*i] != c && str[*i])
-	{
-		s[k] = str[*i];
-		k++;
-		*i += 1;
-	}
-	s[k] = '\0';
-	while (str[*i] == c && str[*i])
-		*i += 1;
-	return (s);
-}
-
-char			**ft_strsplit(const char *str, char c)
+static int	tablen(char const *s, int c)
 {
 	int		i;
-	int		j;
-	int		wrd;
-	char	**s;
+	int		len;
 
 	i = 0;
-	j = 0;
-	wrd = ft_count_words(str, c);
-	if (!(s = (char **)malloc(sizeof(s) * (wrd + 2))))
-		return (NULL);
-	while (str[i] == c && str[i])
-		i++;
-	while (j < wrd && str[i])
+	len = 0;
+	while (s[i])
 	{
-		s[j] = ft_word(str, c, &i);
-		j++;
+		if (s[i] != c && (!s[i + 1] || s[i + 1] == c))
+			len++;
+		i++;
 	}
-	s[j] = NULL;
-	return (s);
+	return (len);
+}
+
+char		**ft_strsplit(char const *s, int c)
+{
+	int		start;
+	int		i;
+	int		len;
+	char	**new;
+
+	len = 0;
+	i = 0;
+	start = 0;
+	if (!s || !s[0])
+		return (NULL);
+	new = (char**)malloc(sizeof(char *) * (tablen(s, c) + 1));
+	if (!new)
+		return (NULL);
+	while (i < tablen(s, c))
+	{
+		len += start;
+		while (s[len] == c)
+			len++;
+		start = ft_parser(s, c, len) - len;
+		new[i] = ft_strsub((const char *)s, len, start);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
 }

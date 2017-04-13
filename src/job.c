@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 18:29:15 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 21:17:11 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_job	*create_job(t_tree *root, int foreground)
 	bzero(job, sizeof(*job));
 	job->foreground = foreground;
 	job->process_tree = create_process_tree(root);
-	job->command = iter_cmd(job->process_tree);
+//	job->command = iter_cmd(job->process_tree);
 	return (job);
 }
 

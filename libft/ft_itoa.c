@@ -3,68 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/25 12:25:19 by alallema          #+#    #+#             */
-/*   Updated: 2015/12/02 15:41:59 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/07 03:07:06 by nbelouni          #+#    #+#             */
+/*   Updated: 2016/04/12 20:42:34 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count_a(int n)
+static void	ft_nbr(int n, char *s, int len)
 {
-	int		i;
-
-	i = 0;
 	if (n < 0)
-		n = -n;
-	while (n > 0)
 	{
-		n = n / 10;
-		i++;
+		*s = '-';
+		n *= -1;
 	}
-	return (i);
+	if (n > 9)
+		ft_nbr(n / 10, s, len - 1);
+	*(s + len) = n % 10 + '0';
 }
 
-static int	ft_power(int i)
+static char	*exeption(void)
 {
-	int		div;
+	char	*new;
 
-	div = 1;
-	while (i > 0)
-	{
-		div = div * 10;
-		i--;
-	}
-	return (div);
+	new = (char *)malloc(sizeof(char) * 12);
+	if (!new)
+		return (NULL);
+	ft_nbr(-214748364, new, 9);
+	new[10] = '8';
+	new[11] = '\0';
+	return (new);
 }
 
 char		*ft_itoa(int n)
 {
-	int		i;
-	char	*s;
-	int		div;
+	int		tmp;
+	int		len;
+	char	*new;
 
-	i = ft_count_a(n);
-	s = (char *)malloc(sizeof(char) * (i + 2));
-	if (s == NULL)
-		return (NULL);
-	div = ft_power(i - 1);
-	i = 0;
+	tmp = n;
+	len = 0;
 	if (n == -2147483648)
-		return (ft_strcpy(s, "-2147483648"));
+		return (exeption());
 	if (n < 0)
 	{
-		s[i++] = '-';
-		n = -n;
+		len++;
+		tmp *= -1;
 	}
-	while (div > 0)
+	while (tmp > 9)
 	{
-		s[i] = (n / div % 10 + 48);
-		i++;
-		div = div / 10;
+		tmp /= 10;
+		len++;
 	}
-	s[i] = '\0';
-	return (s);
+	new = (char *)malloc(sizeof(char) * len + 2);
+	if (!new)
+		return (NULL);
+	ft_nbr(n, new, len);
+	new[len + 1] = '\0';
+	return (new);
 }

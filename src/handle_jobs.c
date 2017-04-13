@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 20:37:30 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/12 20:56:31 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,5 +299,4 @@ void	launch_job(t_job *j)
 	}
 	insert_link_bottom(&job_list, new_link(j, sizeof(*j)));
 	wait_for_job(j);
-	PUT2("===== SEG ======");
 }

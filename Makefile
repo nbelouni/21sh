@@ -100,7 +100,7 @@ FLAG =  -Wall -Werror -Wextra -g#-DDEBUG_F  -g -fsanitize=address -UTOSTOP
 
 $(NAME): $(OBCC)
 	make -C ./libft/
-	gcc -v $(FLAG) $(OBCC) -ltermcap -L$(LDIR) $(LIBS) -o $(NAME)
+	gcc $(FLAG) $(OBCC) -ltermcap -L$(LDIR) $(LIBS) -o $(NAME)
 
 $(ODIR)%.o: $(SDIR)%.c Makefile
 	@mkdir -p $(ODIR)
@@ -119,9 +119,3 @@ fclean: clean
 	/bin/rm -f $(NAME)
 
 re: fclean all
-
-#	    ft_cmdnew.c			\
-#	    ft_cmdadd.c			\
-#	    ft_cmdclear.c		\
-#	    ft_cmdestroy.c		\
-#	    ft_cmdpush.c		\

@@ -3,32 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 16:53:55 by alallema          #+#    #+#             */
-/*   Updated: 2015/11/27 11:15:46 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/04 18:21:02 by nbelouni          #+#    #+#             */
+/*   Updated: 2014/12/30 22:34:14 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
-char	*ft_strstr(const char *str, const char *to_find)
+char		*ft_strstr(const char *s1, const char *s2)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
+	int		k;
 
 	i = 0;
-	j = 0;
-	if (to_find[0] == '\0')
-		return ((char *)str);
-	while (str[i])
+	if (s2[i] == '\0')
+		return ((char *)s1);
+	while (s1[i])
 	{
-		while (str[i] == to_find[j] || to_find[j] == '\0')
+		j = 0;
+		if (s1[i] == s2[j])
 		{
-			i++;
-			j++;
-			if (to_find[j] == '\0')
-				return ((char *)&str[i - j]);
+			k = i;
+			while (s1[k] && s2[j] && s1[k] == s2[j])
+			{
+				j++;
+				k++;
+			}
+			if (s2[j] == '\0')
+				return ((char *)s1 + (k - j));
 		}
 		i++;
 	}

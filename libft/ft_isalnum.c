@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   isalnum.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nbelouni <nbelouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 16:52:09 by alallema          #+#    #+#             */
-/*   Updated: 2015/11/24 17:33:19 by alallema         ###   ########.fr       */
+/*   Created: 2014/11/04 22:13:55 by nbelouni          #+#    #+#             */
+/*   Updated: 2014/11/30 11:17:00 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum(int c)
+int			ft_isalnum(int c)
 {
-	int i;
-	int j;
-
-	i = ft_isalpha(c);
-	j = ft_isdigit(c);
-	if (i == 1 || j == 1)
+	if ((c >= '0' && c <= '9')
+		|| (c >= 'A' && c <= 'Z')
+		|| (c >= 'a' && c <= 'z'))
 		return (1);
-	return (0);
+	else
+		return (0);
 }
