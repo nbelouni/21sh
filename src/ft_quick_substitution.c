@@ -6,11 +6,11 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/24 18:15:43 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 int		ft_quicksub_with_args2(t_elem *tail, char *tmp, char *p, char **s)
 {

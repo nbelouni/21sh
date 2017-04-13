@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 21:07:43 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 void	ft_cmdadd(t_cmd **begin, t_cmd *new)
 {

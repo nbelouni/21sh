@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:22:07 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 /*
 **	ft_setenv est une fonction qui va attribué la valeur de var a name et
@@ -82,21 +82,21 @@ static int	ft_exec_setenv(t_lst *env, char **args)
 **	s'il n'y a pas d'arguments, le builtin setenv affiche la liste env.
 */
 
-int			ft_builtin_setenv(t_core *core, char **args)
+int			ft_builtin_setenv(t_core *g_core, char **args)
 {
 	int		ret;
 
 	ret = 0;
 	if (args[0] == NULL)
 	{
-		if (core->env != NULL && core->env->head != NULL)
+		if (g_core->env != NULL && g_core->env->head != NULL)
 		{
-			ft_print_lst(core->env);
+			ft_print_lst(g_core->env);
 		}
 	}
 	else
 	{
-		ret = ft_exec_setenv(core->env, args);
+		ret = ft_exec_setenv(g_core->env, args);
 	}
 	return (ret);
 }

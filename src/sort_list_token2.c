@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:40:53 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 /*
 ** A check si pas de cmd avant token redir

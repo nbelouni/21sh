@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 20:07:22 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 14:36:57 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:06:04 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ int					is_end(char *s, int *i, char c);
 ** void				push_cmd();
 ** void				clear_cmd();
 ** void				destroy_cmd();
-**
 */
 
 #endif

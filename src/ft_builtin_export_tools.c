@@ -6,11 +6,11 @@
 /*   By: dogokar <dogokar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 18:19:12 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 /*
 **		extrais l'element et l'insert dans une autre liste

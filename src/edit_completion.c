@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 17:17:28 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 int			fill_command(t_sort_list **list, char *path)
 {
@@ -187,25 +187,25 @@ int			fill_hostname(t_sort_list **list, char *path)
 	return (0);
 }
 
-int			fill_variable(t_sort_list **list, t_core *core)
+int			fill_variable(t_sort_list **list, t_core *g_core)
 {
 	t_elem		*tmp;
 
-	tmp = (core->env) ? core->env->head : NULL;
+	tmp = (g_core->env) ? g_core->env->head : NULL;
 	while (tmp)
 	{
 		if (insert_in_list(list, tmp->name) == ERR_EXIT)
 			return (ERR_EXIT);
 		tmp = tmp->next;
 	}
-	tmp = (core->exp) ? core->exp->head : NULL;
+	tmp = (g_core->exp) ? g_core->exp->head : NULL;
 	while (tmp)
 	{
 		if (insert_in_list(list, tmp->name) == ERR_EXIT)
 			return (ERR_EXIT);
 		tmp = tmp->next;
 	}
-	tmp = (core->set) ? core->set->head : NULL;
+	tmp = (g_core->set) ? g_core->set->head : NULL;
 	while (tmp)
 	{
 		if (insert_in_list(list, tmp->name) == ERR_EXIT)
@@ -215,11 +215,11 @@ int			fill_variable(t_sort_list **list, t_core *core)
 	return (0);
 }
 
-int			init_completion(t_completion *cplt, t_core *core)
+int			init_completion(t_completion *cplt, t_core *g_core)
 {
 	char	*s;
 
-	s = ft_find_elem("PATH", core->env)->value;
+	s = ft_find_elem("PATH", g_core->env)->value;
 	if (cplt->command)
 		destroy_sort_list(&(cplt->command));
 	if (cplt->username)
@@ -234,7 +234,7 @@ int			init_completion(t_completion *cplt, t_core *core)
 		return (ERR_EXIT);
 	if (fill_hostname(&(cplt->hostname), "/etc/hosts") == ERR_EXIT)
 		return (ERR_EXIT);
-	if (fill_variable(&(cplt->variable), core) == ERR_EXIT)
+	if (fill_variable(&(cplt->variable), g_core) == ERR_EXIT)
 		return (ERR_EXIT);
 	return (0);
 }

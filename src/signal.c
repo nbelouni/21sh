@@ -6,11 +6,11 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 16:02:58 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:59:05 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 t_bool		get_win(void)
 {
@@ -37,8 +37,8 @@ void		get_sigint(int sig)
 {
 	if (sig == SIGINT)
 	{
-		core->buf->size = 0;
-		ft_bzero(core->buf->line, BUFF_SIZE);
+		g_core->buf->size = 0;
+		ft_bzero(g_core->buf->line, BUFF_SIZE);
 		clean_pos_curs();
 		ft_putstr_fd("\n21sh.$ ", 1);
 	}

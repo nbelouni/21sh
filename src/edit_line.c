@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 22:28:17 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 16:03:36 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 int			vb_insert(t_buf *buf, char *s)
 {

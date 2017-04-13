@@ -6,11 +6,11 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:43:38 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 15:44:16 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:46:51 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 t_buf		*init_buf(void)
 {

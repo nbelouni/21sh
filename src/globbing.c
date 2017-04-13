@@ -6,11 +6,11 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 16:31:05 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "ft_21sh.h"
 
 int			which_quotes(char *s, int len)
 {
@@ -121,16 +121,16 @@ int		init_begin_end(char *s, int *begin, int *end)
 	return (FALSE);
 }
 
-int		init_new_value(char *var_name, t_core *core, char **new_value)
+int		init_new_value(char *var_name, t_core *g_core, char **new_value)
 {
 	t_elem	*tmp;
 
 	if (!var_name)
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	if (!(tmp = ft_find_elem(var_name, core->set)))
+	if (!(tmp = ft_find_elem(var_name, g_core->set)))
 	{
-		if (!(tmp = ft_find_elem(var_name, core->env)))
-			tmp = ft_find_elem(var_name, core->exp);
+		if (!(tmp = ft_find_elem(var_name, g_core->env)))
+			tmp = ft_find_elem(var_name, g_core->exp);
 	}
 	*new_value = (tmp && tmp->value && tmp->value[0]) ? tmp->value : NULL;
 	if (var_name)
@@ -138,7 +138,7 @@ int		init_new_value(char *var_name, t_core *core, char **new_value)
 	return (0);
 }
 
-int		replace_env_var(char **s, t_core *core)
+int		replace_env_var(char **s, t_core *g_core)
 {
 	char	*new_val;
 	char	*new_s;
@@ -148,7 +148,7 @@ int		replace_env_var(char **s, t_core *core)
 
 	if (init_begin_end(*s, &bg, &end) == TRUE)
 		return (TRUE);
-	if (init_new_value(ft_strsub(*s, bg, end), core, &new_val) == ERR_EXIT)
+	if (init_new_value(ft_strsub(*s, bg, end), g_core, &new_val) == ERR_EXIT)
 		return (ERR_EXIT);
 	if (!(new_s = ft_strnew(ft_strlen(*s) - end + ft_strlen(new_val))))
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
@@ -166,12 +166,12 @@ int		replace_env_var(char **s, t_core *core)
 	return (FALSE);
 }
 
-int		replace_tild(char **s, t_core *core)
+int		replace_tild(char **s, t_core *g_core)
 {
 	t_elem	*tmp;
 	char	*new;
 
-	if (!(tmp = ft_find_elem("HOME", core->env)))
+	if (!(tmp = ft_find_elem("HOME", g_core->env)))
 		return (0);
 	if (!tmp->value)
 		return (0);
@@ -184,7 +184,7 @@ int		replace_tild(char **s, t_core *core)
 	return (0);
 }
 
-int		globb(char **s, t_core *core)
+int		globb(char **s, t_core *g_core)
 {
 	int			i;
 	int			ret;
@@ -193,13 +193,13 @@ int		globb(char **s, t_core *core)
 	ret = FALSE;
 	if (*s[0] == '~')
 	{
-		if (replace_tild(s, core) == ERR_EXIT)
+		if (replace_tild(s, g_core) == ERR_EXIT)
 			return (ERR_EXIT);
 	}
 	while (ret == FALSE)
 	{
 		is_end(*s, &i, '\'');
-		if ((ret = replace_env_var(s, core)) == ERR_EXIT)
+		if ((ret = replace_env_var(s, g_core)) == ERR_EXIT)
 			return (ERR_EXIT);
 		i++;
 	}
@@ -207,14 +207,14 @@ int		globb(char **s, t_core *core)
 	return (TRUE);
 }
 
-int		edit_cmd(char ***args, t_core *core)
+int		edit_cmd(char ***args, t_core *g_core)
 {
 	int			i;
 
 	i = -1;
 	while ((*args)[++i])
 	{
-		if (globb(&(*args)[i], core) == ERR_EXIT)
+		if (globb(&(*args)[i], g_core) == ERR_EXIT)
 			return (ERR_EXIT);
 	}
 	return (0);
