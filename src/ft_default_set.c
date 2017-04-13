@@ -6,7 +6,7 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 14:39:57 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 22:00:33 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 /*
 ** env par defaut
 */
+
 t_lst	*ft_default_env(void)
 {
 	t_lst	*env;
-	char *pwd;
+	char	*pwd;
 
 	pwd = NULL;
 	if (!(env = ft_init_list()))

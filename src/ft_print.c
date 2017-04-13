@@ -6,15 +6,15 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 20:44:31 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 22:05:47 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /*
- * fonction de debug pour affichage de la liste chainee
- **/
+** fonction de debug pour affichage de la liste chainee
+*/
 
 static char		*(tab_name[20]) = {
 	[NO_TOKEN] = "NO_TOKEN",

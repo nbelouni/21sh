@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 20:05:40 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 22:02:37 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		ft_pwd_swap(t_lst *env, char *owd, char *cwd)
 	}
 	if ((ret = ft_modify_env(env, "OLDPWD", owd)) != 0)
 	{
-		 return (ret);
+		return (ret);
 	}
 	return (0);
 }

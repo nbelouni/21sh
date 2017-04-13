@@ -6,13 +6,13 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/03 18:21:52 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 20:19:41 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:50:47 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void 	ft_del_core(t_core *core)
+void	ft_del_core(t_core *core)
 {
 	if (core)
 	{
@@ -27,7 +27,6 @@ void 	ft_del_core(t_core *core)
 		ft_memdel((void*)&core);
 	}
 }
-
 
 /*
 **	la fonction ft_builtin_exit gere les erreurs des arguments (s'il y en a),

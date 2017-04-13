@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 20:40:22 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:26:33 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int 	main(int argc, char **argv, char **envp)
 	if (init_completion(&completion, g_core) == ERR_EXIT)
 		return (-1);
 	if (!isatty(0))
-		return (ft_print_error("21sh", "is wrong tty\n", ERR_EXIT));
+		return (ft_print_error("21sh", " : Input is not from a terminal", ERR_EXIT));
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
 	g_core->buf = buf;
@@ -110,32 +110,14 @@ int 	main(int argc, char **argv, char **envp)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-				/*
-				 *					enleve les quotes et les backslash -> va changer de place
-				 *					edit_cmd(list, env);
-				 */	
 				ft_push_ast(list, &ast);
-				//					regexp_in_tree(ast, core);
-//				print_debug_ast(ast);
-				//					test_func(ast);
 				export_job(ast, &job_list_bis);
-				//					printJobList(job_list_bis);
 				list_iter(job_list_bis, (void *)launch_job);
 				delete_list(&job_list_bis, NULL);
 				free_ast(ast);
-				//					free(ast);
-				/*
-				 **				. remplace $var
-				 **				. ajoute arguments si regex
-				 **				. supprime '\'', '"' , '`' et '\\'
-				 **
-				 **				. sera remplacee quqnd je saurais ou la mettre
-				 **
-				 */
 				if ((ret = ft_check_history_var(g_core->set, g_core->hist)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 			}
-//							ft_print_token_list(&list);
 			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
 				ft_strdel(&(g_core->buf->final_line));
 			else

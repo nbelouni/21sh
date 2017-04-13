@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:43:37 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			check_target_place(&elem);
 		if (elem->type == CMD && elem->prev && PREVISCMD(elem))
 			elem->type = ARG;
+		if (elem->type == CMD)
+			elem = is_local_var(elem);
 		if (elem->type == DL_DIR)
 			here_doc(elem->next, completion, hist);
-//		if (!elem->prev || !is_dir_type(elem->prev->type))
-//			expand_args(list, &elem);
 		elem = elem->next;
 	}
 	return ;
