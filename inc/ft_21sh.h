@@ -119,4 +119,9 @@ void				restore_originals_handler();
 
 t_term				*get_term(void);
 
+
+void			ft_extract_elem(t_elem **elem, t_lst *lst);
+void			ft_clear_elem(t_elem **elem);
+void			ft_del_elem(t_elem **elem, t_lst *lst);
+
 #endif
