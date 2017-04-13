@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 00:50:00 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 17:37:27 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static int		(*g_tab_tok[13])() = {
 	[0] = is_space,
-//	[1] = is_brace,
-//	[2] = is_bracket,
 	[1] = is_dot,
 	[2] = is_or_and,
 	[3] = is_agreg,
