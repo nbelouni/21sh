@@ -109,7 +109,7 @@ int 	main(int argc, char **argv, char **envp)
 			if (ret > 0 && list)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
-					return (ERR_EXIT);
+					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				/*
 				 *					enleve les quotes et les backslash -> va changer de place
 				 *					edit_cmd(list, env);
@@ -133,7 +133,7 @@ int 	main(int argc, char **argv, char **envp)
 				 **
 				 */
 				if ((ret = ft_check_history_var(g_core->set, g_core->hist)) == ERR_EXIT)
-					return (ERR_EXIT);
+					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 			}
 //							ft_print_token_list(&list);
 			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)

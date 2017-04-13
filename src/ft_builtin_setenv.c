@@ -54,9 +54,6 @@ int			ft_setenv(t_lst *env, char *var, char *word)
 
 static int	ft_exec_setenv(t_lst *env, char **args)
 {
-	int		ret;
-
-	ret = 0;
 	if (ft_strchr(args[0], '=') != NULL)
 	{
 		return (ft_print_error("cd", ERR_VAR_NO_ALPHA, ERR_NEW_CMD));
@@ -71,9 +68,8 @@ static int	ft_exec_setenv(t_lst *env, char **args)
 		{
 			return (ft_print_error("cd", ERR_TOO_MANY_ARGS, ERR_NEW_CMD));
 		}
-		ret = ft_setenv(env, args[0], args[1]);
+		return (ft_setenv(env, args[0], args[1]));
 	}
-	return (ret);
 }
 
 /*
@@ -84,19 +80,11 @@ static int	ft_exec_setenv(t_lst *env, char **args)
 
 int			ft_builtin_setenv(t_core *g_core, char **args)
 {
-	int		ret;
-
-	ret = 0;
-	if (args[0] == NULL)
+	if (args != NULL && args[0] != NULL)
+		return (ft_exec_setenv(g_core->env, args));
+	if (g_core->env != NULL && g_core->env->head != NULL)
 	{
-		if (g_core->env != NULL && g_core->env->head != NULL)
-		{
-			ft_print_lst(g_core->env);
-		}
+		ft_print_lst(g_core->env);
 	}
-	else
-	{
-		ret = ft_exec_setenv(g_core->env, args);
-	}
-	return (ret);
+	return (0);
 }
