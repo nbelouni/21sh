@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 20:44:31 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 22:38:08 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 14:33:00 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@
  * fonction de debug pour affichage de la liste chainee
  **/
 
-static char		*(tab_name[23]) = {
+static char		*(tab_name[20]) = {
 	[NO_TOKEN] = "NO_TOKEN",
 	[CMD] = "CMD",
 	[ESPACE] = "ESPACE",
-	[O_BRACKET] = "O_BRACKET",
-	[C_BRACKET] = "C_BRACKET",
 	[DOT] = "DOT",
 	[PIPE] = "PIPE,",
 	[START] = "START",
 	[SL_DIR] = "SL_DIR",
 	[SR_DIR] = "SR_DIR",
-	[AMP] = "AMP",
 	[OR] = "OR",
 	[AND] = "AND",
 	[DL_DIR] = "DL_DIR",
@@ -35,8 +32,6 @@ static char		*(tab_name[23]) = {
 	[LR_DIR] = "LR_DIR",
 	[DIR_L_AMP] = "DIR_L_AMP",
 	[DIR_R_AMP] = "DIR_R_AMP",
-	[O_BRACE] = "O_BRACE",
-	[C_BRACE] = "C_BRACE",
 	[FD_IN] = "FD_IN",
 	[TARGET] = "TARGET",
 	[ARG] = "ARG"
@@ -52,10 +47,7 @@ void		ft_print_token_list(t_token **list)
 		PUT2("--LIST--\n");
 		if (elem && elem->word)
 			PUT2("token :");PUT2(elem->word);X('\n');
-//		PUT2("==========1\n");
 		PUT2("type :");PUT2(tab_name[elem->type]);X('\n');
-		PUT2("bt_level :");E(elem->bt_level);X('\n');
-		PUT2("bc_level :");E(elem->bc_level);X('\n');
 		PUT2("____________\n");
 		elem = elem->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/12 21:17:11 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 13:21:51 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_job	*create_job(t_tree *root, int foreground)
 	bzero(job, sizeof(*job));
 	job->foreground = foreground;
 	job->process_tree = create_process_tree(root);
-//	job->command = iter_cmd(job->process_tree);
 	return (job);
 }
 
@@ -78,7 +77,7 @@ void	export_job(t_tree *root, t_list **job_list)
 {
 	t_job	*j;
 
-	while (root && (TOKEN(root) == AMP || TOKEN(root) == DOT))
+	while (root && TOKEN(root) == DOT)
 	{
 		insert_link_bottom(job_list, new_link(create_job(root->left,
 			(TOKEN(root) == DOT) ? 1 : 0), sizeof(t_job)));

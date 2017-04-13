@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 20:07:22 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/08 20:03:03 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 14:36:57 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@ typedef struct		s_token
 {
 	int				type;
 	char			*word;
-	int				bt_level;
-	int				bc_level;
 	int				select;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
-
-/*
-** bt_level : Parenthese
-** bc_level : Accolade
-*/
 
 enum				e_flag
 {
@@ -51,14 +44,11 @@ enum				e_token
 	NO_TOKEN,
 	CMD,
 	ESPACE,
-	O_BRACKET,
-	C_BRACKET,
 	DOT,
 	PIPE,
 	START,
 	SL_DIR,
 	SR_DIR,
-	AMP,
 	OR,
 	AND,
 	DL_DIR,
@@ -66,22 +56,17 @@ enum				e_token
 	LR_DIR,
 	DIR_L_AMP,
 	DIR_R_AMP,
-	O_BRACE,
-	C_BRACE,
 	FD_IN,
 	TARGET,
 	ARG
 };
 
 /*
-** O_BRACKET,	"("
-** C_BRACKET,	")"
 ** DOT,			";"
 ** PIPE,		'|"
 ** START,		"^, debut de ligne" -> utile ?
 ** SL_DIR,		"<"
 ** SR_DIR,		">"
-** AMP,			"&"
 ** OR,			'||"
 ** AND,			'&&"
 ** DL_DIR,		"<<"
@@ -89,8 +74,6 @@ enum				e_token
 ** LR_DIR,		"<>"
 ** DIR_L_AMP,	"<&"
 ** DIR_R_AMP,	">&"
-** O_BRACE, 	"{ "
-** C_BRACE, 	"}"
 */
 
 typedef struct		s_cmd

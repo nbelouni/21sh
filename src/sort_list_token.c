@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/12 22:23:15 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 13:21:01 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sort_list_token2(t_token **list, t_completion *completion, t_lst *hist)
 	elem = *list;
 	while (elem)
 	{
-		if (((elem->type > START && elem->type < AMP) || (elem->type > AND
+		if (((elem->type > START && elem->type < OR) || (elem->type > AND
 		&& elem->type < DIR_L_AMP)) && elem->next && elem->next->type == CMD)
 			elem->next->type = TARGET;
 		if (elem->type == CMD && elem->prev && (elem->prev->type == CMD
@@ -66,7 +66,7 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			ft_find_fd(elem);
 		if (ISAMP(elem) && elem->next && check_error_out(elem->next))
 			return ;
-		if (((elem->type > START && elem->type < AMP) || (elem->type > AND
+		if (((elem->type > START && elem->type < OR) || (elem->type > AND
 		&& elem->type < DIR_L_AMP)) && elem->next && elem->next->type == CMD)
 			elem->next->type = TARGET;
 		if (elem->type == TARGET && elem->next && NEXTISCMD(elem))
