@@ -114,5 +114,6 @@ void				ft_tabdel_and_init(char ***tab);
 char				*ft_strreplace(char *o, const char *s, const char *r);
 int					ft_intlen(int n);
 void				ft_putnchar(char c, int n);
+int					ft_free_and_return(int ret, void *d1, void *d2, void *d3);
 
 #endif

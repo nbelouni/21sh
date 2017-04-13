@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/13 18:03:24 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:28:04 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
 void	apply_redir(t_io *io)
 {
 	int		pipefd[2];
-	struct	stat s;
 
 	if (io->flag & OPEN)
 	{
@@ -169,12 +168,8 @@ void	apply_redir(t_io *io)
 		close(pipefd[1]);
 	}
 	if (io->flag & DUP)
-	{
-		if (io->mode && fstat(io->dup_src, &s) && s.st_nlink < 1)
+		if (dup2(io->dup_src, io->dup_target) == -1)
 			exit(ft_print_error("21sh", ERR_BADF, ERR_EXIT));
-		else
-			dup2(io->dup_src, io->dup_target);
-	}
 	if (io->flag & CLOSE && io->flag ^ WRITE)
 		close(io->dup_src);
 }
@@ -217,9 +212,7 @@ int		make_children(t_process_p p)
 	else if (pid < 0)
 		exit(ft_print_error("21sh", ERR_FORK, ERR_EXIT));
 	else
-	{
 		p->pid = pid;
-	}
 	return (pid);
 }
 

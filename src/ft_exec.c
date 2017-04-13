@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 22:04:45 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:25:21 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 		execve(av[0], av, envp);
 	if (lstat(s2, &st) == 0 && st.st_mode & S_IXUSR)
 		execve(s2, av, envp);
-	if (!ft_strchr(s, ':'))
+	if (!s)
 	{
 		if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
 			ft_putstr_fd("21sh: exec format error: ", 2);
 		else if (lstat(av[0], &st) == 0)
 			ft_putstr_fd("21sh: permission denied: ", 2);
-		else if (!ft_strchr(s2, ':'))
+		else if (!s)
 		{
 			ft_putstr_fd("21sh: command not found: ", 2);
 			ft_putendl_fd(av[0], 2);
@@ -90,11 +90,16 @@ void			ft_exec(char **av)
 		s = ft_strdup("");
 	else
 		s = ft_strdup(tmp->value);
-	while (s)
+	while (true)
 	{
 		s2 = ft_cut_path(&s, av[0]);
 		not_binary(s, s2, av, envp);
+		if (ft_strcmp(s, "") == 0)
+			break;
 	}
+	ft_putstr_fd("21sh: command not found: ", 2);
+	ft_putendl_fd(av[0], 2);
+	exit(127);
 }
 
 /*
