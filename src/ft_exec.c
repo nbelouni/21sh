@@ -108,7 +108,7 @@ int				ft_check_exec(char ***cmd)
 	ret = TRUE;
 	if (edit_cmd(cmd, core) == ERR_EXIT)
 		return (ERR_EXIT);
-	if ((ret = parse_builtins(core, *cmd[0], *cmd + 1)) != 0)
+	if ((ret = parse_builtins(core, *cmd[0], *cmd + 1)) == 1)
 		ft_exec(*cmd);
 	return (ret);
 }
