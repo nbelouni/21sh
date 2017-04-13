@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 17:17:28 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:33:49 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int			fill_command(t_sort_list **list, char *path)
 	int				i;
 
 	i = -1;
+	if (!path)
+		return (0);
 	if (!(bin_path = ft_strsplit(path, ':')))
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	while (bin_path[++i])
@@ -219,7 +221,10 @@ int			init_completion(t_completion *cplt, t_core *g_core)
 {
 	char	*s;
 
-	s = ft_find_elem("PATH", g_core->env)->value;
+	if (ft_find_elem("PATH", g_core->env) == NULL)
+		s = NULL;
+	else
+		s = ft_find_elem("PATH", g_core->env)->value;
 	if (cplt->command)
 		destroy_sort_list(&(cplt->command));
 	if (cplt->username)
