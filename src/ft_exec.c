@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 18:35:32 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 22:04:45 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 ** recuperer l'env pour execve
 ** remplace le path pour l'envoie a execve
 */
+
 void			ft_exec(char **av)
 {
 	char		*s;
