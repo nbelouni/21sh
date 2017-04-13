@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 15:40:34 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:37:23 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	printJobList(t_list *job_list);
 t_list	*job_list = NULL;
 t_job	*last_job = NULL;
 
-static t_builtin_array builtin_array[] =
+static t_builtin_array g_builtin_array[] =
 {
 	{"cd", &ft_builtin_cd},
 	{"env", &ft_builtin_env},
@@ -38,10 +38,10 @@ int		parse_builtins(t_core *core, char *cmd, char **cmd_args)
 	int	i;
 
 	i = -1;
-	while (builtin_array[++i].cmd)
+	while (g_builtin_array[++i].cmd)
 	{
-		if (ft_strcmp(builtin_array[i].cmd, cmd) == 0)
-			return (builtin_array[i].func(core, cmd_args));
+		if (ft_strcmp(g_builtin_array[i].cmd, cmd) == 0)
+			return (g_builtin_array[i].func(core, cmd_args));
 	}
 	return (1);
 }
@@ -132,6 +132,8 @@ int 	main(int argc, char **argv, char **envp)
 				ret = parse_buf(&list, core->buf->final_line, &completion, core->hist);
 				if (ret > 0 && list)
 				{
+					if ((ret = ft_cmd_to_history(core->hist, buf->final_line)) == ERR_EXIT)
+						return (ERR_EXIT);
 /*
  *					enleve les quotes et les backslash -> va changer de place
  *					edit_cmd(list, env);
@@ -154,6 +156,8 @@ int 	main(int argc, char **argv, char **envp)
 **				. sera remplacee quqnd je saurais ou la mettre
 **
 */
+					if ((ret = ft_check_history_var(core->set, core->hist)) == ERR_EXIT)
+						return (ERR_EXIT);
 				}
 //				ft_print_token_list(&list);
 				if (ret != ERR_NEW_PROMPT && core->buf->final_line)

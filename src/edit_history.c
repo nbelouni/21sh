@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:39:46 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:41:43 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	ft_mv_up(t_buf *buf, t_elem **elem, char **last_cmd)
 
 int			edit_history(t_buf *buf, t_lst *hist, int x)
 {
+	if (!hist || !hist->head)
+		return (0);
 	if (x == UP)
 	{
 		if (buf->cur_hist != hist->head)
