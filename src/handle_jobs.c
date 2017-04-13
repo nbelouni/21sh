@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/13 15:36:40 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:46:40 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
 void	apply_redir(t_io *io)
 {
 	int		pipefd[2];
+	struct	stat s;
 
 	if (io->flag & OPEN)
 	{
@@ -172,7 +173,8 @@ void	apply_redir(t_io *io)
 	}
 	if (io->flag & DUP)
 	{
-		if (fcntl(io->dup_src, F_GETFL) < 0/* && errno == EBADF (Bad file descriptor)*/)
+		fstat(io->dup_src, &s);
+		if(s.st_nlink < 1)
 		{
 			ft_putstr_fd("21sh: Bad file descriptor (a placer dans les error)\n", 2);
 			exit(1);

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:09:30 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 15:41:55 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 16:33:04 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ int					ft_pwd_swap(t_lst *env, char *owd, char *cwd);
 void		block_signal(int sig, sigset_t *set, sigset_t *oset);
 void		unblock_signal(sigset_t *oset);
 void		restore_originals_handler();
-	
+
+t_term		*get_term(void);
+
 #endif
