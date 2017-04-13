@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:42 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:03:24 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,10 +159,7 @@ void	apply_redir(t_io *io)
 		if (io->flag & CLOSE && access(io->str, X_OK) == -1)
 			io->dup_src = open(io->str, io->mode, DEF_FILE);
 		if (io->dup_src < 0)
-		{
-			ft_putstr_fd("21sh: No such file or directory (a placer dans les error)\n", 2);
-			exit(1);
-		}
+			exit(ft_print_error("21sh", ERR_NO_FILE, ERR_EXIT));
 	}
 	if (io->flag & WRITE)
 	{
@@ -173,12 +170,8 @@ void	apply_redir(t_io *io)
 	}
 	if (io->flag & DUP)
 	{
-		fstat(io->dup_src, &s);
-		if(s.st_nlink < 1)
-		{
-			ft_putstr_fd("21sh: Bad file descriptor (a placer dans les error)\n", 2);
-			exit(1);
-		}
+		if (io->mode && fstat(io->dup_src, &s) && s.st_nlink < 1)
+			exit(ft_print_error("21sh", ERR_BADF, ERR_EXIT));
 		else
 			dup2(io->dup_src, io->dup_target);
 	}
@@ -192,10 +185,7 @@ int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 	t_io	*io_out;
 
 	if (pipe(io_pipe) == -1)
-	{
-		ft_putstr_fd("21sh: error pipe \n", 2);
-		exit(1);
-	}
+		exit(ft_print_error("21sh", ERR_PIPE, ERR_EXIT));
 	io_in = new_io();
 	io_out = new_io();
 	io_in->tab_fd[0] = dup(STDOUT_FILENO);
@@ -218,7 +208,6 @@ int		make_children(t_process_p p)
 	pid = fork();
 	if (pid == 0)
 	{
-//		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGTSTP, SIG_DFL);
 		signal(SIGTTIN, SIG_DFL);
@@ -226,10 +215,7 @@ int		make_children(t_process_p p)
 		signal(SIGCHLD, SIG_DFL);
 	}
 	else if (pid < 0)
-	{
-		ft_putstr_fd("21sh: error fork\n", 2);
-		exit(1);
-	}
+		exit(ft_print_error("21sh", ERR_FORK, ERR_EXIT));
 	else
 	{
 		p->pid = pid;

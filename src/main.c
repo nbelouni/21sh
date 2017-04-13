@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:42 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:33:30 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,6 @@ t_core 		*ft_creat_core(char **envp)
 **   si l'entree est different du terminal va lire ligne par ligne GNL
 */
 
-int 	read_ext(t_buf *buf, t_completion *comp, t_core *g_core, t_token *list)
-{
-	int i;
-	char *line = NULL;
-
-	i = 0;
-	if (buf->istty == 1)
-	{
-		while (get_next_line(0, &line) > 0)
-		{
-			buf->final_line = line;
-			PUT2(buf->final_line);
-			parse_buf(&list, buf->final_line, comp, g_core->hist);
-			PUT2("\n line "); E(i);
-			ft_print_token_list(&list);
-			++i;
-		}
-		return (0);
-	}
-	return (1);
-}
-
 int 	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -113,70 +91,67 @@ int 	main(int argc, char **argv, char **envp)
 	if (init_completion(&completion, g_core) == ERR_EXIT)
 		return (-1);
 	if (!isatty(0))
-		buf->istty = 1;
+		return (ft_print_error("21sh", "is wrong tty\n", ERR_EXIT));
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
 	g_core->buf = buf;
-	if (read_ext(g_core->buf, &completion, g_core, list) == 1)
+	init_curs();
+	while ((ret_read = read_line(g_core->buf, &completion, g_core->hist)) != ERR_EXIT)
 	{
-		init_curs();
-		while ((ret_read = read_line(g_core->buf, &completion, g_core->hist)) != ERR_EXIT)
-		{
-			close_termios();
-			job_list_bis = NULL;
-			if (ret_read != TAB)
-			{
-				if (is_line_ended(g_core->buf) < 0)
-					return (-1);
-				bang_substitution(&(g_core->buf->final_line), g_core);
-				ret = parse_buf(&list, g_core->buf->final_line, &completion, g_core->hist);
-				if (ret > 0 && list)
-				{
-					if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
-						return (ERR_EXIT);
-/*
- *					enleve les quotes et les backslash -> va changer de place
- *					edit_cmd(list, env);
- */	
-					ft_push_ast(list, &ast);
-//					regexp_in_tree(ast, g_core);
-//					print_debug_ast(ast);
-//					test_func(ast);
-					export_job(ast, &job_list_bis);
-//					printJobList(job_list_bis);
-					list_iter(job_list_bis, (void *)launch_job);
-					delete_list(&job_list_bis, NULL);
-					free_ast(ast);
-//					free(ast);
-/*
-**				. remplace $var
-**				. ajoute arguments si regex
-**				. supprime '\'', '"' , '`' et '\\'
-**
-**				. sera remplacee quqnd je saurais ou la mettre
-**
-*/
-					if ((ret = ft_check_history_var(g_core->set, g_core->hist)) == ERR_EXIT)
-						return (ERR_EXIT);
-				}
-//				ft_print_token_list(&list);
-				if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
-					ft_strdel(&(g_core->buf->final_line));
-				else
-					complete_final_line(g_core->buf, list);
-				if (list)
-					ft_tokendestroy(&list); //clean la list a mettre a la fin
-				ft_bzero(g_core->buf->line, BUFF_SIZE);
-				g_core->buf->size = 0;
-				clean_pos_curs();
-				if (init_completion(&completion, g_core) == ERR_EXIT)
-					return (-1);
-			}
-			if (ret_read == END_EOT)
-				break ;
-		}
 		close_termios();
+		job_list_bis = NULL;
+		if (ret_read != TAB)
+		{
+			if (is_line_ended(g_core->buf) < 0)
+				return (-1);
+			bang_substitution(&(g_core->buf->final_line), g_core);
+			ret = parse_buf(&list, g_core->buf->final_line, &completion, g_core->hist);
+			if (ret > 0 && list)
+			{
+				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
+					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
+				/*
+				 *					enleve les quotes et les backslash -> va changer de place
+				 *					edit_cmd(list, env);
+				 */	
+				ft_push_ast(list, &ast);
+				//					regexp_in_tree(ast, core);
+//				print_debug_ast(ast);
+				//					test_func(ast);
+				export_job(ast, &job_list_bis);
+				//					printJobList(job_list_bis);
+				list_iter(job_list_bis, (void *)launch_job);
+				delete_list(&job_list_bis, NULL);
+				free_ast(ast);
+				//					free(ast);
+				/*
+				 **				. remplace $var
+				 **				. ajoute arguments si regex
+				 **				. supprime '\'', '"' , '`' et '\\'
+				 **
+				 **				. sera remplacee quqnd je saurais ou la mettre
+				 **
+				 */
+				if ((ret = ft_check_history_var(g_core->set, g_core->hist)) == ERR_EXIT)
+					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
+			}
+//							ft_print_token_list(&list);
+			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
+				ft_strdel(&(g_core->buf->final_line));
+			else
+				complete_final_line(g_core->buf, list);
+			if (list)
+				ft_tokendestroy(&list); //clean la list a mettre a la fin
+			ft_bzero(g_core->buf->line, BUFF_SIZE);
+			g_core->buf->size = 0;
+			clean_pos_curs();
+			if (init_completion(&completion, g_core) == ERR_EXIT)
+				return (-1);
+		}
+		if (ret_read == END_EOT)
+			break ;
 	}
+	close_termios();
 	free_buf(g_core->buf);
 	return (0);
 }

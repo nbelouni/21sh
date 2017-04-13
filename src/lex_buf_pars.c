@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 19:31:44 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 18:20:37 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			parse_list(t_token **list, char *s, t_pt *p)
 {
 	t_token	*new;
 
+	new = NULL;
 	if (!s)
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	if (find_quote_end(s) == FALSE)
