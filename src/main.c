@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 18:33:30 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:40:22 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_builtin_array g_builtin_array[] =
 	{NULL, NULL}
 };
 
-int		parse_builtins(t_core *g_core, char *cmd, char **cmd_args)
+int		parse_builtins(t_core *core, char *cmd, char **cmd_args)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ int		parse_builtins(t_core *g_core, char *cmd, char **cmd_args)
 	while (g_builtin_array[++i].cmd)
 	{
 		if (ft_strcmp(g_builtin_array[i].cmd, cmd) == 0)
-			return (g_builtin_array[i].func(g_core, cmd_args));
+			return (g_builtin_array[i].func(core, cmd_args));
 	}
 	return (1);
 }
@@ -50,11 +50,10 @@ int		parse_builtins(t_core *g_core, char *cmd, char **cmd_args)
 **	  init_core initialisation des liste d'env
 */
 
-t_core 		*ft_creat_core(char **envp)
+int		ft_creat_core(char **envp)
 {
-	t_core *g_core;
-
-	g_core = ft_init_core();
+	if (ft_init_core() != TRUE)
+		return (ERR_EXIT);
 	g_core->set = ft_init_lstset();
 	g_core->exp = ft_init_list();
 	if (envp != NULL && envp[0] != NULL)
@@ -62,7 +61,7 @@ t_core 		*ft_creat_core(char **envp)
 	else
 		g_core->env = ft_default_env();
 	ft_histopt_r(&(g_core->hist), g_core->set, NULL);
-	return (g_core);
+	return (TRUE);
 }
 
 /*
@@ -85,7 +84,8 @@ int 	main(int argc, char **argv, char **envp)
 	tcgetattr(0, &termio);
 	ast = NULL;
 	list = NULL;
-	g_core = ft_creat_core(envp);
+	if (ft_creat_core(envp) == ERR_EXIT)
+		return (ERR_EXIT);
 	if (!(buf = init_buf()))
 		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	if (init_completion(&completion, g_core) == ERR_EXIT)

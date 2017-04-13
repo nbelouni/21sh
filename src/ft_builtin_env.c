@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:58:25 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:19:23 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,21 @@ static int		ft_exec_env(t_lst *env, char **args)
 **	sinon, ft_exec_env est appellé pour gerer les cas specifiques au builtin.
 */
 
-int				ft_builtin_env(t_core *g_core, char **args)
+int				ft_builtin_env(t_core *core, char **args)
 {
 	int		ret;
 
 	ret = 0;
 	if (args == NULL || *args == NULL)
 	{
-		if (g_core->env != NULL && g_core->env->head != NULL)
+		if (core->env != NULL && core->env->head != NULL)
 		{
-			ft_print_lst(g_core->env);
+			ft_print_lst(core->env);
 		}
 	}
 	else
 	{
-		ret = ft_exec_env(g_core->env, args);
+		ret = ft_exec_env(core->env, args);
 	}
 	return (ret);
 }

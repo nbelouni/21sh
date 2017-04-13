@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:21:51 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:04 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:19:08 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,7 +292,7 @@ static char	*ft_builtin_cd_norm(t_lst *env, int *op, char **args)
 **	plus d'arguments sont trouvés.
 */
 
-int			ft_builtin_cd(t_core *g_core, char **args)
+int			ft_builtin_cd(t_core *core, char **args)
 {
 	struct stat	st;
 	int			*opt;
@@ -310,9 +310,9 @@ int			ft_builtin_cd(t_core *g_core, char **args)
 		return (ft_print_error("cd", ERR_TOO_MANY_ARGS, ERR_NEW_CMD));
 	}
 	i = -1;
-	if ((path = ft_builtin_cd_norm(g_core->env, opt, args)) != NULL)
+	if ((path = ft_builtin_cd_norm(core->env, opt, args)) != NULL)
 	{
-		i = ((lstat(path, &st)) != -1) ? ft_cd(g_core->env, opt, path, st.st_mode) :\
+		i = ((lstat(path, &st)) != -1) ? ft_cd(core->env, opt, path, st.st_mode) :\
 			ft_print_error(path, ERR_NO_FILE, ERR_NEW_CMD);
 		ft_strdel(&path);
 	}
