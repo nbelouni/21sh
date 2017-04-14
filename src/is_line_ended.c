@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 16:50:08 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:53:00 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			is_line_ended(t_buf *buf)
 
 	if (!(tmp = ft_strjoin(buf->final_line, buf->line)))
 		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
-	free(buf->final_line);
+	ft_strdel(&(buf->final_line));
 	buf->final_line = tmp;
 	return (0);
 }

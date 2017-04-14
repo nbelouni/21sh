@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 19:55:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:24:29 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		read_here_doc(t_buf *buf, t_completion *completion, t_token *elem, t_lst *h
 			ft_strdel(&(elem->word));
 			if (buf->final_line)
 			{
-				if (!(elem->word = ft_strdup(buf->final_line)))
+				if (!(elem->word = ft_strjoin(buf->final_line, "\n")))
 					return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
 			}
 			break ;
