@@ -6,7 +6,7 @@
 /*   By: dogokar <dogokar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:41:10 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 18:29:12 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,10 @@ char			**copy_fd(t_token *tmp)
 		return (cmd);
 	}
 	else
+	{
+		free(cmd);
 		return (NULL);
+	}
 }
 
 t_tree			*recurs_creat_tree(t_token *lst)
