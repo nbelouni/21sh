@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 17:46:20 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/14 18:04:26 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char		*ft_cut_path(char **s, char *av)
 	while (s1[i] && s1[i] != ':')
 		i++;
 	s2 = ft_memalloc(sizeof(char) * (i + 2 + ft_strlen(av)));
-	ft_strncpy(s2, s1, i - 1);
+	ft_strncpy(s2, s1, i);
 	ft_strncpy(s2 + i, "/", 1);
 	ft_strncpy(s2 + i + 1, av, ft_strlen(av));
 	if (s1[i] && s1[i] == ':')
