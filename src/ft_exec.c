@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 22:04:45 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/14 00:37:47 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,23 @@ static char		*ft_cut_path(char **s, char *av)
 {
 	char		*s1;
 	char		*s2;
+	char		*tmp;
 	int			i;
 
 	i = 0;
 	s1 = *s;
 	while (s1[i] && s1[i] != ':')
 		i++;
-	s2 = ft_memalloc(sizeof(char *) * (i + 2 + ft_strlen(av)));
-	s2 = ft_strncpy(s2, s1, i);
-	ft_strncpy(&s2[i], "/", 1);
-	ft_strncpy(&s2[i + 1], av, ft_strlen(av));
+	s2 = ft_memalloc(sizeof(char) * (i + 2 + ft_strlen(av)));
+	ft_strncpy(s2, s1, i - 1);
+	ft_strncpy(s2 + i, "/", 1);
+	ft_strncpy(s2 + i + 1, av, ft_strlen(av));
 	if (s1[i] && s1[i] == ':')
 		i++;
-	s1 = ft_strdup(&s1[i]);
-	free(*s);
-	*s = s1;
+	tmp = ft_strdup(s1 + i);
+	s1 = NULL;
+	ft_strdel(s);
+	*s = tmp;
 	return (s2);
 }
 
@@ -61,12 +63,15 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 		{
 			ft_putstr_fd("21sh: command not found: ", 2);
 			ft_putendl_fd(av[0], 2);
+			free(s);
+			free(s2);
 			exit(127);
 		}
 		else
 			ft_putstr_fd("21sh: no such file or directory: ", 2);
 		ft_putendl_fd(av[0], 2);
 		free(s);
+		free(s2);
 		s = NULL;
 		exit(1);
 	}

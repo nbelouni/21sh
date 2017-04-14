@@ -6,7 +6,7 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 14:39:57 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 22:00:33 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/13 23:47:46 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_lst	*ft_init_lstset(void)
 		free(set);
 		return (NULL);
 	}
-	if ((histfilepath = ft_strnew((ft_strlen(pwd) + 15))) == NULL)
+	if ((histfilepath = ft_strnew((ft_strlen(pwd) + 18))) == NULL)
 		return (NULL);
 	ft_strcpy(histfilepath, pwd);
 	histfilepath = ft_strcat(histfilepath, "/.ft_21sh_history");

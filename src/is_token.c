@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 18:15:50 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 00:11:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int		is_separator(char *s, int i)
 	{
 		if (s[i] == '|' || s[i] == ';')
 			return (1);
-		if (!ft_strncmp(s + i, "||", 2) || !ft_strncmp(s + i, "&&", 2))
+		if (i + 1 < (int)ft_strlen(s) &&
+		(!ft_strncmp(s + i, "||", 2) || !ft_strncmp(s + i, "&&", 2)))
 			return (2);
 	}
 	return (0);
@@ -84,12 +85,13 @@ int		is_separator(char *s, int i)
 
 int		is_redirection(char *s, int i)
 {
-	if (i > 0 || s[i - 1] != '\\')
+	if (i == 0 || s[i - 1] != '\\')
 	{
 		if (s[i] == '>' || s[i] == '<' || s[i] == '&')
 			return (1);
-		if (!ft_strncmp(s + i, "<<", 2) || !ft_strncmp(s + i, ">>", 2)
-		|| !ft_strncmp(s + i, "&>", 2))
+		if (i + 1 < (int)ft_strlen(s) &&
+		(!ft_strncmp(s + i, "<<", 2) || !ft_strncmp(s + i, ">>", 2)
+		|| !ft_strncmp(s + i, "&>", 2)))
 			return (2);
 	}
 	return (0);
