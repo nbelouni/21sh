@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/14 20:05:06 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/14 20:22:34 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int					ft_env_binary(char **args)
 {
 	int	*opt;
 
-	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0)) == NULL)
+	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
 		return (0);
 	if (opt[0] < 0 || !args[opt[0]])
 	{
@@ -94,27 +94,42 @@ int					ft_env_binary(char **args)
 	return (1);
 }
 
-static int		ft_exec_env(t_lst *env, char **args)
+int				ft_exec_env_binary(t_lst *env, char **args)
+{
+	t_lst		*env_tmp;
+
+	env_tmp = NULL;
+	if (args && args[0])
+	{
+		env_tmp = g_core->env;
+		g_core->env = env;
+		ft_exec(args);
+		g_core->env = env_tmp;
+	}
+	return (0);
+}
+
+static int		ft_exec_env(t_lst *env, char **av)
 {
 	int		ret;
 	int		*opt;
 	t_lst	*dup;
 
-	if ((opt = ft_opt_parse(ENV_OPT, args, 0)) == NULL)
+	if ((opt = ft_opt_parse(ENV_OPT, av, 0, 0)) == NULL)
 		return (ERR_EXIT);
 	if (opt[0] == -1)
 		return (ft_free_and_return(ERR_NEW_CMD, opt, NULL, NULL));
 	if ((dup = ft_getlst_env(env, opt)) == NULL)
 		return (ft_free_and_return(ERR_EXIT, opt, NULL, NULL));
-	if (args[opt[0]] != NULL && args[opt[0]][0] != '\0')
+	if (av[opt[0]] != NULL && av[opt[0]][0] != '\0')
 	{
-		ret = ft_parse_env(dup, &(args[opt[0]]));
+		ret = ft_parse_env(dup, &(av[opt[0]]));
 		if (ret < 0)
 			return (ft_free_and_return(ret, opt, NULL, NULL));
-		if (ret > (int)ft_tablen(args) || !args[ret] || !args[ret][0])
+		if (ret > (int)ft_tablen(av) || !av[opt[0] + ret])
 			(dup != NULL) ? ft_print_lst(dup) : 0;
 		else
-			ft_exec(&(args[opt[0] + ret]));
+			ft_exec_env_binary(dup, &(av[opt[0] + ret]));
 	}
 	else
 		(dup != NULL) ? ft_print_lst(dup) : 0;

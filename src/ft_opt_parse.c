@@ -76,7 +76,7 @@ static int	ft_is_opt(int *opt, char *opts, char *arg, size_t overwrite)
 		{
 			if (ft_strchr(opts, arg[i]) == NULL)
 			{
-				return (print_opt_err(opts, arg[i]));
+				return ((opt[0] == 0) ? print_opt_err(opts, arg[i]) : -1);
 			}
 			opt = ft_set_opt(opt, opts, arg[i], overwrite);
 			++i;
@@ -116,7 +116,7 @@ static int	*ft_check_opt(int *opt, char *opts, char **args, size_t overwrite)
 **	parsing d'option se finit, ou une erreur d'option.
 */
 
-int			*ft_opt_parse(char *opts, char **args, size_t overwrite)
+int			*ft_opt_parse(char *opts, char **av, size_t over, int print_opt)
 {
 	int		*opt;
 	size_t	i;
@@ -126,21 +126,18 @@ int			*ft_opt_parse(char *opts, char **args, size_t overwrite)
 	i = 0;
 	len = ft_strlen(opts) + 1;
 	if ((opt = (int *)malloc(sizeof(int) * (len + 1))) == NULL)
-	{
 		return (NULL);
-	}
 	while (i <= len)
 	{
 		opt[i] = 0;
 		++i;
 	}
-	if (args == NULL || *args == NULL || **args == 0)
-	{
+	if (av == NULL || *av == NULL || **av == 0)
 		opt[0] = 0;
-	}
 	else
 	{
-		opt = ft_check_opt(opt, opts, args, overwrite);
+		opt[0] = print_opt;
+		opt = ft_check_opt(opt, opts, av, over);
 	}
 	return (opt);
 }

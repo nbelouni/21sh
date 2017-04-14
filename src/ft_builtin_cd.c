@@ -149,7 +149,7 @@ int			ft_builtin_cd(t_core *core, char **args)
 	int			i;
 	char		*s;
 
-	opt = ft_opt_parse(CD_OPT, args, 1);
+	opt = ft_opt_parse(CD_OPT, args, 1, 0);
 	if (opt == NULL)
 		return (ERR_EXIT);
 	else if (opt[0] == -1)
