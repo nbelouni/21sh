@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 00:37:47 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 17:46:20 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void			ft_exec(char **av)
 		s2 = ft_cut_path(&s, av[0]);
 		not_binary(s, s2, av, envp);
 		if (ft_strcmp(s, "") == 0)
-			break;
+			break ;
 	}
 	ft_putstr_fd("21sh: command not found: ", 2);
 	ft_putendl_fd(av[0], 2);

@@ -30,7 +30,8 @@ static char	*ft_envv_to_str(t_elem *elem)
 	}
 	ft_strcpy(res, elem->name);
 	res[name_len] = '=';
-	res = ft_strcat(res, elem->value);
+	if (elem->value)
+		res = ft_strcat(res, elem->value);
 	return (res);
 }
 

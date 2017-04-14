@@ -34,7 +34,7 @@ static int	ft_exec_history(t_lst *set, t_lst *hist, char **args)
 	{
 		if (!ft_strisdigit(args[0]))
 		{
-			write(2, "history: ", 9);
+			ft_putstr_fd("history: ", 2);
 			return (ft_print_error(args[0], ERR_NUM_ARG, ERR_NEW_CMD));
 		}
 		ft_print_history(hist, ft_atoi(args[0]) - 1);

@@ -18,11 +18,11 @@
 
 static int	print_opt_err(char *opts, char c)
 {
-	write(2, "illegal option -- ", 18);
+	ft_putstr_fd("illegal option -- ", 2);
 	write(2, &c, 1);
-	write(2, "\nUsage: [- ", 11);
+	ft_putstr_fd("\nUsage: [- ", 2);
 	write(2, opts, ft_strlen(opts));
-	write(2, "]\n", 2);
+	ft_putstr_fd("]\n", 2);
 	return (-1);
 }
 

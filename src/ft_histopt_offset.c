@@ -20,7 +20,7 @@ int		ft_del_hist_offset(t_lst *hist, char *arg)
 	offset = ft_atoi(arg);
 	if (offset <= 0 || offset > (int)hist->size)
 	{
-		write(2, "history: ", 9);
+		ft_putstr_fd("history: ", 2);
 		return (ft_print_error(arg, ": position out of range", ERR_NEW_CMD));
 	}
 	tmp = ft_get_nelem(hist, offset);
