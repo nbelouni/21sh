@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:03:19 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 18:05:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 19:54:25 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ void				do_job_notification(void);
 void				format_job_info(t_job *job, const char *status);
 t_node_p			create_redir(t_tree *node_redir, t_node_p left_node);
 char				*iter_iolist_cmd(t_list *io_list);
+int					ft_env_binary(char **args);
 
 #endif

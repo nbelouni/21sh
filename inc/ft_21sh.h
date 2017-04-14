@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:47:51 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 20:24:14 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 19:59:23 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_lst				*ft_lstdup(t_lst *to_dup);
 **	ft_list.c
 */
 int					ft_export(t_lst *dup, char *arg);
+void			ft_exec(char **av);
 
 /*
 **	ft_norm_tools.c

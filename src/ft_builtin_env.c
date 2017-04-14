@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 20:19:23 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 20:05:06 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ static t_lst	*ft_getlst_env(t_lst *env, int *opt)
 **	partant de la fin des options.
 */
 
+int					ft_env_binary(char **args)
+{
+	int	*opt;
+
+	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0)) == NULL)
+		return (0);
+	if (opt[0] < 0 || !args[opt[0]])
+	{
+		free(opt);
+		return (0);
+	}
+	free(opt);
+	return (1);
+}
+
 static int		ft_exec_env(t_lst *env, char **args)
 {
 	int		ret;
@@ -99,7 +114,7 @@ static int		ft_exec_env(t_lst *env, char **args)
 		if (ret > (int)ft_tablen(args) || !args[ret] || !args[ret][0])
 			(dup != NULL) ? ft_print_lst(dup) : 0;
 		else
-			ft_putendl("bin execution");
+			ft_exec(&(args[opt[0] + ret]));
 	}
 	else
 		(dup != NULL) ? ft_print_lst(dup) : 0;
@@ -132,3 +147,5 @@ int				ft_builtin_env(t_core *core, char **args)
 	}
 	return (ret);
 }
+
+
