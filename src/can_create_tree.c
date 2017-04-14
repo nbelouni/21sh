@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/15 00:18:36 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 22:30:20 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int			is_new_prompt(t_token *prev)
 		if ((is_separator_type(prev->type) && prev->type != DOT) ||
 	(count_prev_char(prev->word, strlen(prev->word), '\\') % 2 == 1))
 		{
-			PUT2("PAR ICI");
 			set_prompt(PROMPT2, ft_strlen(PROMPT2));
 			return (ERR_NEW_PROMPT);
 		}
