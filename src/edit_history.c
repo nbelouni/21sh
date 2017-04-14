@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 17:39:46 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 17:25:43 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int			edit_history(t_buf *buf, t_lst *hist, int x)
 {
 	if (!hist || !hist->head)
 		return (0);
-	if (x == UP)
+	if (x == UP && buf->cur_hist != hist->head)
 	{
 		if (buf->cur_hist != hist->head)
-			buf->cur_hist = (buf->cur_hist) ? buf->cur_hist->prev : hist->tail;
-		if (ft_mv_up(buf, &(buf->cur_hist), &(buf->last_cmd)) == ERR_EXIT)
 		{
-			return (ERR_EXIT);
+			buf->cur_hist = (buf->cur_hist) ? buf->cur_hist->prev : hist->tail;
 		}
+		if (ft_mv_up(buf, &(buf->cur_hist), &(buf->last_cmd)) == ERR_EXIT)
+			return (ERR_EXIT);
 	}
 	if (x == DOWN)
 	{
