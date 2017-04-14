@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/14 19:40:00 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/14 21:36:16 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	wait_for_job(t_job *j)
 	while (true)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
-		last = WEXITSTATUS(status);
+//		last = WEXITSTATUS(status);
 		if (mark_process_status(pid, status))
 			break ;
 	}

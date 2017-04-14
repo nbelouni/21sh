@@ -6,13 +6,13 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/01 17:17:28 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 20:18:32 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 22:50:16 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int			fill_command(t_sort_list **list, char *path)
+int			fill_command(t_slist **list, char *path)
 {
 	char			**bin_path;
 	DIR				*dirp;
@@ -40,31 +40,9 @@ int			fill_command(t_sort_list **list, char *path)
 	return (0);
 }
 
-int			edit_username_line(char **line)
+int			insert_next(t_slist *tmp, char *s)
 {
-	char	*new;
-	int		i;
-
-	new = NULL;
-	i = -1;
-	if (!*line)
-		return (0);
-	while ((*line)[++i] && (*line)[i] != ':')
-		;
-	if ((*line)[i])
-	{
-		if (!(new = ft_strsub(*line, 0, i)))
-			return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	}
-	if (*line)
-		free(*line);
-	*line = new;
-	return (0);
-}
-
-int			insert_next(t_sort_list *tmp, char *s)
-{
-	t_sort_list		*tmp_next;
+	t_slist		*tmp_next;
 
 	while (tmp->next && ft_strcmp(tmp->next->s, s) < 0)
 		tmp = tmp->next;
@@ -81,10 +59,10 @@ int			insert_next(t_sort_list *tmp, char *s)
 	return (0);
 }
 
-int			insert_in_list(t_sort_list **list, char *s)
+int			insert_in_list(t_slist **list, char *s)
 {
-	t_sort_list		*tmp;
-	t_sort_list		*tmp_next;
+	t_slist		*tmp;
+	t_slist		*tmp_next;
 
 	if (s && !*list)
 	{
@@ -108,88 +86,7 @@ int			insert_in_list(t_sort_list **list, char *s)
 	return (0);
 }
 
-int			fill_username(t_sort_list **list, char *path)
-{
-	int				fd;
-	char			*line;
-
-	line = NULL;
-	if ((fd = open(path, O_RDONLY)) < 0)
-		return (ft_print_error("21sh: ", ERR_READ, ERR_EXIT));
-	while (get_next_line(fd, &line) > 0)
-	{
-		if (edit_username_line(&line) == ERR_EXIT)
-			return (ERR_EXIT);
-		if (insert_in_list(list, line) == ERR_EXIT)
-			return (ERR_EXIT);
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
-	}
-	if (line)
-		free(line);
-	close(fd);
-	return (0);
-}
-
-int			edit_hostname_line(t_sort_list *list, char **line)
-{
-	char		**val;
-	int			i;
-	t_sort_list	*tmp;
-
-	if (!(val = ft_strsplit(*line, ' ')))
-		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	if (ft_tablen(val) != 2)
-		return (0);
-	tmp = list;
-	i = 1;
-	while (tmp)
-	{
-		if (!ft_strcmp(val[i], tmp->s))
-		{
-			i = 0;
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	if (*line)
-		free(*line);
-	if (!(*line = ft_strdup(val[i])))
-		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	ft_tabdel(val);
-	return (0);
-}
-
-int			fill_hostname(t_sort_list **list, char *path)
-{
-	int				fd;
-	char			*line;
-
-	line = NULL;
-	if ((fd = open(path, O_RDONLY)) < 0)
-		return (ft_print_error("21sh: ", ERR_READ, ERR_EXIT));
-	while (get_next_line(fd, &line) > 0)
-	{
-		if (edit_hostname_line(*list, &line) == ERR_EXIT)
-			return (ERR_EXIT);
-		if (insert_in_list(list, line) == ERR_EXIT)
-			return (ERR_EXIT);
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
-	}
-	if (line)
-		free(line);
-	close(fd);
-	return (0);
-}
-
-int			fill_variable(t_sort_list **list, t_core *core)
+int			fill_variable(t_slist **list, t_core *core)
 {
 	t_elem		*tmp;
 

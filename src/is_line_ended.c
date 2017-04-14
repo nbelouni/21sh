@@ -6,17 +6,13 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 16:50:08 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 23:53:00 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:02:12 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-/*
-**	C'est en chantier, je mets au propre apres le push
-*/
-
-int			is_line_ended(t_buf *buf)
+int		is_line_ended(t_buf *buf)
 {
 	char	*tmp;
 
@@ -38,18 +34,10 @@ int		complete_final_line(t_buf *buf, t_token *lst)
 	tmp = lst;
 	while (tmp->next)
 		tmp = tmp->next;
-	if (is_backslash(tmp->word, strlen(tmp->word) - 1))
+	if (is_char(tmp->word, strlen(tmp->word) - 1, '\\'))
 		return (0);
-/*	if ((tmp->bt_level || tmp->bc_level) && !is_separator_type(tmp->type))
-	{
-		if (!(tmp2 = ft_strjoin(buf->final_line, "; ")))
-			return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	}
-	else
-*/	{
-		if (!(tmp2 = ft_strjoin(buf->final_line, " ")))
-			return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	}
+	if (!(tmp2 = ft_strjoin(buf->final_line, " ")))
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	free(buf->final_line);
 	buf->final_line = tmp2;
 	return (0);

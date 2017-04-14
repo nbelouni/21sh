@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 21:15:55 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:06:42 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,12 @@ int		cpy_cut_paste(t_buf *buf, int x)
 	return (0);
 }
 
-int 	read_modul(int x, t_buf *buf)
-{
-	if (buf->size + 1 < BUFF_SIZE && (x > 31 && x < 127))
-	{
-		if (vb_insert(buf, (char *)&x) < 0)
-		{
-			m_right(calc_len(buf, END));
-			return (ft_print_error("\n21sh", ERR_CMD_TOO_LONG, ERR_NEW_CMD));
-		}
-		return (1);
-	}
-	return (0);
-}
-
 int		mv_and_read(t_buf *buf, int x, int ret)
 {
 	if (ret < 0)
 		return (ft_print_error("\n21sh", ERR_READ, ERR_EXIT));
 	if (x == CTRL_D && buf->size == 0)
 		return (ERR_EXIT);
-	//if (read_modul(x, buf) == 1)
-		//return (1);
 	if (x == DEL)
 		vb_del(buf, x);
 	if (x == ALT_UP)
@@ -88,6 +72,7 @@ void	init_line(t_buf *buf)
 	print_pre_curs(buf);
 	print_post_curs(buf);
 }
+
 /*
 **  integre les copier coller a la souris
 */
@@ -121,13 +106,13 @@ int		read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 	init_line(buf);
 	while ((ret = read(0, &x, sizeof(int))))
 	{
-		 if (classic_read(buf, x) == 1)
-		 {
+		if (classic_read(buf, x) == 1)
+		{
 			if ((err = mv_and_read(buf, x, ret)) < 0 ||
 			(err = cpy_cut_paste(buf, x)) < 0 ||
-			(buf->size < BUFF_SIZE && (err = complete_line(buf, cplt, x)) != 0)
+			((err = complete_line(buf, cplt, x)) != 0)
 			|| (err = edit_history(buf, hist, x) != 0))
-			return (err);
+				return (err);
 			if (x == RETR)
 			{
 				m_right(calc_len(buf, END));
@@ -135,8 +120,8 @@ int		read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 				ft_strdel(&(buf->last_cmd));
 				buf->cur_hist = NULL;
 				return (0);
-			 }
-		 }
+			}
+		}
 		x = 0;
 	}
 	close_termios();

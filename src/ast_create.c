@@ -6,7 +6,7 @@
 /*   By: dogokar <dogokar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:41:10 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/14 18:29:12 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/14 22:32:50 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ int				compare_token_op(t_token *node_lst, t_token *tmp)
 	else
 		return (0);
 }
-
+/*
 int				compare_token_com(t_token *node_lst, t_token *tmp)
 {
 	if (!node_lst && tmp->type == CMD)
 		return (1);
 	return (0);
 }
-
+*/
 /*
 **    regle pour parser la liste et inserer les token au bon endroit
 */
@@ -111,7 +111,8 @@ int				priority(t_token *node_lst, t_token *tmp)
 		return (1);
 	else if (compare_token_op(node_lst, tmp))
 		return (1);
-	else if (compare_token_com(node_lst, tmp))
+	//else if (compare_token_com(node_lst, tmp))
+	else if (!node_lst && tmp->type == CMD)
 		return (1);
 	return (0);
 }
@@ -344,7 +345,7 @@ t_tree			*new_tree(t_token *lst)
 /*
 **  print ast pour le debug
 */
-
+/*
 void			print_debug_ast(t_tree *node)
 {
 	int		i = 0;
@@ -376,7 +377,7 @@ void			print_debug_ast(t_tree *node)
 	}
 	PUT2(" \n up");
 }
-
+*/
 void			free_content_ast(t_tree *node)
 {
 	if (node->cmd != NULL)

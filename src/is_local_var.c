@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 20:40:34 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 21:45:23 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:01:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token		*insert_env_export_in_list(t_token *tmp, t_token *lst)
 		cmd = "env";
 	else
 		cmd = "export";
-	if (!(new = ft_tokenew(CMD, ft_strdup(cmd))))		
+	if (!(new = ft_tokenew(CMD, ft_strdup(cmd))))
 		return (NULL);
 	if (lst->prev)
 		lst->prev->next = new;

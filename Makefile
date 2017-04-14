@@ -2,15 +2,15 @@ NAME = 21sh
 
 IDIR = ./inc/
 ILIB = ./libft/inc
-INCS = 42sh.h		\
+INCS = ft_21sh.h	\
 	   read.h		\
 	   lex.h		\
 	   exec.h		\
 	   completion.h	\
 	   globbing.h	\
-		job.h	\
-	  	list.h	\
-	  	io.h
+	   job.h		\
+	   list.h		\
+	  io.h
 INCC = $(addprefix $(IDIR), $(INCS))
 
 LDIR = ./libft
@@ -55,11 +55,15 @@ SRCS = 	ft_builtin_cd.c		\
 		lex_buf_pars.c		\
 		is_tok.c			\
 		is_check.c			\
+		is_quote.c			\
 		sort_list.c			\
 		sort_list_token.c	\
 		sort_list_token2.c	\
 		can_create_tree.c	\
 		completion.c		\
+		completion_tools.c	\
+		completion_open_path.c	\
+		edit_host_username.c	\
 		is_token_type.c		\
 		return_errors.c		\
 		ast_create.c		\

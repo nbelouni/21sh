@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 20:30:33 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:53 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:08:54 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int			t_putchar(int i)
 	write(1, &i, 1);
 	return (0);
 }
+
 void		t_puts(char *s, int i)
 {
 	tputs(tgetstr(s, NULL), i, t_putchar);
@@ -54,7 +55,7 @@ int			init_termios(void)
 int			close_termios(void)
 {
 	t_term			*st_term;
-	
+
 	st_term = get_term();
 	if (tcsetattr(0, TCSADRAIN, &st_term->old) == -1)
 	{
