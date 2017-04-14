@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:47:16 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:57:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,41 +50,28 @@ typedef struct		s_lib
 int					is_char(char *s, int i, char c);
 int					find_prev_char(char *s, int len, char c);
 int					find_next_char(char *s, int len, char c);
+int					count_prev_char(char *s, int i, char c);
 
 int					is_group(char *s, int i);
 int					is_separator(char *s, int i);
 int					is_redirection(char *s, int i);
-int					is_btquote(char *s, int i);
 int					is_dquote(char *s, int i);
 int					is_squote(char *s, int i);
-int					is_new_btquote(char *s, int i);
-int					is_backslash(char *s, int i);
 int					is_any_quote(char *s, int i);
-int					is_bracket(char *s, int i);
-int					is_brace(char *s, int i);
 int					is_space(char *s, int i);
 int					is_dot(char *s, int i);
 int					is_redir(char *s, int i);
 int					is_agreg(char *s, int i);
 int					is_or_and(char *s, int i);
-int					is_quot(char *s, int i);
+int					is_cmd(char *s, int i);
+int					is_arg(char *s, int i);
 
 int					is_separator_type(int type);
-int					is_open_group_type(int type);
-int					is_close_group_type(int type);
 int					is_dir_type(int type);
 int					is_text_type(int type);
 
-int					find_btquote_end(char *s, int i);
 int					find_dquote_end(char *s, int i);
 int					find_squote_end(char *s, int i);
-int					find_group_end(char *s, int i, int token);
-int					find_next_nbtq(char *s, int i);
-int					find_dollar(char *s, int i);
-int					find_new_btquote_end(char *s, int i);
-int					find_next_inhibitor(char *s, int i, int *token);
-int					find_next_btq(char *s, int i, int *token);
-int					find_bracket_end(char *s, int i);
 
 int					parse_buf(t_token **l, char *s, t_completion *c, t_lst *h);
 int					cut_space(char *s, int i);

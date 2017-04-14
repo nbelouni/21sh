@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 19:55:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 23:24:29 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/14 23:00:07 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int		join_lines(t_buf *buf)
 	return (0);
 }
 
-int		read_here_doc(t_buf *buf, t_completion *completion, t_token *elem, t_lst *hist)
+int		read_here_doc(t_buf *buf, t_completion *c, t_token *elem, t_lst *hist)
 {
 	int		ret_read;
 
 	ret_read = 0;
-	while ((ret_read = read_line(buf, completion, hist)) != ERR_EXIT)
+	while ((ret_read = read_line(buf, c, hist)) != ERR_EXIT)
 	{
 		close_termios();
 		if (!ft_strcmp(elem->word, buf->line))

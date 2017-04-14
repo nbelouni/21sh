@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 00:18:36 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,12 @@ int			is_new_prompt(t_token *prev)
 	{
 		if (!(prev = prev->next))
 			return (TRUE);
-/*		if (prev->bt_level < 0)
-			return (print_err_message(")"));
-		if (prev->bc_level < 0)
-			return (print_err_message("}"));
-*/		if (is_dir_type(prev->type))
+		if (is_dir_type(prev->type))
 			return (print_err_message("newline"));
 		if ((is_separator_type(prev->type) && prev->type != DOT) ||
-		prev->word[ft_strlen(prev->word) - 1] == '\\')
+	(count_prev_char(prev->word, strlen(prev->word), '\\') % 2 == 1))
 		{
+			PUT2("PAR ICI");
 			set_prompt(PROMPT2, ft_strlen(PROMPT2));
 			return (ERR_NEW_PROMPT);
 		}
@@ -47,24 +44,9 @@ int			is_new_prompt(t_token *prev)
 
 int			is_parse_error(t_token *tmp, t_token *prev)
 {
-/*	if (tmp->type == O_BRACKET && prev && !is_separator_type(prev->type)
-	&& !is_open_group_type(prev->type))
+	if (is_separator_type(tmp->type) &&
+	(!prev || is_separator_type(prev->type) || is_dir_type(prev->type)))
 		return (print_err_message(tmp->word));
-	if (tmp->type == C_BRACKET &&
-	(!prev || (prev->type != DOT
-	&& !is_text_type(prev->type) && !is_close_group_type(prev->type))))
-		return (print_err_message(tmp->word));
-	if (tmp->type == O_BRACE && prev && !is_separator_type(prev->type)
-	&& !is_open_group_type(prev->type))
-		return (print_err_message(tmp->word));
-	if (tmp->type == C_BRACE && (!prev || prev->type != DOT))
-		return (print_err_message(tmp->word));
-*/	if (is_separator_type(tmp->type) &&
-	(!prev || is_separator_type(prev->type) || is_dir_type(prev->type)
-	/*|| is_open_group_type(prev->type)*/))
-		return (print_err_message(tmp->word));
-//	if (tmp->type == CMD && prev && is_close_group_type(prev->type))
-//		return (print_err_message(tmp->word));
 	if (is_dir_type(tmp->type) &&
 	(!prev || is_separator_type(prev->type) || is_dir_type(prev->type)))
 		return (print_err_message(tmp->word));
@@ -88,8 +70,8 @@ int			can_create_tree(t_token *lst)
 			return (ret);
 		tmp = tmp->next;
 	}
-	if (!prev && (/*lst->type == O_BRACKET || lst->type == O_BRACE ||*/
-	lst->word[ft_strlen(lst->word) - 1] == '\\'))
+	if (!prev &&
+	(count_prev_char(lst->word, strlen(lst->word) - 1, '\\') % 2 == 1))
 	{
 		set_prompt(PROMPT2, ft_strlen(PROMPT2));
 		return (ERR_NEW_PROMPT);

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/14 20:22:34 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/14 22:57:40 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,3 @@ int				ft_builtin_env(t_core *core, char **args)
 	}
 	return (ret);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:47:51 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 19:59:23 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/14 22:52:39 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_lst				*ft_lstdup(t_lst *to_dup);
 **	ft_list.c
 */
 int					ft_export(t_lst *dup, char *arg);
-void			ft_exec(char **av);
+void				ft_exec(char **av);
 
 /*
 **	ft_norm_tools.c
@@ -120,9 +120,8 @@ void				restore_originals_handler();
 
 t_term				*get_term(void);
 
-
-void			ft_extract_elem(t_elem **elem, t_lst *lst);
-void			ft_clear_elem(t_elem **elem);
-void			ft_del_elem(t_elem **elem, t_lst *lst);
+void				ft_extract_elem(t_elem **elem, t_lst *lst);
+void				ft_clear_elem(t_elem **elem);
+void				ft_del_elem(t_elem **elem, t_lst *lst);
 
 #endif

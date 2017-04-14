@@ -6,13 +6,13 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 20:21:01 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 00:40:56 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int			which_quotes(char *s, int len)
+int		which_quotes(char *s, int len)
 {
 	int		w_quotes;
 	int		i;
@@ -25,8 +25,6 @@ int			which_quotes(char *s, int len)
 			w_quotes = (w_quotes == NO_QUOTE) ? D_QUOTE : NO_QUOTE;
 		if (is_char(s, i, '\''))
 			w_quotes = (w_quotes == NO_QUOTE) ? S_QUOTE : NO_QUOTE;
-		if (is_char(s, i, '`'))
-			w_quotes = (w_quotes == NO_QUOTE) ? BT_QUOTE : NO_QUOTE;
 	}
 	return (w_quotes);
 }
@@ -203,7 +201,7 @@ int		globb(char **s, t_core *core)
 			return (ERR_EXIT);
 		i++;
 	}
-		supp_quotes(*s);
+	supp_quotes(*s);
 	return (TRUE);
 }
 
