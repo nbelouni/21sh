@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 13:08:51 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 18:21:08 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/15 18:17:08 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void		init_signal(void)
 
 void		init_shell(void)
 {
-	signal(SIGWINCH, get_sigwinch);
 	signal(SIGINT, get_sigint);
 	init_signal();
 }

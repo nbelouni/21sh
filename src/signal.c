@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/15 15:16:07 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/15 18:17:21 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ t_bool		get_win(void)
 	g_curs.win_col = windows.ws_col;
 	g_curs.win_row = windows.ws_row;
 	return (TRUE);
-}
-
-void		get_sigwinch(int sig)
-{
-	int		status;
-
-	waitpid(-1, &status, 0);
-	if (sig == SIGWINCH)
-		get_win();
-	return ;
 }
 
 void		get_sigint(int sig)
