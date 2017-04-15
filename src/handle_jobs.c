@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/14 21:36:16 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 16:57:09 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <errno.h>
 
 extern	t_list	*g_job_list;
-int last = 0;
 
 /*
 ** Store the status of the process pid that was returned by waitpid.
@@ -86,7 +85,7 @@ int	mark_process_status(pid_t pid, int status)
 			else
 			{
 				p->completed = 1;
-				last = WEXITSTATUS(status);
+//				last = WEXITSTATUS(status);
 				if (WIFSIGNALED(status))
 				{
 					ft_putstr_fd("21sh: Terminated by signal ", 2);
@@ -110,20 +109,23 @@ int	mark_process_status(pid_t pid, int status)
 ** blocking until all processes in the given job have reported.
 */
 
-void	wait_for_job(t_job *j)
+int		wait_for_job(t_job *j)
 {
 	int			status;
 	pid_t		pid;
+	int			last;
 
+	last = -1;
 	(void)j;
 	signal(SIGCHLD, SIG_DFL);
 	while (true)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
-//		last = WEXITSTATUS(status);
+		last = WEXITSTATUS(status);
 		if (mark_process_status(pid, status))
 			break ;
 	}
+	return (last);
 }
 
 void	launch_process(t_process_p process, int dofork)
@@ -244,13 +246,15 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 	int			io_pipe[2];
 	int			in;
 	int			out;
-	int			dofork = 0;
+	int			dofork;
 
+	dofork = 0;
 	in = STDIN_FILENO;
 	dofork |= shouldfork(job, pipeline);
 	while (pipeline)
 	{
-		out = (pipeline->next)? do_pipe(pipeline->content, pipeline->next->content, io_pipe) : STDOUT_FILENO;
+		out = (pipeline->next) ? do_pipe(pipeline->content,
+			pipeline->next->content, io_pipe) : STDOUT_FILENO;
 		exec_simple_command(pipeline->content, dofork);
 		list_iter_int(((t_process_p)pipeline->content)->io_list, (void *)restore_fd, dofork);
 		if (out != STDOUT_FILENO)
@@ -268,13 +272,19 @@ void	launch_job(t_job *j)
 {
 	t_node_p	current;
 	t_list		*stack;
+	int			last;
 
 	current = j->process_tree;
 	stack = NULL;
 	while ((current = iter_in_order(current, &stack)))
 	{
+		last = wait_for_job(j);
 		if (current->type == IF)
-			current = ((((t_condition_if_p)current->data)->type == IF_OR && last) || (((t_condition_if_p)current->data)->type == IF_AND && !last)) ? current->right : NULL;
+		{
+			current = ((((t_condition_if_p)current->data)->type == IF_OR &&
+				last) || (((t_condition_if_p)current->data)->type == IF_AND &&
+					!last)) ? current->right : NULL;
+		}
 		else
 		{
 			do_pipeline(j, current->data);

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 14:13:58 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 20:35:06 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:15:38 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 **	ft_init_set initialise une nouvelle liste en l'allouant et en mettant tous
 **	ses octets a 0, puis retourne la nouvelle liste de type set.
 */
+
+extern t_core	*g_core;
 
 int			ft_init_core(void)
 {

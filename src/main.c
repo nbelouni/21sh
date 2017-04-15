@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 21:26:33 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:14:20 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	export_job(t_tree *root, t_list **g_job_list);
 void	printJobList(t_list *g_job_list);
 
 t_list	*g_job_list = NULL;
+t_core	*g_core;
 t_job	*last_job = NULL;
 
 static t_builtin_array g_builtin_array[] =

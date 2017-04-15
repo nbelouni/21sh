@@ -6,11 +6,13 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:05 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:16:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+extern t_core	*g_core;
 
 t_bool		get_win(void)
 {

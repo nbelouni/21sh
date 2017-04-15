@@ -6,13 +6,15 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/14 20:02:50 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:12:42 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 #include "list.h"
 #include "io.h"
+
+extern	t_list	*g_job_list;
 
 int	iter_post_ord(t_tree **ptr, t_list **stock)
 {

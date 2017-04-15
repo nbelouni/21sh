@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 20:30:33 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 23:08:54 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 16:09:38 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int			close_termios(void)
 	st_term = get_term();
 	if (tcsetattr(0, TCSADRAIN, &st_term->old) == -1)
 	{
-//		ft_putstr_fd("21sh: error term\n", 2);
 		return (-1);
 	}
 	return (0);

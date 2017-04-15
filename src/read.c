@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/15 01:04:02 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 16:09:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int		cpy_cut_paste(t_buf *buf, int x)
 	}
 	return (0);
 }
-int    read_modul(int x, t_buf *buf)
+
+int		read_modul(int x, t_buf *buf)
 {
 	if (buf->size + 1 < BUFF_SIZE && (x > 31 && x < 127))
 	{
@@ -75,8 +76,8 @@ int		mv_and_read(t_buf *buf, int x, int ret)
 }
 
 /*
- **	Y faut trouver un autre moyen de recuperer les caracteres speciaux
- */
+**	Y faut trouver un autre moyen de recuperer les caracteres speciaux
+*/
 
 void	init_line(t_buf *buf)
 {
@@ -87,8 +88,8 @@ void	init_line(t_buf *buf)
 }
 
 /*
- **  integre les copier coller a la souris
- */
+**  integre les copier coller a la souris
+*/
 
 int		classic_read(t_buf *buf, int x)
 {

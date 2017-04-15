@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/14 22:57:40 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:14:57 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 **	l'index dans les args où l'export de type var=value se termine, sinon
 **	il export la chaine contenu dans args.
 */
+
+extern t_core	*g_core;
 
 static int		ft_parse_env(t_lst *lst, char **args)
 {

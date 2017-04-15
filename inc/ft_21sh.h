@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:47:51 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 22:52:39 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 15:17:52 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ typedef struct		s_core
 **	ft_default_set.c
 */
 t_lst				*ft_init_lstset(void);
-t_core				*g_core;
-extern t_list		*g_job_list;
 
 int					job_is_stopped (t_job *j);
 int					job_is_completed(t_job *j);
