@@ -1,0 +1,21 @@
+DANS CE FICHIER, METTEZ LES BUGS/ERREUR QUE VOUS AVEZ TROUVE, AINSI
+QUE LA COMMANDE AVEC LAQUELLE CE BUG A ETE DECOUVERT DANS LES CATEGORIES :
+
+-	MAJEUR -> TACHE VRAIMENT IMPORTANTE A FIX
+-	MINEUR -> TACHE A FIX NON PRIORITAIRE
+
+MAJEUR :
+
+	- env -> probleme avec le fork, fait probablement suite a la fonction
+	is_builtin que Mehdi et Amelie ont modifie;
+
+	- PATH=0 ls -> leaks, probablement due a tokenew;
+
+MINEUR :
+
+	- ./[tab] en debut de commande -> pas d'autocompletion
+
+	- ~/[tab] n'importe ou dans la ligne de commande -> pas d'autocompletion
+
+	- mkdir lol;cd lol;chmod 0 . -> impossible de ressortir du dossier ou meme
+		de retablir les droits
