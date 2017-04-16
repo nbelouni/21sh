@@ -102,6 +102,7 @@ void				ft_push_ast(t_token *list, t_tree **ast);
 void				free_ast(t_tree *ast);
 void				print_tab(char **tabol);
 void				print_debug_ast(t_tree *node);
+void 				print_t(t_tree *tree);
 t_list				*concate_argv(t_token *lst);
 
 #endif

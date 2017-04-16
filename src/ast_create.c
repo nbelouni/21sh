@@ -27,8 +27,8 @@ t_tree			*init_node(void)
 static t_lib	g_lib_op[LENLIB] =
 {
 	{.toke = DOT, .priority = 11},
-	{.toke = OR, .priority = 9},
-	{.toke = AND, .priority = 10},
+	{.toke = OR, .priority = 10},
+	{.toke = AND, .priority = 9},
 	{.toke = PIPE, .priority = 8},
 	{.toke = SL_DIR, .priority = 7},
 	{.toke = SR_DIR, .priority = 7},

@@ -1,0 +1,11 @@
+21sh
+21sh.dSYM
+Makefile
+README.md
+debug
+doc
+inc
+libft
+lol
+obj
+src
