@@ -7,9 +7,20 @@ QUE LA COMMANDE AVEC LAQUELLE CE BUG A ETE DECOUVERT DANS LES CATEGORIES :
 MAJEUR :
 
 	- env -> probleme avec le fork, fait probablement suite a la fonction
-	is_builtin que Mehdi et Amelie ont modifie;
+	is_builtin que Mehdi et Amelie ont modifie, a tester avec valgrind;
 
 	- PATH=0 ls -> leaks, probablement due a tokenew;
+
+	PATIE EXECUTION (petit morceau) :
+		- ls -z && ls -z && ls -la && ls -p
+		- ls -z && ls -z && ls -la || ls -p
+		- ls -z && ls -z || ls -la && ls -p
+		- ls -z || ls -z && ls -la && ls -p
+		- ls -z && ls -z || ls -la || ls -p
+		- ls -z || ls -z && ls -la || ls -p
+		....
+		je suppose que ca proviens des priorites mal gerees
+			-> mauvais output compare a bash
 
 MINEUR :
 

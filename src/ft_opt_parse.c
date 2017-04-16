@@ -32,7 +32,7 @@ static int	print_opt_err(char *opts, char c)
 **	quelles soient a 1 ou 0 sont remit a 0.
 */
 
-static int	*ft_set_opt(int *opt, char *opts, char c, size_t overwrite)
+static int	*ft_set_opt(int *opt, char *opts, char c, int overwrite)
 {
 	size_t pos;
 
@@ -57,7 +57,7 @@ static int	*ft_set_opt(int *opt, char *opts, char c, size_t overwrite)
 **	est renvoyée.
 */
 
-static int	ft_is_opt(int *opt, char *opts, char *arg, size_t overwrite)
+static int	ft_is_opt(int *opt, char *opts, char *arg, int *tabi)
 {
 	int	i;
 
@@ -76,9 +76,9 @@ static int	ft_is_opt(int *opt, char *opts, char *arg, size_t overwrite)
 		{
 			if (ft_strchr(opts, arg[i]) == NULL)
 			{
-				return ((opt[0] == 0) ? print_opt_err(opts, arg[i]) : -1);
+				return ((tabi[1] == 0) ? print_opt_err(opts, arg[i]) : -1);
 			}
-			opt = ft_set_opt(opt, opts, arg[i], overwrite);
+			opt = ft_set_opt(opt, opts, arg[i], tabi[0]);
 			++i;
 		}
 	}
@@ -90,14 +90,17 @@ static int	ft_is_opt(int *opt, char *opts, char *arg, size_t overwrite)
 **	la chaine d'option.
 */
 
-static int	*ft_check_opt(int *opt, char *opts, char **args, size_t overwrite)
+static int	*ft_check_opt(int *opt, char *opts, char **args, int overwrite)
 {
 	int		i;
+	int		tabi[2];
 
 	i = -1;
+	tabi[0] = overwrite;
+	tabi[1] = opt[0];
 	while (args[++i] != NULL)
 	{
-		opt[0] = ft_is_opt(opt, opts, args[i], overwrite);
+		opt[0] = ft_is_opt(opt, opts, args[i], tabi);
 		if (opt[0] == -1)
 		{
 			return (opt);
@@ -116,7 +119,7 @@ static int	*ft_check_opt(int *opt, char *opts, char **args, size_t overwrite)
 **	parsing d'option se finit, ou une erreur d'option.
 */
 
-int			*ft_opt_parse(char *opts, char **av, size_t over, int print_opt)
+int			*ft_opt_parse(char *opts, char **av, int over, int print_opt)
 {
 	int		*opt;
 	size_t	i;

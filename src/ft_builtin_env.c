@@ -85,14 +85,15 @@ int					ft_env_binary(char **args)
 {
 	int	*opt;
 
+	opt = NULL;
 	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
 		return (0);
 	if (opt[0] < 0 || !args[opt[0]])
 	{
-		free(opt);
+		(opt) ? free(opt) : 0;
 		return (0);
 	}
-	free(opt);
+	(opt) ? free(opt) : 0;
 	return (1);
 }
 
