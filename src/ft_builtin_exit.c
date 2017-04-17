@@ -21,7 +21,9 @@ void	ft_del_core(t_core *core)
 		if (core->exp)
 			ft_del_list(core->exp);
 		if (core->env)
+		{
 			ft_del_list(core->env);
+		}
 		if (core->hist)
 			ft_del_list(core->hist);
 		ft_memdel((void*)&core);

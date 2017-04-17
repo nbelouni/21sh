@@ -53,9 +53,9 @@ int		ft_histopt_d(t_lst *hist, char *arg);
 t_lst	*ft_histopt_c(t_lst *hist);
 int		ft_check_histopt_arg(t_lst *hist, char **args, int i);
 int		ft_check_histopt_offset(t_lst *hist, char **args, int i);
-int		ft_check_histopt_file(t_lst *set, t_lst *hist, char **args, int i);
-int		ft_check_histopt(t_lst *set, t_lst *hist, char **args, int i);
-int		ft_parse_histopt(t_lst *set, t_lst *hist, char **args);
+int		ft_check_histopt_file(t_core *core, char **args, int i);
+int		ft_check_histopt(t_core *core, char **args, int i);
+int		ft_parse_histopt(t_core *core, char **args);
 
 /*
 **	ft_history_tools.c

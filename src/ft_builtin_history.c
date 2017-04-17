@@ -21,11 +21,11 @@
 **	apres avoir checké qu'un digit est bien envoyé au builtin.
 */
 
-static int	ft_exec_history(t_lst *set, t_lst *hist, char **args)
+static int	ft_exec_history(t_core *core, char **args)
 {
 	int		ret;
 
-	ret = (args[0][0] != '-') ? 1 : ft_parse_histopt(set, hist, args);
+	ret = (args[0][0] != '-') ? 1 : ft_parse_histopt(core, args);
 	if (ret == 0 || ret == ERR_NEW_CMD || ret == ERR_EXIT)
 	{
 		return (ret);
@@ -37,7 +37,7 @@ static int	ft_exec_history(t_lst *set, t_lst *hist, char **args)
 			ft_putstr_fd("history: ", 2);
 			return (ft_print_error(args[0], ERR_NUM_ARG, ERR_NEW_CMD));
 		}
-		ft_print_history(hist, ft_atoi(args[0]) - 1);
+		ft_print_history(core->hist, ft_atoi(args[0]) - 1);
 	}
 	return (0);
 }
@@ -68,7 +68,7 @@ int			ft_builtin_history(t_core *core, char **args)
 		}
 		else
 		{
-			ret = ft_exec_history(core->set, core->hist, args);
+			ret = ft_exec_history(core, args);
 		}
 	}
 	return (ret);
