@@ -114,6 +114,7 @@ int 	main(int argc, char **argv, char **envp)
 				if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				ft_push_ast(list, &ast);
+				print_t(ast);
 				export_job(ast, &job_list_bis);
 				list_iter(job_list_bis, (void *)launch_job);
 				delete_list(&job_list_bis, NULL);
