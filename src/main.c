@@ -111,14 +111,14 @@ int 	main(int argc, char **argv, char **envp)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
+				if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
+					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				ft_push_ast(list, &ast);
 				print_t(ast);
 				export_job(ast, &job_list_bis);
 				list_iter(job_list_bis, (void *)launch_job);
 				delete_list(&job_list_bis, NULL);
 				free_ast(ast);
-				if ((ret = ft_check_history_var(g_core->set, g_core->hist)) == ERR_EXIT)
-					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 			}
 			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
 				ft_strdel(&(g_core->buf->final_line));

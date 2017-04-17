@@ -11,16 +11,17 @@ MAJEUR :
 
 	- PATH=0 ls -> leaks, probablement due a tokenew;
 
-	PATIE EXECUTION (petit morceau) :
-		- ls -z && ls -z && ls -la && ls -p
-		- ls -z && ls -z && ls -la || ls -p
-		- ls -z && ls -z || ls -la && ls -p
-		- ls -z || ls -z && ls -la && ls -p
-		- ls -z && ls -z || ls -la || ls -p
-		- ls -z || ls -z && ls -la || ls -p
-		....
-		je suppose que ca proviens des priorites mal gerees
-			-> mauvais output compare a bash
+/	///******DONE*******//
+/	PARTIE EXECUTION (petit morceau) :
+/		- ls -z && ls -z && ls -la && ls -p
+/		- ls -z && ls -z && ls -la || ls -p
+/		- ls -z && ls -z || ls -la && ls -p
+/		- ls -z || ls -z && ls -la && ls -p
+/		- ls -z && ls -z || ls -la || ls -p
+/		- ls -z || ls -z && ls -la || ls -p
+/		....
+/		je suppose que ca proviens des priorites mal gerees
+/			-> mauvais output compare a bash
 
 MINEUR :
 

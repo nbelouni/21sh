@@ -17,14 +17,17 @@
 **	la variable du set HISTFILE. Si cette valeur est NULL, NULL est retourné.
 */
 
-char		*ft_get_hfname(t_lst *set)
+char		*ft_get_hfname(t_core *core)
 {
 	t_elem	*elem;
 
 	elem = NULL;
-	if ((elem = ft_find_elem("HISTFILE", set)) == NULL)
+	if ((elem = ft_find_elem("HISTFILE", core->set)) == NULL)
 	{
-		return (NULL);
+		if ((elem = ft_find_elem("HISTFILE", core->env)) == NULL)
+		{
+			return (NULL);
+		}
 	}
 	if (elem->value == NULL || elem->value[0] == '\0')
 	{
@@ -39,19 +42,19 @@ char		*ft_get_hfname(t_lst *set)
 **	le fichier et/ou la liste d'historique.
 */
 
-int			ft_check_history_var(t_lst *set, t_lst *hist)
+int			ft_check_history_var(t_core *core)
 {
 	int		hsize;
 	int		hfsize;
 	char	*hfname;
 
-	if ((hsize = ft_get_hsize(set)) >= 0)
+	if ((hsize = ft_get_hsize(core)) >= 0)
 	{
-		ft_truncate_histlist(hist, (size_t)hsize);
+		ft_truncate_histlist(core->hist, (size_t)hsize);
 	}
-	if ((hfname = ft_get_hfname(set)) != NULL)
+	if ((hfname = ft_get_hfname(core)) != NULL)
 	{
-		if ((hfsize = ft_get_hfsize(set)) >= 0)
+		if ((hfsize = ft_get_hfsize(core)) >= 0)
 		{
 			if ((hsize = ft_truncate_histfile(hfname, hfsize)) < 0)
 			{

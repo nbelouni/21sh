@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:26:10 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 22:16:48 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:01:17 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		is_redir(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (i + 1 < (int)ft_strlen(s))
 		{
@@ -35,7 +35,7 @@ int		is_redir(char *s, int i)
 
 int		is_agreg(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (i + 1 < (int)ft_strlen(s))
 		{
@@ -50,7 +50,7 @@ int		is_agreg(char *s, int i)
 
 int		is_or_and(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == '&' || s[i] == '|')
 		{

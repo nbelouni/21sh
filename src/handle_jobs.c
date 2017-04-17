@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/15 18:11:25 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:33:39 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <errno.h>
 
 extern	t_list	*g_job_list;
-
+extern	t_core	*g_core;
 /*
 ** Store the status of the process pid that was returned by waitpid.
 ** Return 0 if all went well, nonzero otherwise.
@@ -122,6 +122,7 @@ int		wait_for_job(t_job *j)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
 		last = WEXITSTATUS(status);
+		ft_setenv(g_core->set, "RET", ft_itoa(last));
 		if (mark_process_status(pid, status))
 			break ;
 	}
@@ -147,10 +148,20 @@ t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
 			ptr = ptr->left;
 		}
 		else
+		{
 			return (POP(stock));
+		}
 	}
 	return (NULL);
 }
+
+int		return_or_exit(char *error, int dofork)
+{
+	if (dofork)
+		exit(ft_print_error("21sh", error, ERR_EXIT));
+	return (1);
+}
+
 
 int		apply_redir(t_io *io, int dofork)
 {
@@ -160,8 +171,10 @@ int		apply_redir(t_io *io, int dofork)
 	{
 		if (io->flag & CLOSE && access(io->str, X_OK) == -1)
 			io->dup_src = open(io->str, io->mode, DEF_FILE);
+		if (access(io->str, R_OK | W_OK) == -1)
+			return (ft_print_error("21sh", ERR_NO_ACCESS, return_or_exit(ERR_NO_ACCESS, dofork)));
 		if (io->dup_src < 0)
-			exit(ft_print_error("21sh", ERR_NO_FILE, ERR_EXIT));
+			return (ft_print_error("21sh", ERR_NO_FILE, return_or_exit(ERR_NO_FILE, dofork)));
 	}
 	if (io->flag & WRITE && pipe(pipefd) != -1)
 	{
@@ -172,9 +185,7 @@ int		apply_redir(t_io *io, int dofork)
 	if (io->flag & DUP)
 	{
 		if (dup2(io->dup_src, io->dup_target) == -1 && dofork)
-			exit(ft_print_error("21sh", ERR_BADF, ERR_EXIT));
-		else if (dup2(io->dup_src, io->dup_target) == -1 && !dofork)
-			return (ft_print_error("21sh", ERR_BADF, ERR_EXIT));
+			return (ft_print_error("21sh", ERR_BADF, return_or_exit(ERR_BADF, dofork)));
 	}
 	if (io->flag & CLOSE && io->flag ^ WRITE)
 		close(io->dup_src);
@@ -278,12 +289,14 @@ void	launch_job(t_job *j)
 	t_node_p	current;
 	t_list		*stack;
 	int			last;
+	char		*s;
 
+	s = NULL;
+	last = 0;
 	current = j->process_tree;
 	stack = NULL;
 	while ((current = iter_in_order(current, &stack)))
 	{
-		last = wait_for_job(j);
 		if (current->type == IF)
 		{
 			current = ((((t_condition_if_p)current->data)->type == IF_OR &&
@@ -294,6 +307,9 @@ void	launch_job(t_job *j)
 		{
 			do_pipeline(j, current->data);
 			current = current->right;
+			last = wait_for_job(j);
+			ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
+			free(s);
 		}
 	}
 	insert_link_bottom(&g_job_list, new_link(j, sizeof(*j)));

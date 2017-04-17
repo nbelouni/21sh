@@ -50,13 +50,16 @@ int			ft_histopt_n(t_lst *set, t_lst *hist, char *filename)
 	return (0);
 }
 
-int			ft_histopt_w(t_lst *set, t_lst *hist, char *filename)
+int			ft_histopt_w(t_core *core, char *filename)
 {
-	if ((filename = ft_check_hist_filename(set, filename)) == NULL)
+	if ((filename = ft_check_hist_filename(core->set, filename)) == NULL)
 	{
-		return (ERR_NEW_CMD);
+		if ((filename = ft_check_hist_filename(core->env, filename)) == NULL)
+		{
+			return (ERR_NEW_CMD);	
+		}
 	}
-	return (ft_set_history(hist, filename));
+	return (ft_set_history(core->hist, filename));
 }
 
 int			ft_histopt_a(t_lst *set, t_lst *hist, char *filename)

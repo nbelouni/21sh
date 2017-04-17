@@ -6,7 +6,7 @@
 #    By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/05 17:19:47 by nbelouni          #+#    #+#              #
-#    Updated: 2017/04/13 18:25:36 by dogokar          ###   ########.fr        #
+#    Updated: 2017/04/15 18:41:14 by alallema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ $(NAME): $(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
 
-$(OBJ): $(SRCS)
-	$(CC) $(CFLAGS) -c $(SRCS) $(INC)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 clean:
 	rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/14 22:26:39 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 22:34:10 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:02:38 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		is_dquote(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == '"')
 			return (1);
@@ -24,7 +24,7 @@ int		is_dquote(char *s, int i)
 
 int		is_squote(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == '\'')
 			return (1);
@@ -37,7 +37,7 @@ int		find_dquote_end(char *s, int i)
 	int	len;
 
 	len = 0;
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		while (s[i + len])
 		{
@@ -57,7 +57,7 @@ int		find_squote_end(char *s, int i)
 	int	len;
 
 	len = 0;
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		while (s[i + len])
 		{

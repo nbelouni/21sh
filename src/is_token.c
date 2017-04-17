@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 18:15:50 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 23:02:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:04:02 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int		is_cmd(char *s, int i)
 		i--;
 	if (i < 0)
 		return (1);
-	if (i >= 0 &&
-	(is_separator(s, i) || is_char(s, i, '(') || is_char(s, i, '{')))
+	if (i >= 0 && is_separator(s, i))
 		return (1);
 	return (0);
 }

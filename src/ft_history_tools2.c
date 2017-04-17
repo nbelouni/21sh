@@ -60,7 +60,7 @@ static int	ft_truncate_histfile2(t_lst *tmp_hist, int n, int fd)
 	tmp_elem = tmp_hist->head;
 	while (tmp_elem != NULL)
 	{
-		if (--i <= 0)
+		if (--i < 0)
 			ft_putendl_fd(tmp_elem->name, fd);
 		tmp_elem = tmp_elem->next;
 	}

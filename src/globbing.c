@@ -6,11 +6,23 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/03 14:15:26 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 22:59:29 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 23:45:02 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+int		count_prev_char_in_quote(char *s, int *arr, int i, int quote)
+{
+	int len;
+
+	len = 0;
+	while (i - len >= 0 && s[i - len] == '\\' && arr[i - len] == quote)
+	{
+		len += 1;
+	}
+	return (len);
+}
 
 int		which_quotes(char *s, int len)
 {
@@ -29,77 +41,73 @@ int		which_quotes(char *s, int len)
 	return (w_quotes);
 }
 
-int		supp_char(char *s, int i, int c)
+int		supp_char(char *s, int i)
 {
 	int	j;
 
 	j = i;
-	if (is_char(s, i, c))
+	while (j < (int)ft_strlen(s))
 	{
-		while (j < (int)ft_strlen(s))
+		s[j] = s[j + 1];
+		j++;
+	}
+	return (TRUE);
+}
+
+void	init_is_in_quote(char *s, int *is_in_quote)
+{
+	int		iiq_len;
+	int		i;
+	int		quote;
+	int		supp;
+
+	iiq_len = ft_strlen(s);
+	i = 0;
+	quote = NO_QUOTE;
+	while (i < iiq_len)
+	{
+		supp = FALSE;
+		if ((quote != D_QUOTE && is_char(s, i, '\'')) ||
+		(quote != S_QUOTE && is_char(s, i, '"')))
 		{
-			s[j] = s[j + 1];
-			j++;
+			if (quote != D_QUOTE && is_char(s, i, '\''))
+				quote = (quote == NO_QUOTE) ? S_QUOTE : NO_QUOTE;
+			if (quote != S_QUOTE && is_char(s, i, '"'))
+				quote = (quote == NO_QUOTE) ? D_QUOTE : NO_QUOTE;
+			supp = supp_char(s, i);
+			iiq_len -= 1;
 		}
-		return (TRUE);
+		is_in_quote[i] = quote;
+		if (supp == FALSE)
+			i += 1;
 	}
-	return (FALSE);
-}
-
-void	supp_squote(char *s, int *i, int *len)
-{
-	int		j;
-
-	supp_char(s, *i, '\'');
-	j = find_next_char(s, *i, '\'');
-	supp_char(s, *i + j, '\'');
-	*i += j;
-	len -= 2;
-}
-
-void	supp_dquote(char *s, int *i, int *len)
-{
-	int		j;
-
-	supp_char(s, *i, '"');
-	j = find_next_char(s, *i, '"');
-	j += *i;
-	while (*i < j)
-	{
-		if (s[*i + 1] && (s[*i + 1] == '$' || s[*i + 1] == '\\' ||
-		s[*i + 1] == '`' || s[*i + 1] == '"'))
-			if (supp_char(s, *i, '\\'))
-				j--;
-		(*i)++;
-	}
-	supp_char(s, *i, '"');
-	*len -= 2;
 }
 
 void	supp_quotes(char *s)
 {
+	int		is_in_quote[ft_strlen(s)];
 	int		i;
+	int		n_bs;
 	int		j;
-	int		len;
+	int		keep_n_bs;
 
-	i = 0;
-	len = (int)ft_strlen(s);
-	while (i < len)
+	init_is_in_quote(s, is_in_quote);
+	i = ft_strlen(s);
+	j = i;
+	while (--i >= 0)
 	{
-		if (is_char(s, i, '\''))
-			supp_squote(s, &i, &len);
-		else if (is_char(s, i, '"'))
-			supp_dquote(s, &i, &len);
-		else if (s[i] == '\\')
+		if ((is_in_quote[--j] == NO_QUOTE && s[i] == '\\') ||
+		(is_in_quote[j] == D_QUOTE && (s[i + 1] &&
+		(s[i + 1] == '$' || s[i + 1] == '\\' ||
+		s[i + 1] == '"') && s[i] == '\\')))
 		{
-			j = i - 1;
-			while (++j < (int)ft_strlen(s))
-				s[j] = s[j + 1];
-			i += 1;
-			len -= 1;
+			n_bs = count_prev_char_in_quote(s, is_in_quote, i, is_in_quote[j]);
+			keep_n_bs = n_bs / 2;
+			n_bs = n_bs / 2 + n_bs % 2;
+			while (n_bs > 0 && supp_char(s, i) && (i -= 1) >= 0)
+				n_bs -= 1;
+			i -= keep_n_bs;
 		}
-		else
-			i++;
 	}
 }
 
@@ -108,7 +116,7 @@ int		init_begin_end(char *s, int *begin, int *end)
 	int		i;
 
 	*begin = find_next_char(s, 0, '$');
-	if (*begin < 0 || *begin + 1 >= (int)ft_strlen(s) ||
+	if (*begin < 0 || !ft_isalpha(s[*begin + 1]) ||
 	which_quotes(s, *begin) == S_QUOTE)
 		return (TRUE);
 	*begin += 1;
