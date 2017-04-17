@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/17 17:17:27 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:33:39 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <errno.h>
 
 extern	t_list	*g_job_list;
-
+extern	t_core	*g_core;
 /*
 ** Store the status of the process pid that was returned by waitpid.
 ** Return 0 if all went well, nonzero otherwise.
@@ -122,6 +122,7 @@ int		wait_for_job(t_job *j)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
 		last = WEXITSTATUS(status);
+		ft_setenv(g_core->set, "RET", ft_itoa(last));
 		if (mark_process_status(pid, status))
 			break ;
 	}
@@ -147,7 +148,9 @@ t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
 			ptr = ptr->left;
 		}
 		else
+		{
 			return (POP(stock));
+		}
 	}
 	return (NULL);
 }
@@ -286,12 +289,14 @@ void	launch_job(t_job *j)
 	t_node_p	current;
 	t_list		*stack;
 	int			last;
+	char		*s;
 
+	s = NULL;
+	last = 0;
 	current = j->process_tree;
 	stack = NULL;
 	while ((current = iter_in_order(current, &stack)))
 	{
-		last = wait_for_job(j);
 		if (current->type == IF)
 		{
 			current = ((((t_condition_if_p)current->data)->type == IF_OR &&
@@ -302,6 +307,9 @@ void	launch_job(t_job *j)
 		{
 			do_pipeline(j, current->data);
 			current = current->right;
+			last = wait_for_job(j);
+			ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
+			free(s);
 		}
 	}
 	insert_link_bottom(&g_job_list, new_link(j, sizeof(*j)));
