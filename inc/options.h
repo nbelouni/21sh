@@ -32,6 +32,6 @@
 **	ft_opt_parse.c
 */
 
-int		*ft_opt_parse(char *opts, char **av, size_t overwrite, int print_o);
+int		*ft_opt_parse(char *opts, char **av, int overwrite, int print_o);
 
 #endif
