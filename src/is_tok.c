@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 13:02:54 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 22:25:59 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:00:55 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		cut_space(char *s, int i)
 
 int		is_space(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == ' ')
 			return (ESPACE);
@@ -31,7 +31,7 @@ int		is_space(char *s, int i)
 
 int		is_dot(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == ';')
 			return (DOT);
@@ -41,7 +41,7 @@ int		is_dot(char *s, int i)
 
 int		is_separator(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == '|' || s[i] == ';')
 			return (1);
@@ -54,7 +54,7 @@ int		is_separator(char *s, int i)
 
 int		is_redirection(char *s, int i)
 {
-	if (i == 0 || s[i - 1] != '\\')
+	if (i == 0 || count_prev_char(s, i - 1, '\\') % 2 == 0)
 	{
 		if (s[i] == '>' || s[i] == '<' || s[i] == '&')
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 22:35:30 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:01:49 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int					find_prev_char(char *s, int len, char c);
 int					find_next_char(char *s, int len, char c);
 int					count_prev_char(char *s, int i, char c);
 
-int					is_group(char *s, int i);
 int					is_separator(char *s, int i);
 int					is_redirection(char *s, int i);
 int					is_dquote(char *s, int i);
