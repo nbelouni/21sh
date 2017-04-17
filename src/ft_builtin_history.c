@@ -58,7 +58,7 @@ int			ft_builtin_history(t_core *core, char **args)
 	if (core->hist != NULL)
 	{
 		hsize = 0;
-		if ((hsize = ft_get_hsize(core->set)) == 0)
+		if ((hsize = ft_get_hsize(core)) == 0)
 		{
 			return (ERR_NEW_CMD);
 		}

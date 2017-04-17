@@ -22,15 +22,18 @@
 **	la valeur digitale de la value est renvoyée.
 */
 
-int		ft_get_hsize(t_lst *set)
+int		ft_get_hsize(t_core *core)
 {
 	int			ret;
 	t_elem		*elem;
 
 	elem = NULL;
-	if ((elem = ft_find_elem("HISTSIZE", set)) == NULL)
+	if ((elem = ft_find_elem("HISTSIZE", core->set)) == NULL)
 	{
-		return (-1);
+		if ((elem = ft_find_elem("HISTSIZE", core->env)) == NULL)
+		{
+			return (-1);
+		}
 	}
 	if (elem->value == NULL || elem->value[0] == '\0')
 	{

@@ -56,17 +56,17 @@ static int	ft_exec_setenv(t_lst *env, char **args)
 {
 	if (ft_strchr(args[0], '=') != NULL)
 	{
-		return (ft_print_error("cd", ERR_VAR_NO_ALPHA, ERR_NEW_CMD));
+		return (ft_print_error("setenv", ERR_VAR_NO_ALPHA, ERR_NEW_CMD));
 	}
 	else if (ft_isalpha(args[0][0]) == 0)
 	{
-		return (ft_print_error("cd", ERR_VAR_BEG_NO_ALPHA, ERR_NEW_CMD));
+		return (ft_print_error("setenv", ERR_VAR_BEG_NO_ALPHA, ERR_NEW_CMD));
 	}
 	else
 	{
 		if (args[1] != NULL && args[2] != NULL)
 		{
-			return (ft_print_error("cd", ERR_TOO_MANY_ARGS, ERR_NEW_CMD));
+			return (ft_print_error("setenv", ERR_TOO_MANY_ARGS, ERR_NEW_CMD));
 		}
 		return (ft_setenv(env, args[0], args[1]));
 	}

@@ -22,13 +22,14 @@
 **	cas n'est trouvé, la valeur digitale de la value est renvoyée.
 */
 
-int			ft_get_hfsize(t_lst *set)
+int			ft_get_hfsize(t_core *core)
 {
 	t_elem	*elem;
 	int		ret;
 
-	if ((elem = ft_find_elem("HISTFILESIZE", set)) == NULL)
+	if ((elem = ft_find_elem("HISTFILESIZE", core->set)) == NULL)
 	{
+		if ((elem = ft_find_elem("HISTFILESIZE", core->env)) == NULL)
 		return (-1);
 	}
 	if (elem->value == NULL || elem->value[0] == '\0')

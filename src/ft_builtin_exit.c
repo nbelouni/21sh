@@ -43,17 +43,14 @@ int		ft_builtin_exit(t_core *core, char **args)
 	if (args && args[0])
 	{
 		if (!ft_isdigit(args[0][0]) || args[1])
-		{
 			return (ft_print_error("exit", ERR_EXPR_SYNT, ERR_NEW_CMD));
-		}
 		else if (!ft_strisdigit(args[0]) && args[0][0] != '-')
-		{
 			return (ft_print_error("exit", ERR_EXT_FRMT, ERR_NEW_CMD));
-		}
 		ret = (unsigned char)ret;
 		ret = ft_atoi(args[0]);
 	}
-	ft_histopt_w(core->set, core->hist, NULL);
+	ft_histopt_w(core, NULL);
+	ft_check_history_var(core);
 	ft_del_core(core);
 	clean_pos_curs();
 	close_termios();
