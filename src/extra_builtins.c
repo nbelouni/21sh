@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 15:58:54 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/13 17:59:42 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:47:11 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void			print_no_opt(t_job *j)
 
 void			print_optl(t_job *j)
 {
+	PUT2("COUCOU\n");
 //	print_index();
 	print_current(j);
 	ft_putstr_fd("\t", 1);
@@ -53,6 +54,7 @@ void			print_optl(t_job *j)
 	ft_putstr_fd("\t\t", 1);
 	print_command(j);
 	ft_putstr_fd("\n", 1);
+	PUT2("END\n");
 }
 
 void			print_optp(t_job *j)

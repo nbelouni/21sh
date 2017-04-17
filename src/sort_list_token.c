@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 23:07:28 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/17 21:35:48 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			here_doc(elem->next, completion, hist);
 		elem = elem->next;
 	}
+	while (*list && (*list)->prev)
+		(*list) = (*list)->prev;
 	return ;
 }
