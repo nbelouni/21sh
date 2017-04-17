@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:24:17 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/15 15:14:57 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 20:02:55 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int					ft_env_binary(char **args)
 	opt = NULL;
 	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
 		return (0);
-	if (opt[0] < 0 || !args[opt[0]])
+	if (opt[0] < 0 || !args[opt[0] + 1])
 	{
 		(opt) ? free(opt) : 0;
 		return (0);
