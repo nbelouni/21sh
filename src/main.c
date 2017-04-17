@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/15 15:14:20 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 20:20:42 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int 	main(int argc, char **argv, char **envp)
 				if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				ft_push_ast(list, &ast);
-				print_t(ast);
+//				print_t(ast);
 				export_job(ast, &job_list_bis);
 				list_iter(job_list_bis, (void *)launch_job);
 				delete_list(&job_list_bis, NULL);
