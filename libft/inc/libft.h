@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/04 14:46:22 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/18 11:49:26 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/18 22:53:36 by dogokar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 
 # include "error.h"
 # include "option.h"
-# include "get_next_line.h"
 
 # define BUFF_SIZE 2048
 
@@ -33,6 +32,14 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct		s_line
+{
+	int				fd;
+	int				ret;
+	char			*tmp;
+	struct s_line	*next;
+}					t_line;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -94,7 +101,7 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstpush(t_list **begin, void const *s, size_t s_size);
 int					get_next_line(int const fd, char **line);
-
+char				*ft_strndup(const char *s1, size_t n);
 int					ft_print_error(char *cmd, char *err, int ret);
 int					ft_is_valid_dir(const char *pathname);
 int					ft_get_index_of(char *str, char c);
