@@ -22,7 +22,7 @@ int		bang_number_sub(t_lst *hist, char **s, char *n)
 
 	number = (n[0] == '-') ? hist->size - ft_atoi(n + 1) + 1 : ft_atoi(n);
 	if ((tmp2 = ft_gets_hist_ncmd(hist, number)) == NULL)
-		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: event not found: ", *s, -1));
 	if ((tmpjoin = ft_strjoin("!", n)) == NULL)
 		return (ERR_EXIT);
 	tmp = *s;
@@ -43,7 +43,7 @@ int		bang_start_occur_sub(t_lst *hist, char **s, char *n)
 	char	*tmpjoin;
 
 	if ((tmp2 = ft_gets_in_hist(hist, n, &ft_strncmp_bis)) == NULL)
-		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: event not found: ", *s, -1));
 	if ((tmpjoin = ft_strjoin("!", n)) == NULL)
 		return (ERR_EXIT);
 	tmp = *s;
@@ -64,7 +64,7 @@ int		bang_contain_occur_sub(t_lst *hist, char **s, char *n)
 	char	*tmpjoin;
 
 	if ((tmp2 = ft_gets_in_hist(hist, n, &ft_strstr_bis)) == NULL)
-		return (ft_print_error("21sh: !", ERR_EVENT_NFOUND, ERR_NEW_CMD));
+		return (ft_print_error("21sh: event not found: ", *s, -1));
 	if ((tmpjoin = ft_strjoin("!?", n)) == NULL)
 		return (ERR_EXIT);
 	tmp = *s;

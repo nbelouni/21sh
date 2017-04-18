@@ -77,6 +77,7 @@ int 	main(int argc, char **argv, char **envp)
 	t_buf	*buf;
 	t_token	*list;
 	int		ret;
+	int		ret_subs;
 	int		ret_read;
 	t_tree	*ast;
 	t_list	*job_list_bis = NULL;
@@ -105,9 +106,9 @@ int 	main(int argc, char **argv, char **envp)
 		{
 			if (is_line_ended(g_core->buf) < 0)
 				return (-1);
-			bang_substitution(&(g_core->buf->final_line), g_core);
+			ret_subs = bang_substitution(&(g_core->buf->final_line), g_core);
 			ret = parse_buf(&list, g_core->buf->final_line, &completion, g_core->hist);
-			if (ret > 0 && list)
+			if (ret > 0 && list && ret_subs == 0)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
@@ -120,6 +121,8 @@ int 	main(int argc, char **argv, char **envp)
 				delete_list(&job_list_bis, NULL);
 				free_ast(ast);
 			}
+			else if (ret_subs == 2)
+				ft_putendl(buf->final_line);
 			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
 				ft_strdel(&(g_core->buf->final_line));
 			else
