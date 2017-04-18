@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:01:52 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 18:07:23 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/18 22:37:28 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@
 */
 # define CTRL_P 16
 
+# define CTRL_Y 16
 # define CTRL_T 20
 # define ALT_C  42947
 # define ALT_V  10127586

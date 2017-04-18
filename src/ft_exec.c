@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/15 16:20:10 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/18 19:40:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static char		*ft_cut_path(char **s, char *av)
 void			not_binary(char *s, char *s2, char **av, char **envp)
 {
 	struct stat	st;
+
 
 	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
 		execve(av[0], av, envp);
@@ -101,7 +102,7 @@ void			ft_exec(char **av)
 	free(s2);
 	free(envp);
 	ft_putendl_fd(av[0], 2);
-	exit(127);
+	exit(37);
 }
 
 /*
