@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/17 19:33:39 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/18 23:19:18 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_job	*get_job_from_pid(pid_t pid)
 	return (NULL);
 }
 
-int	mark_process_status(pid_t pid, int status)
+int	mark_process_status(pid_t pid, int status, int *last)
 {
 	t_process_p	p;
 
@@ -85,7 +85,7 @@ int	mark_process_status(pid_t pid, int status)
 			else
 			{
 				p->completed = 1;
-//				last = WEXITSTATUS(status);
+				*last = WEXITSTATUS(status);
 				if (WIFSIGNALED(status))
 				{
 					ft_putstr_fd("21sh: Terminated by signal ", 2);
@@ -96,7 +96,10 @@ int	mark_process_status(pid_t pid, int status)
 			return (0);
 		}
 		else
+//		{
+//			PUT2("_______________1\n");
 			return (-1);
+//		}
 	}
 	else if (pid == 0 || errno == ECHILD)
 		return (-1);
@@ -109,28 +112,50 @@ int	mark_process_status(pid_t pid, int status)
 ** blocking until all processes in the given job have reported.
 */
 
+int		job_is_complete(t_job *j)
+{
+	t_process *p;
+	t_list		*ptr;
+
+	ptr = j->wait_process_list;
+	while (ptr)
+	{
+		p = ptr->content;
+		if (!p->completed)
+			return (0);
+		ptr = ptr->next;
+	}
+	return (1);
+}
+
 int		wait_for_job(t_job *j)
 {
 	int			status;
 	pid_t		pid;
 	int			last;
-	char		*tmp;
 
 	last = -1;
-	tmp = NULL;
-	status = 0;
 	(void)j;
 	signal(SIGCHLD, SIG_DFL);
 	while (true)
 	{
+//		PUT2("waitpid() : ");
+//		if (((t_process_p)((t_list *)j->process_tree->data)->content)->argv)
+//			PUT2(((t_process_p)((t_list *)j->process_tree->data)->content)->argv[0]);
+		X('\n');
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
-		last = WEXITSTATUS(status);
-		tmp = ft_itoa(last);
-		ft_setenv(g_core->set, "RET", tmp);
-		ft_strdel(&tmp);
-		if (mark_process_status(pid, status))
+//		PUT2("wait_for_job() : pid : ");E(pid);X('\n');
+//		last = WEXITSTATUS(status);
+//		ft_setenv(g_core->set, "RET", ft_itoa(last));
+		int ret;
+		if ((ret = mark_process_status(pid, status, &last)) || job_is_complete(j))
+		{
+//			PUT2("mark_process_status() 1: ");E(ret);X('\n');
 			break ;
+		}
+//		PUT2("mark_process_status() 2: ");E(ret);X('\n');
 	}
+//	PUT2("wait_for_job() : last : ");E(last);X('\n');
 	return (last);
 }
 
@@ -199,23 +224,35 @@ int		apply_redir(t_io *io, int dofork)
 
 int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 {
-	t_io	*io_in;
-	t_io	*io_out;
+	t_io	*io_in[2];
+	t_io	*io_out[2];
 
 	if (pipe(io_pipe) == -1)
 		exit(ft_print_error("21sh", ERR_PIPE, ERR_EXIT));
-	io_in = new_io();
-	io_out = new_io();
-	io_in->tab_fd[0] = dup(STDOUT_FILENO);
-	io_out->tab_fd[1] = dup(STDIN_FILENO);
-	io_in->flag = DUP | CLOSE;
-	io_out->flag = DUP | CLOSE;
-	io_in->dup_src = io_pipe[1];
-	io_in->dup_target = STDOUT_FILENO;
-	io_out->dup_src = io_pipe[0];
-	io_out->dup_target = STDIN_FILENO;
-	PUSH(&(p1->io_list), io_in);
-	PUSH(&(p2->io_list), io_out);
+	io_in[0] = new_io();
+	io_in[1] = new_io();
+	io_out[0] = new_io();
+	io_out[1] = new_io();
+
+	io_in[0]->tab_fd[0] = dup(STDOUT_FILENO);
+	io_out[0]->tab_fd[1] = dup(STDIN_FILENO);
+
+	io_in[0]->flag = DUP | CLOSE;
+	io_in[1]->flag = CLOSE;
+	io_out[0]->flag = DUP | CLOSE;
+	io_out[1]->flag = CLOSE;
+
+	io_in[0]->dup_src = io_pipe[1];
+	io_in[0]->dup_target = STDOUT_FILENO;
+	io_in[1]->dup_src = io_pipe[0];
+	io_out[0]->dup_src = io_pipe[0];
+	io_out[0]->dup_target = STDIN_FILENO;
+	io_out[1]->dup_src = io_pipe[1];
+
+	PUSH(&(p1->io_list), io_in[0]);
+	PUSH(&(p1->io_list), io_in[1]);
+	PUSH(&(p2->io_list), io_out[0]);
+	PUSH(&(p2->io_list), io_out[1]);
 	return (io_pipe[1]);
 }
 
@@ -223,11 +260,14 @@ int		make_children(t_process_p p)
 {
 	int	pid;
 
+//	PUT2("fork() : ");
+//	PUT2(p->argv[0]);
+//		X('\n');
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-		signal(SIGTSTP, SIG_DFL);
+//		signal(SIGTSTP, SIG_DFL);
 		signal(SIGTTIN, SIG_DFL);
 		signal(SIGTTOU, SIG_DFL);
 		signal(SIGCHLD, SIG_DFL);
@@ -236,6 +276,8 @@ int		make_children(t_process_p p)
 		exit(ft_print_error("21sh", ERR_FORK, ERR_EXIT));
 	else
 		p->pid = pid;
+
+//	PUT2("make_children() : pid : ");E(pid);X('\n');
 	return (pid);
 }
 
@@ -275,7 +317,7 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 	while (pipeline)
 	{
 		out = (pipeline->next) ? do_pipe(pipeline->content,
-			pipeline->next->content, io_pipe) : STDOUT_FILENO;
+		pipeline->next->content, io_pipe) : STDOUT_FILENO;
 		exec_simple_command(pipeline->content, dofork);
 		list_iter_int(((t_process_p)pipeline->content)->io_list, (void *)restore_fd, dofork);
 		if (out != STDOUT_FILENO)
@@ -300,6 +342,7 @@ void	launch_job(t_job *j)
 	last = 0;
 	current = j->process_tree;
 	stack = NULL;
+	insert_link_bottom(&g_job_list, new_link(j, sizeof(*j)));
 	while ((current = iter_in_order(current, &stack)))
 	{
 		if (current->type == IF)
@@ -313,11 +356,7 @@ void	launch_job(t_job *j)
 			do_pipeline(j, current->data);
 			current = current->right;
 			last = wait_for_job(j);
-			s = ft_itoa(last);
-			ft_setenv(g_core->set, "RET", s);
-			ft_strdel(&s);
+			free(s);
 		}
 	}
-	insert_link_bottom(&g_job_list, new_link(j, sizeof(*j)));
-	wait_for_job(j);
 }
