@@ -100,6 +100,7 @@ int		bang_diese_sub(char **s, int i);
 **	ft_bang_substitution.c
 */
 
+int		print_sub(t_lst *hist, char **s, int *i);
 int		switch_bang(t_lst *hist, char **s, int *i);
 int		bang_substitution(char **s, t_core *core);
 

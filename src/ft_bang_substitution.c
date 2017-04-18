@@ -12,7 +12,7 @@
 
 #include "ft_21sh.h"
 
-int		print_sub(t_lst *hist, char **s, int *i)
+int			print_sub(t_lst *hist, char **s, int *i)
 {
 	int		ret;
 	char	*tmp;
@@ -34,7 +34,7 @@ int		print_sub(t_lst *hist, char **s, int *i)
 	return ((ret < 0) ? ret : 2);
 }
 
-int		switch_bang(t_lst *hist, char **s, int *i)
+int			switch_bang(t_lst *hist, char **s, int *i)
 {
 	int		ret;
 	char	*n;
@@ -61,7 +61,26 @@ int		switch_bang(t_lst *hist, char **s, int *i)
 	return (ret);
 }
 
-int		bang_substitution(char **s, t_core *core)
+static int	check_sub_type(t_core *core, char **s, int *i)
+{
+	if (is_char(*s, *i, '!'))
+	{
+		++(*i);
+		if (!ft_strstr(*s, ":p"))
+		{
+			return (switch_bang(core->hist, s, i));
+		}
+		else
+		{
+			return (print_sub(core->hist, s, i));
+		}
+	}
+	else if (is_char(*s, *i, '^'))
+		return (ft_exec_quick_sub(core->hist->tail, s, i));
+	return (0);
+}
+
+int			bang_substitution(char **s, t_core *core)
 {
 	int		i;
 	int		squote;
@@ -76,18 +95,11 @@ int		bang_substitution(char **s, t_core *core)
 			squote++;
 		if (squote % 2 == 0)
 		{
-			if (is_char(*s, i, '!'))
+			ret = check_sub_type(core, s, &i);
+			if (ret < 0 || ret == 2)
 			{
-				++i;
-				if (!ft_strstr(*s, ":p"))
-					ret = switch_bang(core->hist, s, &i);
-				else
-					ret = print_sub(core->hist, s, &i);
-			}
-			else if (is_char(*s, i, '^'))
-				ret = ft_exec_quick_sub(core->hist->tail, s, &i);
-			if (ret < 0)
 				break ;
+			}
 		}
 	}
 	return (ret);
