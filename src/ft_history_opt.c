@@ -53,7 +53,7 @@ static int	ft_check_histopt_file2(t_core *core, char **args, int j)
 	filename = (args[1]) ? args[1] : NULL;
 	if (args[0][1] == HIST_OPT_R)
 	{
-		if ((ret = ft_histopt_r(&(core->hist), core->set, filename)) != -1)
+		if ((ret = ft_histopt_r(core, filename)) != -1)
 			return (j);
 	}
 	if (args[0][1] == HIST_OPT_W)
@@ -63,7 +63,7 @@ static int	ft_check_histopt_file2(t_core *core, char **args, int j)
 	}
 	if (args[0][1] == HIST_OPT_N)
 	{
-		if ((ret = ft_histopt_n(core->set, core->hist, filename)) != ERR_NEW_CMD)
+		if ((ret = ft_histopt_n(core, filename)) != ERR_NEW_CMD)
 			return ((ret == ERR_EXIT) ? ERR_EXIT : j);
 	}
 	return ((ret < 0) ? ret : j);
@@ -90,7 +90,7 @@ int			ft_check_histopt_file(t_core *core, char **args, int i)
 	}
 	if (args[i][1] == HIST_OPT_A)
 	{
-		if ((ret = ft_histopt_a(core->set, core->hist, filename)) != ERR_NEW_CMD)
+		if ((ret = ft_histopt_a(core, filename)) != ERR_NEW_CMD)
 			return (j);
 	}
 	if ((ret = ft_check_histopt_file2(core, &(args[i]), j)) >= 0)

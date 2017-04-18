@@ -62,19 +62,22 @@ t_lst	*ft_histfile_to_histlist(t_lst *histlist, int fd)
 	char		*buf;
 
 	buf = NULL;
+	elem = NULL;
 	while (get_next_line(fd, &buf) > 0)
 	{
 		if ((elem = ft_init_elem()) == NULL)
 			return (NULL);
 		if ((elem->name = ft_strdup(buf)) == NULL)
 		{
+			(buf) ? ft_strdel(&buf) : 0;
 			ft_del_elem(&elem, histlist);
 			return (NULL);
 		}
 		elem->is_appended = 1;
 		ft_insert_elem(elem, histlist);
-		ft_strdel(&buf);
+		(buf) ? ft_strdel(&buf) : 0;
 	}
+	(buf) ? ft_strdel(&buf) : 0;
 	return (histlist);
 }
 
@@ -117,11 +120,11 @@ t_lst	*ft_get_history(t_lst *hist, char *filename)
 	}
 	if ((lstat(filename, &st)) == -1)
 		return (hist);
-	if (st.st_size > 0)
+	if (st.st_size && st.st_size > 0)
 	{
 		if ((ft_get_histfile_content(hist, fd)) == ERR_EXIT)
 		{
-			ft_del_list(hist);
+			(hist) ? ft_del_list(hist) : 0;
 			hist = NULL;
 		}
 	}

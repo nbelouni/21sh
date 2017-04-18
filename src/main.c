@@ -61,7 +61,7 @@ int		ft_creat_core(char **envp)
 		g_core->env = ft_env_to_list(envp, g_core->env);
 	else
 		g_core->env = ft_default_env();
-	ft_histopt_r(&(g_core->hist), g_core->set, NULL);
+	ft_histopt_r(g_core, NULL);
 	return (TRUE);
 }
 

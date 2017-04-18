@@ -32,7 +32,7 @@ int			insert_to_env(t_elem *node, char *arg, t_lst *env, t_lst *type_env)
 	}
 	if (val)
 	{
-		ft_strdel(&node->value);
+		ft_strdel(&(node->value));
 		node->value = ft_strdup(val);
 		ft_strdel(&val);
 	}

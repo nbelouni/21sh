@@ -27,8 +27,8 @@ int			ft_sub_reloaded(t_str *s_str, char **line, int const fd)
 	{
 		if (s_str->s[s_str->i] == '\n')
 		{
-			tmp = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
-			*line = ft_free_and_dup(*line, tmp);
+			tmp = *line;
+			*line = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
 			ft_strdel(&tmp);
 			s_str->i++;
 			s_str->j = s_str->i;
@@ -53,8 +53,8 @@ static int	exec_get_next_line(t_str *s_str, char **s, int const fd, char *buf)
 		return (-1);
 	if (ft_sub_reloaded(s_str, s, fd) == 1)
 		return (1);
-	tmp = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
-	*s = ft_free_and_dup(*s, tmp);
+	tmp = *s;
+	*s = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
 	ft_strdel(&tmp);
 	return (0);
 }
@@ -65,6 +65,7 @@ int			get_next_line(int const fd, char **line)
 	char			buf[BUFF_SIZE + 1];
 	static t_str	s_str;
 
+	ret = 0;
 	if (BUFF_SIZE <= 0 || !line || fd < 0)
 		return (-1);
 	if (!s_str.s)
@@ -73,7 +74,10 @@ int			get_next_line(int const fd, char **line)
 	{
 		if ((s_str.s = (char *)malloc(sizeof(s_str.s))))
 			s_str.s[0] = '\0';
+		else
+			return (-2);
 	}
-	ret = exec_get_next_line(&s_str, line, fd, buf);
+	if ((ret = exec_get_next_line(&s_str, line, fd, buf)) < 0)
+		free(s_str.s);
 	return (ret);
 }

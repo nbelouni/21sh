@@ -134,15 +134,16 @@ int			ft_print_history(t_lst *hist, int start)
 **	de la variable HISTFILE, sinon NULL est retourne.
 */
 
-char		*ft_check_hist_filename(t_lst *set, char *filename)
+char		*ft_check_hist_filename(t_core *core, char *filename)
 {
 	t_elem	*elem;
 
 	if (filename == NULL || filename[0] == '\0')
 	{
-		if ((elem = ft_find_elem("HISTFILE", set)) == NULL)
+		if ((elem = ft_find_elem("HISTFILE", core->set)) == NULL)
 		{
-			return (NULL);
+			if ((elem = ft_find_elem("HISTFILE", core->env)) == NULL)
+				return (NULL);
 		}
 		if (elem->value == NULL || elem->value[0] == '\0')
 		{
