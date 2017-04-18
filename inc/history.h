@@ -34,10 +34,10 @@ int		ft_histopt_s(t_lst *hist, char **args);
 **	ft_histopt_filename.c
 */
 
-int		ft_histopt_n(t_lst *set, t_lst *hist, char *filename);
+int		ft_histopt_n(t_core *core, char *filename);
 int		ft_histopt_w(t_core *core, char *filename);
-int		ft_histopt_a(t_lst *set, t_lst *hist, char *filename);
-int		ft_histopt_r(t_lst **hist, t_lst *set, char *filename);
+int		ft_histopt_a(t_core *core, char *filename);
+int		ft_histopt_r(t_core *core, char *filename);
 
 /*
 **	ft_histopt_offset.c
@@ -64,7 +64,7 @@ int		ft_parse_histopt(t_core *core, char **args);
 int		ft_truncate_histlist(t_lst *hist, size_t n);
 int		ft_truncate_histfile(char *filename, int n);
 char	*ft_get_hfname(t_core *core);
-char	*ft_check_hist_filename(t_lst *set, char *filename);
+char	*ft_check_hist_filename(t_core *core, char *filename);
 int		ft_print_history(t_lst *hist, int start);
 int		ft_cmd_to_history(t_lst *hist, char *cmd);
 int		ft_check_history_var(t_core *core);
@@ -100,6 +100,7 @@ int		bang_diese_sub(char **s, int i);
 **	ft_bang_substitution.c
 */
 
+int		print_sub(t_lst *hist, char **s, int *i);
 int		switch_bang(t_lst *hist, char **s, int *i);
 int		bang_substitution(char **s, t_core *core);
 

@@ -48,14 +48,9 @@ int			fill_username(t_slist **list, char *path)
 			return (ERR_EXIT);
 		if (insert_in_list(list, line) == ERR_EXIT)
 			return (ERR_EXIT);
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
+		(line) ? ft_strdel(&line) : 0;
 	}
-	if (line)
-		free(line);
+	(line) ? ft_strdel(&line) : 0;
 	close(fd);
 	return (0);
 }
@@ -103,14 +98,9 @@ int			fill_hostname(t_slist **list, char *path)
 			return (ERR_EXIT);
 		if (insert_in_list(list, line) == ERR_EXIT)
 			return (ERR_EXIT);
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
+		(line) ? ft_strdel(&line) : 0;
 	}
-	if (line)
-		free(line);
+	(line) ? ft_strdel(&line) : 0;
 	close(fd);
 	return (0);
 }

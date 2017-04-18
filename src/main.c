@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/15 15:14:20 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 20:20:42 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		ft_creat_core(char **envp)
 		g_core->env = ft_env_to_list(envp, g_core->env);
 	else
 		g_core->env = ft_default_env();
-	ft_histopt_r(&(g_core->hist), g_core->set, NULL);
+	ft_histopt_r(g_core, NULL);
 	return (TRUE);
 }
 
@@ -77,6 +77,7 @@ int 	main(int argc, char **argv, char **envp)
 	t_buf	*buf;
 	t_token	*list;
 	int		ret;
+	int		ret_subs;
 	int		ret_read;
 	t_tree	*ast;
 	t_list	*job_list_bis = NULL;
@@ -105,21 +106,23 @@ int 	main(int argc, char **argv, char **envp)
 		{
 			if (is_line_ended(g_core->buf) < 0)
 				return (-1);
-			bang_substitution(&(g_core->buf->final_line), g_core);
+			ret_subs = bang_substitution(&(g_core->buf->final_line), g_core);
 			ret = parse_buf(&list, g_core->buf->final_line, &completion, g_core->hist);
-			if (ret > 0 && list)
+			if (ret > 0 && list && ret_subs == 0)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				ft_push_ast(list, &ast);
-				print_t(ast);
+//				print_t(ast);
 				export_job(ast, &job_list_bis);
 				list_iter(job_list_bis, (void *)launch_job);
 				delete_list(&job_list_bis, NULL);
 				free_ast(ast);
 			}
+			else if (ret_subs == 2)
+				ft_putendl(buf->final_line);
 			if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
 				ft_strdel(&(g_core->buf->final_line));
 			else

@@ -48,15 +48,15 @@ void		ft_extract_elem(t_elem **elem, t_lst *lst)
 
 void		ft_clear_elem(t_elem **elem)
 {
-	if ((*elem)->name != NULL)
+	if ((*elem)->name != NULL && (*elem)->name[0] != '\0')
 	{
 		ft_strdel(&((*elem)->name));
 	}
-	if ((*elem)->value != NULL)
+	if ((*elem)->value != NULL && (*elem)->value[0] != '\0')
 	{
 		ft_strdel(&((*elem)->value));
 	}
-	free(*elem);
+	(*elem) ? free(*elem) : 0;
 }
 
 /*

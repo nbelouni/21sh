@@ -114,15 +114,20 @@ int		wait_for_job(t_job *j)
 	int			status;
 	pid_t		pid;
 	int			last;
+	char		*tmp;
 
 	last = -1;
+	tmp = NULL;
+	status = 0;
 	(void)j;
 	signal(SIGCHLD, SIG_DFL);
 	while (true)
 	{
 		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
 		last = WEXITSTATUS(status);
-		ft_setenv(g_core->set, "RET", ft_itoa(last));
+		tmp = ft_itoa(last);
+		ft_setenv(g_core->set, "RET", tmp);
+		ft_strdel(&tmp);
 		if (mark_process_status(pid, status))
 			break ;
 	}
@@ -308,8 +313,9 @@ void	launch_job(t_job *j)
 			do_pipeline(j, current->data);
 			current = current->right;
 			last = wait_for_job(j);
-			ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
-			free(s);
+			s = ft_itoa(last);
+			ft_setenv(g_core->set, "RET", s);
+			ft_strdel(&s);
 		}
 	}
 	insert_link_bottom(&g_job_list, new_link(j, sizeof(*j)));
