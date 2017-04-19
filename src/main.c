@@ -47,18 +47,46 @@ int		parse_builtins(t_core *core, char *cmd, char **cmd_args)
 	return (1);
 }
 
+static int	up_shlvl(t_elem **elem)
+{
+	int		lvl;
+
+	if ((*elem)->value != NULL && (*elem)->value[0] != '\0')
+	{
+		lvl = ft_atoi((*elem)->value);
+		++lvl;
+	}
+	else
+	{
+		lvl = 2;
+	}
+	ft_strdel(&((*elem)->value));
+	if (((*elem)->value = ft_itoa(lvl)) == NULL)
+		return (ERR_EXIT);
+	return (0);
+}
+
 /*
 **	  init_core initialisation des liste d'env
 */
 
 int		ft_creat_core(char **envp)
 {
+	t_elem	*elem;
+
 	if (ft_init_core() != TRUE)
 		return (ERR_EXIT);
 	g_core->set = ft_init_lstset();
 	g_core->exp = ft_init_list();
 	if (envp != NULL && envp[0] != NULL)
+	{
 		g_core->env = ft_env_to_list(envp, g_core->env);
+		elem = NULL;
+		if ((elem = ft_find_elem("SHLVL", g_core->env)) != NULL)
+			up_shlvl(&elem);
+		else
+			ft_setenv(g_core->env, "SHLVL", "2");
+	}
 	else
 		g_core->env = ft_default_env();
 	ft_histopt_r(g_core, NULL);
@@ -72,7 +100,7 @@ int		ft_creat_core(char **envp)
 int 	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
-  	(void)argv;
+	(void)argv;
 	t_completion	completion = {NULL, NULL, NULL, NULL};
 	t_buf	*buf;
 	t_token	*list;

@@ -3,95 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogokar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/17 18:14:07 by dogokar           #+#    #+#             */
-/*   Updated: 2016/11/22 22:31:00 by dogokar          ###   ########.fr       */
+/*   Created: 2014/11/25 16:53:21 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/04/18 15:29:54 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-static int			verifline(char *str, int *i)
+int			ft_sub_reloaded(t_str *s_str, char **line, int const fd)
 {
-	*i = 0;
-	while (str[*i])
-	{
-		if (str[*i] == '\n')
-			return (1);
-		*i = *i + 1;
-	}
-	return (-1);
-}
+	char			*tmp;
 
-static t_line		*multifd(t_line *node, int fd)
-{
-	while (node->next != NULL)
+	tmp = NULL;
+	if (s_str->fd != fd)
 	{
-		if (node->fd == fd)
-			return (node);
-		node = node->next;
+		s_str->i = 0;
+		s_str->j = 0;
+		s_str->fd = fd;
 	}
-	if (node->fd != fd)
+	while (s_str->s[s_str->i])
 	{
-		if (!(node->next = (t_line *)malloc(sizeof(t_line))))
-			return (NULL);
-		node = node->next;
-		node->fd = fd;
-		node->ret = 0;
-		node->tmp = ft_strnew(0);
-		node->next = NULL;
-	}
-	return (node);
-}
-
-static t_line		*reader(t_line *sline, char **line)
-{
-	char			buffer[BUFF_SIZE + 1];
-	int				i;
-
-	i = 0;
-	if (sline->fd < 0 || read(sline->fd, buffer, 0) < 0 || !line)
-		return (NULL);
-	(!sline->tmp) ? (sline->tmp = ft_strnew(1)) : (0);
-	while ((sline->ret = read(sline->fd, buffer, BUFF_SIZE)))
-	{
-		buffer[sline->ret] = '\0';
-		if ((sline->tmp = ft_strjoin(sline->tmp, buffer)) == NULL)
-			return (NULL);
-		if (verifline(sline->tmp, &i) > -1)
+		if (s_str->s[s_str->i] == '\n')
 		{
-			*line = ft_strndup(sline->tmp, i);
-			return (sline);
+			tmp = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
+			*line = ft_free_and_dup(*line, tmp);
+			ft_strdel(&tmp);
+			s_str->i++;
+			s_str->j = s_str->i;
+			return (1);
 		}
+		s_str->i++;
 	}
-	verifline(sline->tmp, &i);
-	*line = ft_strndup(sline->tmp, i);
-	return (sline);
+	return (0);
 }
 
-int					get_next_line(int const fd, char **line)
+static int	exec_get_next_line(t_str *s_str, char **s, int const fd, char *buf)
 {
-	static t_line	*sline;
-	t_line			*node;
+	char			*tmp;
 
-	node = NULL;
-	if (!sline)
+	tmp = NULL;
+	while ((s_str->read = read(fd, buf, BUFF_SIZE)) > 0)
 	{
-		if (!(sline = (t_line *)malloc(sizeof(t_line))))
-			return (-1);
-		sline->fd = fd;
-		sline->tmp = ft_strnew(0);
-		sline->next = NULL;
-		sline->ret = 0;
+		buf[s_str->read] = '\0';
+		s_str->s = ft_free_and_join(s_str->s, buf);
 	}
-	node = sline;
-	node = multifd(node, fd);
-	if (!(node = reader(node, line)))
+	if (s_str->read == -1)
 		return (-1);
-	if (((node->tmp = ft_strchr(node->tmp, '\n')) != NULL) && node->tmp++)
+	if (ft_sub_reloaded(s_str, s, fd) == 1)
 		return (1);
-	else if (node->tmp == NULL && node->ret == 0 && *line[0] == '\0')
-		return (0);
-	return (1);
+	tmp = ft_strsub(s_str->s, s_str->j, (s_str->i - s_str->j));
+	*s = ft_free_and_dup(*s, tmp);
+	ft_strdel(&tmp);
+	return (0);
+}
+
+int			get_next_line(int const fd, char **line)
+{
+	int				ret;
+	char			buf[BUFF_SIZE + 1];
+	static t_str	s_str;
+
+	if (BUFF_SIZE <= 0 || !line || fd < 0)
+		return (-1);
+	if (!s_str.s)
+		s_str.fd = fd;
+	if (!s_str.s || s_str.fd != fd)
+	{
+		if ((s_str.s = (char *)malloc(sizeof(s_str.s))))
+			s_str.s[0] = '\0';
+	}
+	ret = exec_get_next_line(&s_str, line, fd, buf);
+	return (ret);
 }

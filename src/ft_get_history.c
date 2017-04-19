@@ -56,7 +56,7 @@ int		ft_get_hsize(t_core *core)
 **	afin de les ajouter a la liste histlist.
 */
 
-t_lst	*ft_histfile_to_histlist(t_lst *histlist, int fd)
+t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 {
 	t_elem		*elem;
 	char		*buf;
@@ -70,15 +70,15 @@ t_lst	*ft_histfile_to_histlist(t_lst *histlist, int fd)
 		if ((elem->name = ft_strdup(buf)) == NULL)
 		{
 			(buf) ? ft_strdel(&buf) : 0;
-			ft_del_elem(&elem, histlist);
+			ft_del_elem(&elem, *histlist);
 			return (NULL);
 		}
 		elem->is_appended = 1;
-		ft_insert_elem(elem, histlist);
+		ft_insert_elem(elem, *histlist);
 		(buf) ? ft_strdel(&buf) : 0;
 	}
 	(buf) ? ft_strdel(&buf) : 0;
-	return (histlist);
+	return (*histlist);
 }
 
 /*
@@ -89,7 +89,7 @@ t_lst	*ft_histfile_to_histlist(t_lst *histlist, int fd)
 
 int		ft_get_histfile_content(t_lst *hist, int fd)
 {
-	if ((hist = ft_histfile_to_histlist(hist, fd)) == NULL)
+	if ((hist = ft_histfile_to_histlist(&hist, fd)) == NULL)
 	{
 		return (ERR_EXIT);
 	}

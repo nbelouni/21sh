@@ -30,7 +30,7 @@ t_lst	*ft_default_env(void)
 		return (NULL);
 	}
 	ft_setenv(env, "PWD", pwd);
-	ft_setenv(env, "SHLVL", "1");
+	ft_setenv(env, "SHLVL", "2");
 	ft_setenv(env, "_", NULL);
 	ft_strdel(&pwd);
 	return (env);

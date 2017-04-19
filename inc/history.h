@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/11 18:36:55 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/03/29 15:44:35 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/19 15:16:41 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 char	*ft_get_hist_value(t_elem *elem, int type);
 int		ft_get_hsize(t_core *core);
-t_lst	*ft_histfile_to_histlist(t_lst *histlist, int fd);
+t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd);
 int		ft_get_histfile_content(t_lst *hist, int fd);
 t_lst	*ft_get_history(t_lst *hist, char *filename);
 
