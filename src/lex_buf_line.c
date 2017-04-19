@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 00:50:00 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 22:12:31 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:44:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ int			parse_buf(t_token **lst, char *s, t_completion *compl, t_lst *hist)
 		j = -1;
 		if ((ret_lex = cut_cmd(lst, s, &p)))
 			return (return_new_prompt(ret_lex));
-		if (p.i + p.len < (int)ft_strlen(s) && (ret = check_tok(s, p.i + p.len)) != NO_TOKEN)
+		if (p.i + p.len < (int)ft_strlen(s) &&
+				(ret = check_tok(s, p.i + p.len)) != NO_TOKEN)
 		{
 			if (ret == ESPACE)
 				p.i = cut_space(s, p.i);

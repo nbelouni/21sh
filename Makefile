@@ -98,6 +98,7 @@ SRCS = 	ft_builtin_cd.c		\
 		ft_quick_substitution.c\
 		edit_history.c			\
 		ft_env_dup_operations.c\
+		apply_redir.c		\
 		printdebugast.c
 
 SRCC = $(addprefix $(SDIR),$(SRCS))
@@ -106,7 +107,7 @@ ODIR = ./obj/
 OBJS = $(SRCS:.c=.o)
 OBCC = $(addprefix $(ODIR),$(OBJS))
 
-FLAG =  -Wall -Werror -Wextra# -fsanitize=address
+FLAG =  -Wall -Werror -Wextra -g -fsanitize=address
 
 $(NAME): $(OBCC)
 	make -C ./libft/

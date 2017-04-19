@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 14:45:12 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/17 19:33:47 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:48:18 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_mode		(g_tab_mode[7]) = {
 	[6] = { DIR_R_AMP, O_RDWR | O_TRUNC, 0},
 };
 
-void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
+static void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
 {
 	int				i;
 
@@ -54,7 +54,7 @@ void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
 	}
 }
 
-int		list_iter_int(t_list *list, int (*f)(void *, int), int dofork)
+int				list_iter_int(t_list *list, int (*f)(void *, int), int dofork)
 {
 	int		ret;
 
@@ -67,7 +67,7 @@ int		list_iter_int(t_list *list, int (*f)(void *, int), int dofork)
 	return (0);
 }
 
-int		restore_fd(t_io *io, int dofork)
+int				restore_fd(t_io *io, int dofork)
 {
 	if (!io)
 		return (0);
@@ -86,14 +86,14 @@ int		restore_fd(t_io *io, int dofork)
 	return (0);
 }
 
-void		save_fd(t_io *io, int type_redir)
+static void		save_fd(t_io *io, int type_redir)
 {
 	io->tab_fd[0] = dup(io->dup_target);
 	if (type_redir == DIR_L_AMP || type_redir == DIR_R_AMP)
 		io->tab_fd[1] = dup(io->dup_src);
 }
 
-t_node_p	create_redir(t_tree *node_redir, t_node_p left_node)
+t_node_p		create_redir(t_tree *node_redir, t_node_p left_node)
 {
 	t_io			*io;
 	int				left;

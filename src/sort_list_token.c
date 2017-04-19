@@ -6,13 +6,13 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/19 17:47:46 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:41:20 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void	ft_find_fd(t_token *list)
+int		ft_find_fd(t_token *list)
 {
 	char	*s;
 
@@ -23,6 +23,7 @@ void	ft_find_fd(t_token *list)
 		free(list->word);
 		list->word = NULL;
 	}
+	return (1);
 }
 
 /*
@@ -53,11 +54,12 @@ void	sort_list_token2(t_token **list, t_completion *completion, t_lst *hist)
 
 int		create_cmd(t_token **list)
 {
-	PUT2("create\n");
 	t_token		*tmp;
 	int			ret;
 
 	ret = 1;
+	if ((*list)->prev && PREVISCMD((*list)))
+		return (1);
 	tmp = ft_tokenew(CMD, NULL);
 	if ((*list)->prev)
 	{
@@ -79,8 +81,8 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 	{
 		if (elem->type == FD_IN)
 			(ft_swap_in(&elem) ? *list : (*list = elem));
-		if (is_dir_type(elem->type))
-			ft_find_fd(elem);
+		if (is_dir_type(elem->type) && ft_find_fd(elem))
+			create_cmd(&elem) ? *list : (*list = elem);
 		if (ISAMP(elem) && elem->next && check_error_out(elem->next))
 			return ;
 		if (((elem->type > START && elem->type < OR) || (elem->type > AND
@@ -94,8 +96,6 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			elem = is_local_var(elem);
 		if (elem->type == DL_DIR)
 			here_doc(elem->next, completion, hist);
-		if (is_dir_type(elem->type) && (!elem->prev || (elem->prev && !PREVISCMD(elem))))
-			create_cmd(&elem) ? *list : (*list = elem);
 		elem = elem->next;
 	}
 	while ((*list) && (*list)->prev)

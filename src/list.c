@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 20:01:32 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/10 20:03:34 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:43:51 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	*list_iter_while(t_list *list, void *(f)(void *))
 }
 
 void	*list_get_nth(t_list *list, uint32_t nth)
-{	
+{
 	while (list)
 	{
 		--nth;

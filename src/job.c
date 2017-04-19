@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/19 17:25:23 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:46:21 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_job	*create_job(t_tree *root, int foreground)
 
 void	export_job(t_tree *root, t_list **job_list)
 {
-
 	while (root && TOKEN(root) == DOT)
 	{
 		insert_link_bottom(job_list, new_link(create_job(root->left,
@@ -85,7 +84,8 @@ void	export_job(t_tree *root, t_list **job_list)
 		root = root->right;
 	}
 	if (root)
-		insert_link_bottom(job_list, new_link(create_job(root, 1), sizeof(t_job)));
+		insert_link_bottom(job_list,
+				new_link(create_job(root, 1), sizeof(t_job)));
 }
 
 t_condition_if_p		new_condition_if(t_type_if type)
@@ -167,7 +167,8 @@ t_node_p	create_process(t_tree *node_proc)
 	return (ptr);
 }
 
-t_node_p	create_condition_if(t_tree *node_condition_if, t_node_p right_node, t_node_p left_node)
+t_node_p	create_condition_if(t_tree *node_condition_if,
+		t_node_p right_node, t_node_p left_node)
 {
 	t_node_p ptr;
 
