@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:06:09 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/19 18:19:08 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:47:58 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 		else
 			ft_strdel(&buf);
 	}
+	ft_strdel((buf) ? &buf : NULL);
 	return (*histlist);
 }
 

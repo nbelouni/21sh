@@ -6,7 +6,7 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/25 16:53:21 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/18 15:29:54 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:45:00 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static int	exec_get_next_line(t_str *s_str, char **s, int const fd, char *buf)
 	while ((s_str->read = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[s_str->read] = '\0';
-		s_str->s = ft_free_and_join(s_str->s, buf);
+		tmp = s_str->s;
+		s_str->s = ft_strjoin(tmp, buf);
+		if (tmp)
+			ft_strdel(&tmp);
 	}
 	if (s_str->read == -1)
 		return (-1);

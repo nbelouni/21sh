@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:18:08 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:00:01 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		ft_lstclr(t_lst *lst)
 		ft_del_elem(&tmp, lst);
 		tmp = tmp2;
 	}
+	sleep(10);
 	lst->head = NULL;
 	lst->tail = NULL;
 	lst->size = 0;

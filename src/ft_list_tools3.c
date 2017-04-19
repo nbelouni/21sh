@@ -6,7 +6,7 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 22:39:55 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 22:39:56 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:01:16 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ void		ft_extract_elem(t_elem **elem, t_lst *lst)
 
 void		ft_clear_elem(t_elem **elem)
 {
-	if ((*elem)->name != NULL && (*elem)->name[0] != '\0')
+	if ((*elem)->name != NULL)
 	{
 		ft_strdel(&((*elem)->name));
 	}
-	if ((*elem)->value != NULL && (*elem)->value[0] != '\0')
+	if ((*elem)->value != NULL)
 	{
 		ft_strdel(&((*elem)->value));
 	}
 	(*elem) ? free(*elem) : 0;
+	*elem = NULL;
 }
 
 /*
