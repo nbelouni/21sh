@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:06:09 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:19:08 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,22 @@ t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 	elem = NULL;
 	while (get_next_line(fd, &buf) > 0)
 	{
-		if ((elem = ft_init_elem()) == NULL)
-			return (NULL);
-		if ((elem->name = ft_strdup(buf)) == NULL)
+		if (ft_strlen(buf) < BUFF_SIZE)
 		{
-			(buf) ? ft_strdel(&buf) : 0;
-			ft_del_elem(&elem, *histlist);
-			return (NULL);
+			if ((elem = ft_init_elem()) == NULL)
+				return (NULL);
+			if ((elem->name = buf) == NULL)
+			{
+				ft_del_elem(&elem, *histlist);
+				return (NULL);
+			}
+			ft_char_replace(elem->name, '\t', ' ');
+			elem->is_appended = 1;
+			ft_insert_elem(elem, *histlist);
 		}
-		elem->is_appended = 1;
-		ft_insert_elem(elem, *histlist);
-		(buf) ? ft_strdel(&buf) : 0;
+		else
+			ft_strdel(&buf);
 	}
-	(buf) ? ft_strdel(&buf) : 0;
 	return (*histlist);
 }
 
