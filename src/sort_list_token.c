@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/17 20:33:05 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:47:46 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ void	sort_list_token2(t_token **list, t_completion *completion, t_lst *hist)
 	return ;
 }
 
+int		create_cmd(t_token **list)
+{
+	PUT2("create\n");
+	t_token		*tmp;
+	int			ret;
+
+	ret = 1;
+	tmp = ft_tokenew(CMD, NULL);
+	if ((*list)->prev)
+	{
+		(*list)->prev->next = tmp;
+		tmp->prev = (*list)->prev;
+		ret = 0;
+	}
+	(*list)->prev = tmp;
+	tmp->next = (*list);
+	return (ret);
+}
+
 void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 {
 	t_token		*elem;
@@ -75,6 +94,8 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			elem = is_local_var(elem);
 		if (elem->type == DL_DIR)
 			here_doc(elem->next, completion, hist);
+		if (is_dir_type(elem->type) && (!elem->prev || (elem->prev && !PREVISCMD(elem))))
+			create_cmd(&elem) ? *list : (*list = elem);
 		elem = elem->next;
 	}
 	while ((*list) && (*list)->prev)

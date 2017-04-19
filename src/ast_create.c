@@ -6,7 +6,7 @@
 /*   By: dogokar <dogokar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:41:10 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/18 21:34:20 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:44:14 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ char			**concate_cmd(t_token *lst)
 	if (!(argv = (char **)malloc(sizeof(char*) * (i * j + 1))))
 		return (NULL);
 	argv[i * j] = NULL;
-	while (tmp && (count <= i - 1))
+	while (tmp && tmp->word && (count <= i - 1))
 	{
 		argv[count] = ft_strdup(tmp->word);
 		++count;

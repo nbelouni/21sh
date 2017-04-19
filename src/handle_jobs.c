@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/18 23:19:18 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:28:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ int	mark_process_status(pid_t pid, int status, int *last)
 			return (0);
 		}
 		else
-//		{
-//			PUT2("_______________1\n");
 			return (-1);
-//		}
 	}
 	else if (pid == 0 || errno == ECHILD)
 		return (-1);
@@ -139,23 +136,10 @@ int		wait_for_job(t_job *j)
 	signal(SIGCHLD, SIG_DFL);
 	while (true)
 	{
-//		PUT2("waitpid() : ");
-//		if (((t_process_p)((t_list *)j->process_tree->data)->content)->argv)
-//			PUT2(((t_process_p)((t_list *)j->process_tree->data)->content)->argv[0]);
-		X('\n');
-		pid = waitpid(-1, &status, WUNTRACED);// | WNOHANG);
-//		PUT2("wait_for_job() : pid : ");E(pid);X('\n');
-//		last = WEXITSTATUS(status);
-//		ft_setenv(g_core->set, "RET", ft_itoa(last));
-		int ret;
-		if ((ret = mark_process_status(pid, status, &last)) || job_is_complete(j))
-		{
-//			PUT2("mark_process_status() 1: ");E(ret);X('\n');
+		pid = waitpid(-1, &status, WUNTRACED);
+		if ((mark_process_status(pid, status, &last)) || job_is_complete(j))
 			break ;
-		}
-//		PUT2("mark_process_status() 2: ");E(ret);X('\n');
 	}
-//	PUT2("wait_for_job() : last : ");E(last);X('\n');
 	return (last);
 }
 
@@ -260,15 +244,12 @@ int		make_children(t_process_p p)
 {
 	int	pid;
 
-//	PUT2("fork() : ");
-//	PUT2(p->argv[0]);
-//		X('\n');
 	pid = fork();
 	if (pid == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
-//		signal(SIGTSTP, SIG_DFL);
 		signal(SIGTTIN, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGTTOU, SIG_DFL);
 		signal(SIGCHLD, SIG_DFL);
 	}
@@ -276,8 +257,6 @@ int		make_children(t_process_p p)
 		exit(ft_print_error("21sh", ERR_FORK, ERR_EXIT));
 	else
 		p->pid = pid;
-
-//	PUT2("make_children() : pid : ");E(pid);X('\n');
 	return (pid);
 }
 

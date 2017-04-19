@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/18 19:40:19 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:47:29 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int				ft_check_exec(char ***cmd)
 	ret = TRUE;
 	if (edit_cmd(cmd, g_core) == ERR_EXIT)
 		return (ERR_EXIT);
-	if ((ret = parse_builtins(g_core, *cmd[0], *cmd + 1)) == 1)
+	if (**cmd && (ret = parse_builtins(g_core, *cmd[0], *cmd + 1)) == 1)
 		ft_exec(*cmd);
 	return (ret);
 }

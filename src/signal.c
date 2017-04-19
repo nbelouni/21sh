@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/18 22:46:24 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 01:44:12 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		get_sigint(int sig)
 		g_core->buf->size = 0;
 		ft_bzero(g_core->buf->line, BUFF_SIZE);
 		clean_pos_curs();
-		ft_putstr_fd("\n21sh.$ ", 1);
+//		ft_putstr_fd("\n21sh.$ ", 1);
 	}
 	return ;
 }

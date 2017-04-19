@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/17 20:00:56 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:25:23 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ t_node_p	create_process_tree(t_tree *root)
 				PUSH(&stack, create_process(root));
 			else if ((TOKEN(root)) == OR || (TOKEN(root)) == AND)
 				PUSH(&stack, create_condition_if(root, POP(&stack),
-					POP(&stack)));//Condition, right_node, left_node
+					POP(&stack)));
 			else if (TOKEN(root) == PIPE)
-				PUSH(&stack, create_pipe(POP(&stack), POP(&stack)));//right_node, left_node
+				PUSH(&stack, create_pipe(POP(&stack), POP(&stack)));
 			else if (is_dir_type(TOKEN(root)))
-				PUSH(&stack, create_redir(root, POP(&stack)));//Redir, targetNode, left_node
+				PUSH(&stack, create_redir(root, POP(&stack)));
 			root = NULL;
 		}
 		if (!stock)
@@ -75,19 +75,17 @@ t_job	*create_job(t_tree *root, int foreground)
 	return (job);
 }
 
-void	export_job(t_tree *root, t_list **g_job_list)
+void	export_job(t_tree *root, t_list **job_list)
 {
-	t_job	*j;
 
 	while (root && TOKEN(root) == DOT)
 	{
-		insert_link_bottom(g_job_list, new_link(create_job(root->left,
+		insert_link_bottom(job_list, new_link(create_job(root->left,
 			(TOKEN(root) == DOT) ? 1 : 0), sizeof(t_job)));
 		root = root->right;
 	}
 	if (root)
-		insert_link_bottom(g_job_list, new_link(create_job(root, 1), sizeof(t_job)));
-	j = TOP((*g_job_list));
+		insert_link_bottom(job_list, new_link(create_job(root, 1), sizeof(t_job)));
 }
 
 t_condition_if_p		new_condition_if(t_type_if type)
@@ -127,8 +125,6 @@ t_process_p	new_process(char **argv)
 	ptr = malloc(sizeof(*ptr));
 	bzero(ptr, sizeof(*ptr));
 	ptr->argv = argv;
-	if (is_builtin(argv))
-		ptr->flag |= BUILTIN;
 	return (ptr);
 }
 
@@ -160,10 +156,14 @@ int			is_builtin(char **args)
 
 t_node_p	create_process(t_tree *node_proc)
 {
-	t_node_p ptr;
+	t_node_p	ptr;
+	t_process	*p;
 
 	ptr = new_node(PROCESS, sizeof(struct s_process));
-	ptr->data = new_link(new_process(node_proc->cmd), sizeof(struct s_process));
+	p = new_process(node_proc->cmd);
+	ptr->data = new_link(p, sizeof(struct s_process));
+	if (!node_proc->cmd || is_builtin(node_proc->cmd))
+		p->flag |= BUILTIN;
 	return (ptr);
 }
 

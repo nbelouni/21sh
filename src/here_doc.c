@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 19:55:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 23:00:07 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 01:37:12 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		join_lines(t_buf *buf)
 	if (tmp)
 		ft_strdel(&tmp);
 	ft_bzero(buf->line, BUFF_SIZE);
+	buf->size = 0;
 	return (0);
 }
 
