@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:06:09 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/19 18:47:58 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 20:17:35 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,23 @@ t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 	char		*buf;
 
 	buf = NULL;
-	elem = NULL;
 	while (get_next_line(fd, &buf) > 0)
 	{
 		if (ft_strlen(buf) < BUFF_SIZE)
 		{
 			if ((elem = ft_init_elem()) == NULL)
 				return (NULL);
-			if ((elem->name = buf) == NULL)
+			if ((elem->name = (buf)) == NULL)
 			{
 				ft_del_elem(&elem, *histlist);
 				return (NULL);
 			}
-			ft_char_replace(elem->name, '\t', ' ');
-			elem->is_appended = 1;
+			elem->is_appended = 1 + ft_char_replace(elem->name, '\t', ' ');
 			ft_insert_elem(elem, *histlist);
 		}
 		else
 			ft_strdel(&buf);
+		buf = NULL;
 	}
 	ft_strdel((buf) ? &buf : NULL);
 	return (*histlist);

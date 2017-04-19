@@ -6,14 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/19 17:17:56 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/19 17:20:21 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 20:16:48 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 
-void		ft_char_replace(char *s, char search, char replace)
+int		ft_char_replace(char *s, char search, char replace)
 {
 	int		i;
 
@@ -23,4 +23,5 @@ void		ft_char_replace(char *s, char search, char replace)
 		if (s[i] == search)
 			s[i] = replace;
 	}
+	return (0);
 }
