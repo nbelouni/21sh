@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 20:01:32 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/19 19:43:51 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:49:52 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	delete_list(t_list **ref_head, void (f)(void *))
 	while (*ref_head)
 	{
 		ptr = delete_link(remove_link_top(ref_head));
-		if (f)
+		if (f && ptr)
 			f(ptr);
 	}
 }

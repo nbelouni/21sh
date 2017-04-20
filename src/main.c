@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/19 18:56:11 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/19 19:56:30 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int		parse_builtins(t_core *core, char *cmd, char **cmd_args)
 	while (g_builtin_array[++i].cmd)
 	{
 		if (ft_strcmp(g_builtin_array[i].cmd, cmd) == 0)
+		{
 			return (g_builtin_array[i].func(core, cmd_args));
+		}
 	}
 	return (1);
 }
@@ -140,7 +142,6 @@ int 	main(int argc, char **argv, char **envp)
 			{
 				if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-				//sleep(10);
 				if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
 					return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 				ft_push_ast(list, &ast);

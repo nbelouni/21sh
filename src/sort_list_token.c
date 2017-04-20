@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/19 19:41:20 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/20 17:08:14 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		create_cmd(t_token **list)
 	int			ret;
 
 	ret = 1;
-	if ((*list)->prev && PREVISCMD((*list)))
+	if ((*list)->prev && (PREVISCMD((*list)) || (*list)->prev->type == TARGET))
 		return (1);
 	tmp = ft_tokenew(CMD, NULL);
 	if ((*list)->prev)
