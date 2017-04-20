@@ -68,19 +68,35 @@ t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 		{
 			if ((elem = ft_init_elem()) == NULL)
 				return (NULL);
+<<<<<<< HEAD
 			if ((elem->name = (buf)) == NULL)
+=======
+			if ((elem->name = ft_strdup(buf)) == NULL)
+>>>>>>> 19e2b0f168bda183982871a77fb28149f0490677
 			{
+				(buf) ? ft_strdel(&buf) : 0;
 				ft_del_elem(&elem, *histlist);
 				return (NULL);
 			}
+<<<<<<< HEAD
 			elem->is_appended = 1 + ft_char_replace(elem->name, '\t', ' ');
+=======
+			(buf) ? ft_strdel(&buf) : 0;
+			ft_char_replace(elem->name, '\t', ' ');
+			elem->is_appended = 1;
+>>>>>>> 19e2b0f168bda183982871a77fb28149f0490677
 			ft_insert_elem(elem, *histlist);
 		}
 		else
+		{
 			ft_strdel(&buf);
+<<<<<<< HEAD
 		buf = NULL;
+=======
+		}
+>>>>>>> 19e2b0f168bda183982871a77fb28149f0490677
 	}
-	ft_strdel((buf) ? &buf : NULL);
+	(buf) ? ft_strdel(&buf) : 0;
 	return (*histlist);
 }
 

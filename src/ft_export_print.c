@@ -116,15 +116,14 @@ void		ft_print_export(t_core *m_env)
 	t_lst	*export;
 
 	export = NULL;
-	env = ft_lstdup(m_env->env);
-	if (m_env->exp && m_env->exp->head)
-	{
-		export = ft_lstdup(m_env->exp);
+	env = (m_env->env && m_env->env->head) ? ft_lstdup(m_env->env) : NULL;
+	export = (m_env->exp && m_env->exp->head) ? ft_lstdup(m_env->exp) : NULL;
+	if (env && export)
 		concatlst(env, export);
-	}
-	ft_print_lst_ex(lst_sort_ascii(env), 1);
 	if (env)
-		ft_del_list(env);
-	if (export)
-		ft_del_list(export);
+		ft_print_lst_ex(lst_sort_ascii(env), 1);
+	else if (!env && export)
+		ft_print_lst_ex(lst_sort_ascii(export), 1);
+	(env) ? ft_del_list(env) : 0;
+	(export) ? ft_del_list(export) : 0;
 }
