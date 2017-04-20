@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 11:02:12 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/15 18:01:50 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/17 21:45:35 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct	s_io
 	int		mode;
 	int		dup_src;
 	int		dup_target;
-	int		tab_fd[3];
+	int		tab_fd[2];
 	char	*str;
 }				t_io;
 
