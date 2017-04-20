@@ -96,6 +96,8 @@ int		classic_read(t_buf *buf, int x)
 	int tmp;
 
 	tmp = x & 0xff;
+	if (x ==  25)
+		return (0);
 	if (tmp < 31 || tmp > 127)
 		return (1);
 	while (x)
@@ -107,36 +109,44 @@ int		classic_read(t_buf *buf, int x)
 	return (1);
 }
 
+static int norme(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
+{
+	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) < 0 ||
+			(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
+			((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0)
+			|| (tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
+		return (tabi[2]);
+	else if (tabi[0] == RETR)
+	{
+		m_right(calc_len(buf, END));
+		ft_putchar_fd((char)tabi[0], 1);
+		ft_strdel(&(buf->last_cmd));
+		buf->cur_hist = NULL;
+		return (0);
+	}
+	else
+		return (2);
+}
+
 int		read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 {
-	unsigned int	x;
+	int				tabi[3];
 	int				ret;
-	int				err;
-	int				i;
 
-	i = -1;
-	x = 0;
-	err = 0;
+	tabi[0] = 0;
+	tabi[1] = 0;
+	tabi[2] = 0;
+	ret = 0;
 	init_line(buf);
-	while ((ret = read(0, &x, sizeof(int))))
+	while ((tabi[1] = read(0, &tabi[0], sizeof(int))))
 	{
-		if (classic_read(buf, x) == 1)
+		if (classic_read(buf, tabi[0]) == 1)
 		{
-			if ((err = mv_and_read(buf, x, ret)) < 0 ||
-					(err = cpy_cut_paste(buf, x)) < 0 ||
-					((err = complete_line(buf, cplt, x)) != 0)
-					|| (err = edit_history(buf, hist, x) != 0))
-				return (err);
-			if (x == RETR)
-			{
-				m_right(calc_len(buf, END));
-				ft_putchar_fd((char)x, 1);
-				ft_strdel(&(buf->last_cmd));
-				buf->cur_hist = NULL;
-				return (0);
-			}
+			ret = norme(tabi, cplt, hist, buf);
+			if (ret == TAB || ret < 1)
+				return (ret);
 		}
-		x = 0;
+		tabi[0] = 0;
 	}
 	close_termios();
 	return (END_EOT);
