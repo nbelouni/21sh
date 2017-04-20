@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/20 17:58:58 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/20 18:31:24 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_builtin_array g_builtin_array[] =
 	{"history", &ft_builtin_history},
 	{"unset", &ft_builtin_unset},
 	{"export", &ft_builtin_export},
+	{"loc", &ft_builtin_locale},
 	{NULL, NULL}
 };
 

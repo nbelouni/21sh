@@ -120,6 +120,12 @@ int				ft_builtin_history(t_core *core, char **args);
 int				ft_builtin_jobs(t_core *core, char **args);
 
 /*
+**	ft_builtin_locale.c
+*/
+
+int				ft_builtin_locale(t_core *core, char **args);
+
+/*
 **	ft_builtin_setenv.c
 */
 

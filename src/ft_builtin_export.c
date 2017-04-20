@@ -52,19 +52,12 @@ t_elem		*search_var(char *arg, t_lst *type_env)
 
 	tmp = NULL;
 	if (ft_strchr(arg, '='))
-	{
-		if (!(name = ft_strsub(arg, 0, ft_get_index_of(arg, '='))))
-			return (NULL);
-	}
+		name = ft_strsub(arg, 0, ft_get_index_of(arg, '='));
 	else
 		name = ft_strdup(arg);
 	if (name == NULL || name[0] == '\0' || name[0] == '=')
 		return (NULL);
-	if (!(tmp = ft_find_elem(name, type_env)))
-	{
-		ft_strdel(&name);
-		return (NULL);
-	}
+	tmp = ft_find_elem(name, type_env);
 	ft_strdel(&name);
 	return (tmp);
 }
@@ -93,9 +86,9 @@ int			insert_to_exp(char *argv, t_core *m_env)
 }
 
 /*
-**    va chercher dans les diffrents listes de varaiable, si la variable
-**		existe il va l'inserer dans l'env
-**		si non il va la cree avec insert_to_exp
+**	va chercher dans les diffrents listes de varaiable, si la variable
+**	existe il va l'inserer dans l'env
+**	si non il va la cree avec insert_to_exp
 */
 
 int			multi_var_cheak(char *argv, t_core *m_env)
@@ -135,7 +128,7 @@ int			ft_builtin_export(t_core *m_env, char **argv)
 	}
 	i = opt[0];
 	result = 0;
-	if (argv[0] == NULL)
+	if (argv[i] == NULL)
 		ft_print_export(m_env);
 	while (argv[i] != NULL)
 	{
