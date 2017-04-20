@@ -129,7 +129,10 @@ int			ft_builtin_export(t_core *m_env, char **argv)
 	if (!(opt = ft_opt_parse(EXPORT_OPT, argv, 0, 0)))
 		return (ERR_EXIT);
 	if (opt[0] == -1)
+	{
+		free(opt);
 		return (ERR_NEW_CMD);
+	}
 	i = opt[0];
 	result = 0;
 	if (argv[0] == NULL)

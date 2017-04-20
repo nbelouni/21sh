@@ -85,6 +85,7 @@ void		ft_print_lst_ex(t_lst *lst, int t)
 {
 	t_elem	*elem;
 
+	elem = NULL;
 	if (lst != NULL)
 	{
 		elem = lst->head;

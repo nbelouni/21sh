@@ -25,9 +25,10 @@ void init_termios(void)
 	tcsetattr(0, TCSANOW, &term);
 }
 
-int main (int ac, char **av)
+int main (void)
 {
 	int rt = 0;
+	int ret = 0;
 	int douggydrog = 1;
 
 	if (!isatty(0))
@@ -40,10 +41,10 @@ int main (int ac, char **av)
 	while (douggydrog)
 	{
 		rt = 0;
-		read(0, &rt, sizeof(int));
+		ret =  read(0, &rt, sizeof(int));
 		if (rt >= 32 && rt <= 126)
 			printf("Key [%c] ", (char)rt);
-		printf("RAW [%d] Hexa [0x%08.8x]\n", rt, rt);
+		printf(" return RET [%d] RAW [%d] Hexa [0x%08.8x]\n", ret, rt, rt);
 		if (rt == 27)
 			break ;
 	}
