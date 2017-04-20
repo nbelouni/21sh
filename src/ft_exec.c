@@ -66,6 +66,7 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 		ft_putendl_fd(av[0], 2);
 		free(s);
 		free(s2);
+		ft_tabdel(envp);
 		s = NULL;
 		exit(1);
 	}
@@ -86,20 +87,21 @@ void			ft_exec(char **av)
 	close_termios();
 	envp = ft_env_to_tab(g_core->env);
 	if (!(tmp = ft_find_elem("PATH", g_core->env)) || !tmp->value)
-		s = NULL;
+		s = ft_strdup("");
 	else
 		s = ft_strdup(tmp->value);
 	while (true)
 	{
 		s2 = ft_cut_path(&s, av[0]);
 		not_binary(s, s2, av, envp);
+		(s2) ? ft_strdel(&s2) : 0;
 		if (ft_strcmp(s, "") == 0)
 			break ;
 	}
 	ft_putstr_fd("21sh: command not found: ", 2);
-	free(s);
-	free(s2);
-	free(envp);
+	(s) ? free(s) : 0;
+	(s2) ? free(s2) : 0;
+	(envp) ? ft_tabdel(envp) : 0;
 	ft_putendl_fd(av[0], 2);
 	exit(37);
 }

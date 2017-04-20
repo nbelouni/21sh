@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/18 16:39:05 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/20 20:57:07 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,15 +272,13 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 		pipeline = pipeline->next;
 	}
 }
-
+ 
 void	launch_job(t_job *j)
 {
 	t_node_p	current;
 	t_list		*stack;
 	int			last;
-	char		*s;
 
-	s = NULL;
 	last = 0;
 	current = j->process_tree;
 	stack = NULL;
@@ -298,7 +296,6 @@ void	launch_job(t_job *j)
 			do_pipeline(j, current->data);
 			current = current->right;
 			last = wait_for_job(j);
-			free(s);
 		}
 	}
 }

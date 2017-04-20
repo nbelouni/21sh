@@ -16,8 +16,9 @@ void	*new_link(void *content, size_t content_size)
 {
 	t_list	*link;
 
-	link = malloc(sizeof(*link));
-	bzero(link, sizeof(*link));
+	if ((link = malloc(sizeof(*link))) == NULL)
+		return (NULL);
+	ft_bzero(link, sizeof(*link));
 	link->content = content;
 	link->content_size = content_size;
 	return (link);
