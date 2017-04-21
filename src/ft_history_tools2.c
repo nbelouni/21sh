@@ -83,22 +83,17 @@ static int	ft_truncate_histfile2(t_lst *tmp_hist, int n, int fd)
 int			ft_truncate_histfile(char *filename, int n)
 {
 	int		fd;
-	t_lst	*tmp_hist;
+	t_lst	*tmp;
 
-	tmp_hist = NULL;
-	if ((tmp_hist = ft_get_history(tmp_hist, filename)) == NULL)
+	tmp = NULL;
+	if ((tmp = ft_get_history(tmp, filename)) == NULL)
 		return (ERR_EXIT);
-	if (tmp_hist->head == NULL)
+	if (!tmp->head || (fd = open(filename, O_RDWR | O_TRUNC | O_APPEND)) == -1)
 	{
-		free(tmp_hist);
+		ft_del_list(tmp);
 		return (ERR_NEW_CMD);
 	}
-	if ((fd = open(filename, O_RDWR | O_TRUNC | O_APPEND)) == -1)
-	{
-		ft_del_list(tmp_hist);
-		return (ERR_NEW_CMD);
-	}
-	ft_truncate_histfile2(tmp_hist, n, fd);
+	ft_truncate_histfile2(tmp, n, fd);
 	close(fd);
 	return (0);
 }

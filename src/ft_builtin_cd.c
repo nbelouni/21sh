@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/07 18:21:51 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 21:55:23 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:49:50 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static char	*ft_cd_opt(char *path, mode_t mode, int *opt)
 	char	*buf;
 	char	*tmp;
 
-	buf = NULL;
 	tmp = NULL;
+	buf = NULL;
 	if ((buf = ft_strnew(PATH_MAX)) == NULL)
 	{
 		return (NULL);
@@ -60,8 +60,7 @@ static int	ft_cd(t_lst *env, int *opt, char *s, mode_t m)
 		return (-1);
 	if (ft_is_valid_dir(buf) == -1)
 		return (ft_free_and_return(-1, buf, NULL, NULL));
-	if ((owd = getcwd(NULL, PATH_MAX)) == NULL)
-		return (ft_free_and_return(-1, buf, NULL, NULL));
+	owd = getcwd(NULL, PATH_MAX);
 	chdir(buf);
 	if ((b2 = getcwd(NULL, PATH_MAX)) == NULL)
 		return (ft_free_and_return(-1, owd, NULL, NULL));
@@ -112,15 +111,15 @@ char		*ft_concat_path(char *res, char *s1, char *s2, size_t len)
 **	pas set, sera NULL.
 */
 
-static char	*ft_builtin_cd_norm(t_lst *env, int *op, char **args)
+static char	*ft_builtin_cd_norm(t_lst *env, char **args)
 {
 	char		*path;
 	t_elem		*e;
 
 	path = NULL;
-	if (args != NULL && args[op[0]] != NULL && args[op[0]][0] != '\0')
+	if (args != NULL && args[0] != NULL)
 	{
-		if ((path = ft_create_path(env, args[op[0]], args[op[0] + 1])) == NULL)
+		if ((path = ft_create_path(env, args[0], args[1])) == NULL)
 			return (NULL);
 	}
 	else
@@ -149,8 +148,7 @@ int			ft_builtin_cd(t_core *core, char **args)
 	int			i;
 	char		*s;
 
-	opt = ft_opt_parse(CD_OPT, args, 1, 0);
-	if (opt == NULL)
+	if (!(opt = ft_opt_parse(CD_OPT, args, 1, 0)))
 		return (ERR_EXIT);
 	else if (opt[0] == -1)
 		return (ft_free_and_return(ERR_NEW_CMD, opt, NULL, NULL));
@@ -160,7 +158,7 @@ int			ft_builtin_cd(t_core *core, char **args)
 		return (ft_print_error("cd", ERR_TOO_MANY_ARGS, ERR_NEW_CMD));
 	}
 	i = -1;
-	if ((s = ft_builtin_cd_norm(core->env, opt, args)) != NULL)
+	if ((s = ft_builtin_cd_norm(core->env, &(args[opt[0]]))) != NULL)
 	{
 		i = ((lstat(s, &st)) != -1) ? ft_cd(core->env, opt, s, st.st_mode) :\
 			ft_print_error(s, ERR_NO_FILE, ERR_NEW_CMD);

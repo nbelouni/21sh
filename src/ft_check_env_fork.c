@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin_locale.c                                :+:      :+:    :+:   */
+/*   ft_check_env_fork.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/21 14:32:18 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/21 14:32:20 by maissa-b         ###   ########.fr       */
+/*   Created: 2017/04/21 19:55:36 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/04/21 19:55:38 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		ft_builtin_locale(t_core *core, char **args)
+int					ft_env_binary(char **args)
 {
-	if (args == NULL || args[0] == NULL)
+	int	*opt;
+
+	opt = NULL;
+	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
+		return (0);
+	if (opt[0] < 0 || !args[opt[0] + 1])
 	{
-		if (core != NULL && core->set != NULL && core->set->head != NULL)
-		{
-			ft_print_lst(core->set);
-		}
+		(opt) ? free(opt) : 0;
+		return (0);
 	}
-	return (0);
+	(opt) ? free(opt) : 0;
+	return (1);
 }

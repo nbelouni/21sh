@@ -78,7 +78,7 @@ t_lst	*ft_histfile_to_histlist(t_lst **histlist, int fd)
 			ft_insert_elem(elem, *histlist);
 		}
 		else
-			ft_strdel(&buf);
+			(buf) ? ft_strdel(&buf) : 0;
 		buf = NULL;
 	}
 	(buf) ? ft_strdel(&buf) : 0;

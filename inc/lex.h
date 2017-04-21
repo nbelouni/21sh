@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/21 18:15:20 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:46:48 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void				ft_push_ast(t_token *list, t_tree **ast);
 void				free_ast(t_tree *ast);
 void				print_tab(char **tabol);
 void				print_debug_ast(t_tree *node);
-void 				print_t(t_tree *tree);
+void				print_t(t_tree *tree);
 t_list				*concate_argv(t_token *lst);
 
 int					priority(t_token *node_lst, t_token *tmp);

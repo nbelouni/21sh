@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/04 17:22:15 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 14:32:50 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			ft_get_hfsize(t_core *core)
 	if ((elem = ft_find_elem("HISTFILESIZE", core->set)) == NULL)
 	{
 		if ((elem = ft_find_elem("HISTFILESIZE", core->env)) == NULL)
-		return (-1);
+			return (-1);
 	}
 	if (elem->value == NULL || elem->value[0] == '\0')
 	{
