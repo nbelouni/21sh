@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/15 21:01:49 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 18:15:20 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,13 @@ void				print_tab(char **tabol);
 void				print_debug_ast(t_tree *node);
 void 				print_t(t_tree *tree);
 t_list				*concate_argv(t_token *lst);
+
+int					priority(t_token *node_lst, t_token *tmp);
+char				**copy_fd(t_token *tmp);
+char				**concate_cmd(t_token *lst);
+t_token				*search_toke(t_token *lst);
+t_token				*search_toke_prev(t_token *lst);
+t_tree				*new_tree(t_token *lst);
+t_tree				*add_tree(t_token *lst);
 
 #endif

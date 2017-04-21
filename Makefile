@@ -68,6 +68,9 @@ SRCS = 	ft_builtin_cd.c		\
 		is_token_type.c		\
 		return_errors.c		\
 		ast_create.c		\
+		ast_create2.c		\
+		ast_create3.c		\
+		ast_create4.c		\
 		find_quote_end.c	\
 		globbing.c			\
 		here_doc.c			\
