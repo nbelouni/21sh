@@ -6,17 +6,17 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/14 22:40:47 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 22:55:19 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:19:34 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-int		find_word_begin(char *s)
+int		find_word_begin(char *s, int pos)
 {
 	int	i;
 
-	i = ft_strlen(s) - 1;
+	i = pos - 1;
 	while (i >= 0)
 	{
 		if (is_separator(s, i) || is_redirection(s, i) ||

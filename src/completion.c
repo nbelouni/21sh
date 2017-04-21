@@ -6,11 +6,13 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 15:10:02 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/20 14:53:23 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/21 22:33:09 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
+
+extern t_core	*g_core;
 
 void	print_slist(t_slist *lst, int n, char c)
 {
@@ -79,7 +81,7 @@ int		fill_file(t_buf *buf, t_slist **lst, int *bg)
 		n_lst++;
 	}
 	closedir(dirp);
-	return (n_lst);
+	return (0);
 }
 
 int		replace_or_print(t_buf *buf, t_slist *ref, int begin, char c)
@@ -103,7 +105,11 @@ int		replace_or_print(t_buf *buf, t_slist *ref, int begin, char c)
 		replace_cplt(buf, lst->s, begin);
 	else if (n_lst > 1)
 		print_slist(lst, n_lst, c);
-	return (n_lst > 1 ? TAB : 0);
+	if (n_lst > 1)
+		return (TAB);
+	if (n_lst == 1)
+		return (0);
+	return (-1);
 }
 
 int		complete_line(t_buf *buf, t_completion *cplt, char x)
@@ -114,23 +120,23 @@ int		complete_line(t_buf *buf, t_completion *cplt, char x)
 
 	if (x != TAB || buf->size >= BUFF_SIZE)
 		return (0);
-	begin = find_word_begin(buf->line);
-	if (is_char(buf->line, begin, '$'))
-		return (replace_or_print(buf, cplt->variable, begin + 1, '$'));
-	if (is_char(buf->line, begin, '~'))
-		return (replace_or_print(buf, cplt->username, begin + 1, '~'));
-	if (is_char(buf->line, begin, '@'))
-		return (replace_or_print(buf, cplt->hostname, begin + 1, '@'));
-	if (is_cmd(buf->line, begin - 1))
-		return (replace_or_print(buf, cplt->command, begin, 0));
-	if (is_arg(buf->line, begin - 1))
-	{
-		if ((ret = fill_file(buf, &ref, &begin)) < 0)
-			return (ret);
-		ret = replace_or_print(buf, ref, begin, 0);
-		if (ref)
-			destroy_sort_list(&ref);
+	begin = find_word_begin(buf->line,
+	(g_curs.win_col * g_curs.row + g_curs.col) - get_prompt_len());
+	if (is_char(buf->line, begin, '$') &&
+	(ret = replace_or_print(buf, cplt->variable, begin + 1, '$')) >= 0)
 		return (ret);
-	}
-	return (0);
+	if (is_char(buf->line, begin, '~') &&
+	(ret = replace_or_print(buf, cplt->username, begin + 1, '~')) >= 0)
+		return (ret);
+	if (is_char(buf->line, begin, '~') && ret == -1)
+		home_tild(buf, &begin);
+	if (is_char(buf->line, begin, '@') &&
+	(ret = replace_or_print(buf, cplt->hostname, begin + 1, '@')) >= 0)
+		return (ret);
+	if (is_cmd(buf->line, begin - 1) &&
+	(ret = replace_or_print(buf, cplt->command, begin, 0)) >= 0)
+		return (ret);
+	ret = fill_file(buf, &ref, &begin) + replace_or_print(buf, ref, begin, 0);
+	destroy_sort_list((ref) ? &ref : NULL);
+	return (ret >= 0 ? ret : 0);
 }

@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 14:49:27 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/14 22:52:05 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 22:33:03 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void					rm_sort_list(t_slist **cmd);
 */
 void					destroy_sort_list();
 
-int						find_word_begin(char *s);
+int						find_word_begin(char *s, int pos);
 int						find_word_end(char *s);
 int						find_cplt(char *s, t_slist *r, t_slist **lst, int len);
 int						count_sort_lst(t_slist *lst);
@@ -116,5 +116,6 @@ int						init_completion(t_completion *cplt, t_core *core);
 **	completion.c
 */
 int						complete_line(t_buf *buf, t_completion *cplt, char x);
+void					home_tild(t_buf *buf, int *begin);
 
 #endif
