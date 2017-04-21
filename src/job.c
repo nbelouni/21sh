@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/10 13:52:27 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/21 18:37:09 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 18:41:19 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 extern	t_list	*g_job_list;
 
-int	iter_post_ord(t_tree **ptr, t_list **stock)
+int					iter_post_ord(t_tree **ptr, t_list **stock)
 {
 	while (*ptr)
 	{
@@ -36,7 +36,7 @@ int	iter_post_ord(t_tree **ptr, t_list **stock)
 	return (1);
 }
 
-t_node_p	create_process_tree(t_tree *root)
+t_node_p			create_process_tree(t_tree *root)
 {
 	t_list	*stack;
 	t_list	*stock;
@@ -64,7 +64,7 @@ t_node_p	create_process_tree(t_tree *root)
 	return (POP(&stack));
 }
 
-t_job	*create_job(t_tree *root, int foreground)
+t_job				*create_job(t_tree *root, int foreground)
 {
 	t_job	*job;
 
@@ -75,7 +75,7 @@ t_job	*create_job(t_tree *root, int foreground)
 	return (job);
 }
 
-void	export_job(t_tree *root, t_list **job_list)
+void				export_job(t_tree *root, t_list **job_list)
 {
 	while (root && TOKEN(root) == DOT)
 	{
@@ -88,7 +88,7 @@ void	export_job(t_tree *root, t_list **job_list)
 				new_link(create_job(root, 1), sizeof(t_job)));
 }
 
-t_condition_if_p		new_condition_if(t_type_if type)
+t_condition_if_p	new_condition_if(t_type_if type)
 {
 	t_condition_if_p	ptr;
 
