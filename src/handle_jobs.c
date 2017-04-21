@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/21 20:18:47 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:22:31 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,14 +256,17 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 		out = (pipeline->next) ? do_pipe(pipeline->content,
 		pipeline->next->content, io_pipe) : STDOUT_FILENO;
 		exec_simple_command(pipeline->content, dofork);
-		list_iter_int(((t_process_p)pipeline->content)->io_list, (void *)restore_fd, dofork);
+		list_iter_int(((t_process_p)pipeline->content)->io_list,
+			(void *)restore_fd, dofork);
 		if (out != STDOUT_FILENO)
 			close(out);
 		if (in != STDIN_FILENO)
 			close(in);
 		in = io_pipe[0];
 		delete_list(&(((t_process_p)pipeline->content)->io_list), &free);
-		insert_link_bottom(&job->wait_process_list, new_link(memcpy(malloc(pipeline->content_size), pipeline->content, pipeline->content_size), pipeline->content_size));
+		insert_link_bottom(&job->wait_process_list,
+			new_link(memcpy(malloc(pipeline->content_size), pipeline->content,
+				pipeline->content_size), pipeline->content_size));
 		pipeline = pipeline->next;
 	}
 }

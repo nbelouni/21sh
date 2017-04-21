@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:26:10 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/15 21:01:17 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:13:22 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,16 @@ int		is_or_and(char *s, int i)
 				return (PIPE);
 		}
 	}
+	return (0);
+}
+
+int		is_arg(char *s, int i)
+{
+	if (i < 0)
+		return (1);
+	while (i >= 0 && is_char(s, i, ' '))
+		i--;
+	if (i >= 0 && !is_separator(s, i))
+		return (1);
 	return (0);
 }
