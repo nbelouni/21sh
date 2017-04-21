@@ -272,7 +272,7 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 		pipeline = pipeline->next;
 	}
 }
- 
+
 void	launch_job(t_job *j)
 {
 	t_node_p	current;

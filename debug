@@ -1,107 +1,159 @@
-export
-(expo                                                                           
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-export
-(expo                                                                           
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-export
-(expo                                                                           
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-env
-(env)                                                                           
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-exit
-(exit                                                                           
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-                                                                                
-21sh(63313,0x7fff7bad5000) malloc: *** error for object 0xb000000000000000: pointer being freed was not allocated
-*** set a breakpoint in malloc_error_break to debug
+==72691== Memcheck, a memory error detector
+==72691== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==72691== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==72691== Command: bash
+==72691== 
+: line 3: dvbkfv: command not found
+==72741== 
+==72741== HEAP SUMMARY:
+==72741==     in use at exit: 148,043 bytes in 696 blocks
+==72741==   total heap usage: 930 allocs, 234 frees, 175,495 bytes allocated
+==72741== 
+==72741== 7 bytes in 1 blocks are definitely lost in loss record 50 of 334
+==72741==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==72741==    by 0x10004D268: ??? (in /bin/bash)
+==72741==    by 0x10001FAFD: ??? (in /bin/bash)
+==72741==    by 0x10001CF77: ??? (in /bin/bash)
+==72741==    by 0x10001CBB1: ??? (in /bin/bash)
+==72741==    by 0x100001E97: ??? (in /bin/bash)
+==72741==    by 0x1002265AC: start (in /usr/lib/system/libdyld.dylib)
+==72741== 
+==72741== 19 bytes in 1 blocks are definitely lost in loss record 118 of 334
+==72741==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==72741==    by 0x10004D268: ??? (in /bin/bash)
+==72741==    by 0x10004D0F9: ??? (in /bin/bash)
+==72741==    by 0x10004BA55: ??? (in /bin/bash)
+==72741==    by 0x10001FACB: ??? (in /bin/bash)
+==72741==    by 0x10001CF77: ??? (in /bin/bash)
+==72741==    by 0x10001CBB1: ??? (in /bin/bash)
+==72741==    by 0x100001E97: ??? (in /bin/bash)
+==72741==    by 0x1002265AC: start (in /usr/lib/system/libdyld.dylib)
+==72741== 
+==72741== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 328 of 334
+==72741==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==72741==    by 0x10050AF74: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x1005068D5: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x100514FC3: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==72741==    by 0x100514F8F: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==72741==    by 0x1005069DC: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x1000EFB40: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==72741==    by 0x100290F8C: fork (in /usr/lib/system/libsystem_c.dylib)
+==72741==    by 0x1000263A5: ??? (in /bin/bash)
+==72741==    by 0x10001FB16: ??? (in /bin/bash)
+==72741==    by 0x10001CF77: ??? (in /bin/bash)
+==72741==    by 0x10001CBB1: ??? (in /bin/bash)
+==72741== 
+==72741== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 329 of 334
+==72741==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==72741==    by 0x10050AF74: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x1005068E6: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x100514FC3: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==72741==    by 0x100514F8F: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==72741==    by 0x1005069DC: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==72741==    by 0x1000EFB40: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==72741==    by 0x100290F8C: fork (in /usr/lib/system/libsystem_c.dylib)
+==72741==    by 0x1000263A5: ??? (in /bin/bash)
+==72741==    by 0x10001FB16: ??? (in /bin/bash)
+==72741==    by 0x10001CF77: ??? (in /bin/bash)
+==72741==    by 0x10001CBB1: ??? (in /bin/bash)
+==72741== 
+==72741== LEAK SUMMARY:
+==72741==    definitely lost: 58 bytes in 4 blocks
+==72741==    indirectly lost: 4,096 bytes in 2 blocks
+==72741==      possibly lost: 0 bytes in 0 blocks
+==72741==    still reachable: 116,459 bytes in 493 blocks
+==72741==         suppressed: 27,430 bytes in 197 blocks
+==72741== Reachable blocks (those to which a pointer was found) are not shown.
+==72741== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==72741== 
+==72741== For counts of detected and suppressed errors, rerun with: -v
+==72741== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 18 from 18)
+==72691== 
+==72691== Process terminating with default action of signal 2 (SIGINT)
+==72691==    at 0x1003D26F2: sigprocmask (in /usr/lib/system/libsystem_kernel.dylib)
+==72691==    by 0x10001FB16: ??? (in /bin/bash)
+==72691==    by 0x10001CF77: ??? (in /bin/bash)
+==72691==    by 0x10001CBB1: ??? (in /bin/bash)
+==72691==    by 0x100001E97: ??? (in /bin/bash)
+==72691==    by 0x1002265AC: start (in /usr/lib/system/libdyld.dylib)
+==72691== 
+==72691== HEAP SUMMARY:
+==72691==     in use at exit: 135,291 bytes in 672 blocks
+==72691==   total heap usage: 936 allocs, 264 frees, 159,028 bytes allocated
+==72691== 
+==72691== LEAK SUMMARY:
+==72691==    definitely lost: 0 bytes in 0 blocks
+==72691==    indirectly lost: 0 bytes in 0 blocks
+==72691==      possibly lost: 0 bytes in 0 blocks
+==72691==    still reachable: 113,104 bytes in 482 blocks
+==72691==         suppressed: 22,187 bytes in 190 blocks
+==72691== Reachable blocks (those to which a pointer was found) are not shown.
+==72691== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==72691== 
+==72691== For counts of detected and suppressed errors, rerun with: -v
+==72691== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 16 from 16)
+: line 4: q: command not found
+==73847== 
+==73847== HEAP SUMMARY:
+==73847==     in use at exit: 148,050 bytes in 698 blocks
+==73847==   total heap usage: 974 allocs, 276 frees, 176,324 bytes allocated
+==73847== 
+==73847== 2 bytes in 1 blocks are definitely lost in loss record 15 of 334
+==73847==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==73847==    by 0x10004D268: ??? (in /bin/bash)
+==73847==    by 0x10001FAFD: ??? (in /bin/bash)
+==73847==    by 0x10001CF77: ??? (in /bin/bash)
+==73847==    by 0x10001CBB1: ??? (in /bin/bash)
+==73847==    by 0x100001E97: ??? (in /bin/bash)
+==73847==    by 0x1002265AC: start (in /usr/lib/system/libdyld.dylib)
+==73847== 
+==73847== 19 bytes in 1 blocks are definitely lost in loss record 118 of 334
+==73847==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==73847==    by 0x10004D268: ??? (in /bin/bash)
+==73847==    by 0x10004D0F9: ??? (in /bin/bash)
+==73847==    by 0x10004BA55: ??? (in /bin/bash)
+==73847==    by 0x10001FACB: ??? (in /bin/bash)
+==73847==    by 0x10001CF77: ??? (in /bin/bash)
+==73847==    by 0x10001CBB1: ??? (in /bin/bash)
+==73847==    by 0x100001E97: ??? (in /bin/bash)
+==73847==    by 0x1002265AC: start (in /usr/lib/system/libdyld.dylib)
+==73847== 
+==73847== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 328 of 334
+==73847==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==73847==    by 0x10050AF74: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x1005068D5: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x100514FC3: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==73847==    by 0x100514F8F: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==73847==    by 0x1005069DC: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x1000EFB40: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==73847==    by 0x100290F8C: fork (in /usr/lib/system/libsystem_c.dylib)
+==73847==    by 0x1000263A5: ??? (in /bin/bash)
+==73847==    by 0x10001FB16: ??? (in /bin/bash)
+==73847==    by 0x10001CF77: ??? (in /bin/bash)
+==73847==    by 0x10001CBB1: ??? (in /bin/bash)
+==73847== 
+==73847== 2,064 (16 direct, 2,048 indirect) bytes in 1 blocks are definitely lost in loss record 329 of 334
+==73847==    at 0x1000A3671: malloc (in /Users/dogokar/.brew/Cellar/valgrind/3.12.0/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==73847==    by 0x10050AF74: _nc_table_new (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x1005068E6: _notify_init_globals (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x100514FC3: _os_once (in /usr/lib/system/libsystem_platform.dylib)
+==73847==    by 0x100514F8F: _os_alloc_once (in /usr/lib/system/libsystem_platform.dylib)
+==73847==    by 0x1005069DC: _notify_fork_child (in /usr/lib/system/libsystem_notify.dylib)
+==73847==    by 0x1000EFB40: libSystem_atfork_child (in /usr/lib/libSystem.B.dylib)
+==73847==    by 0x100290F8C: fork (in /usr/lib/system/libsystem_c.dylib)
+==73847==    by 0x1000263A5: ??? (in /bin/bash)
+==73847==    by 0x10001FB16: ??? (in /bin/bash)
+==73847==    by 0x10001CF77: ??? (in /bin/bash)
+==73847==    by 0x10001CBB1: ??? (in /bin/bash)
+==73847== 
+==73847== LEAK SUMMARY:
+==73847==    definitely lost: 53 bytes in 4 blocks
+==73847==    indirectly lost: 4,096 bytes in 2 blocks
+==73847==      possibly lost: 0 bytes in 0 blocks
+==73847==    still reachable: 116,471 bytes in 495 blocks
+==73847==         suppressed: 27,430 bytes in 197 blocks
+==73847== Reachable blocks (those to which a pointer was found) are not shown.
+==73847== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==73847== 
+==73847== For counts of detected and suppressed errors, rerun with: -v
+==73847== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 18 from 18)
