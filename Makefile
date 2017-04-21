@@ -75,6 +75,9 @@ SRCS = 	ft_builtin_cd.c		\
 		globbing.c			\
 		here_doc.c			\
 		job.c				\
+		job2.c				\
+		job3.c				\
+		job4.c				\
 		job_redir.c			\
 		is_local_var.c		\
 		ft_print.c			\
