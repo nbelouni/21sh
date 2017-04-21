@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/19 19:32:59 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:23:35 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		get_sigint(int sig)
 	pid = waitpid(-1, &status, WUNTRACED);
 	if (sig == SIGINT)
 	{
+		m_right(calc_len(g_core->buf, END));
 		g_core->buf->size = 0;
 		ft_bzero(g_core->buf->line, BUFF_SIZE);
 		clean_pos_curs();

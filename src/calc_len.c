@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/05 14:44:38 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:59:22 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ size_t	calc_len(t_buf *buf, int x)
 		else
 			len = 0;
 	}
-	else if (x == ALT_LEFT || x == CTRL_I || x == CTRL_B)
+	else if (x == ALT_LEFT || x == CTRL_L || x == CTRL_B)
 		len = find_prev_word(buf, cursor);
 	else if (x == ALT_RIGHT || x == CTRL_N || x == CTRL_E)
 		len = find_next_word(buf, cursor);

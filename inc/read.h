@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 18:01:52 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/18 22:37:28 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:55:01 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 /*
 ** copy word before
 */
-# define CTRL_I 9
+# define CTRL_L 12
 
 /*
 ** copy word after

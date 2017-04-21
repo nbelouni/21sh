@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/18 23:17:27 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 19:55:12 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int		cpy_cut_paste(t_buf *buf, int x)
 {
-	if (x == CTRL_F || x == CTRL_N || x == CTRL_A || x == CTRL_I)
+	if (x == CTRL_F || x == CTRL_N || x == CTRL_A || x == CTRL_L)
 	{
 		if (vb_copy(buf, x) < 0)
 		{
