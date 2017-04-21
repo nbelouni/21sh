@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/21 21:03:18 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:10:46 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void				sort_list_token(t_token **list, t_completion *c, t_lst *h);
 int					ft_swap_in(t_token **list);
 int					check_error_out(t_token *elem);
 void				check_target_place(t_token **list);
-void				ft_print_token_list(t_token **list);
 
 int					return_new_prompt(int ret);
 int					here_doc(t_token *elemi, t_completion *c, t_lst *hist);

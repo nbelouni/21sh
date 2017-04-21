@@ -80,7 +80,6 @@ SRCS = 	ft_builtin_cd.c		\
 		job4.c				\
 		job_redir.c			\
 		is_local_var.c		\
-		ft_print.c			\
 		list.c				\
 		list2.c				\
 		io.c				\
