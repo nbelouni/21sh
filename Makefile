@@ -68,14 +68,20 @@ SRCS = 	ft_builtin_cd.c		\
 		is_token_type.c		\
 		return_errors.c		\
 		ast_create.c		\
+		ast_create2.c		\
+		ast_create3.c		\
+		ast_create4.c		\
 		find_quote_end.c	\
 		globbing.c			\
 		here_doc.c			\
 		job.c				\
+		job2.c				\
+		job3.c				\
+		job4.c				\
 		job_redir.c			\
 		is_local_var.c		\
-		ft_print.c			\
 		list.c				\
+		list2.c				\
 		io.c				\
 		handle_jobs.c		\
 		init_shell.c		\
@@ -100,6 +106,7 @@ SRCS = 	ft_builtin_cd.c		\
 		edit_history.c			\
 		ft_env_dup_operations.c\
 		apply_redir.c		\
+		ft_check_env_fork.c	\
 		printdebugast.c
 
 SRCC = $(addprefix $(SDIR),$(SRCS))

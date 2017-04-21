@@ -57,6 +57,12 @@ typedef struct		s_core
 	t_buf			*buf;
 }					t_core;
 
+typedef struct		s_builtin_array
+{
+	char			*cmd;
+	int				(* const func)(t_core *, char **);
+}					t_builtin_array;
+
 /*
 **	ft_default_set.c
 */

@@ -46,6 +46,7 @@ int			init_termios(void)
 		return (-1);
 	st_term->new.c_lflag &= ~(ICANON | ECHO | TOSTOP);
 	st_term->new.c_cc[VMIN] = 1;
+	st_term->new.c_cc[VDSUSP] = _POSIX_VDISABLE;
 	st_term->new.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &st_term->new) == -1)
 		return (-1);

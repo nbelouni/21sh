@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmdclear.c                                      :+:      :+:    :+:   */
+/*   ft_check_env_fork.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/13 21:18:16 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/21 19:55:36 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/04/21 19:55:38 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-void		ft_cmdclear(t_cmd **cmd)
+int					ft_env_binary(char **args)
 {
-	t_cmd	*tmp;
-	t_cmd	*elem;
+	int	*opt;
 
-	if (cmd == NULL)
-		return ;
-	elem = (*cmd)->prev;
-	tmp = (*cmd)->next;
-	if (!elem)
-		*cmd = (*cmd)->next;
-	else
+	opt = NULL;
+	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
+		return (0);
+	if (opt[0] < 0 || !args[opt[0] + 1])
 	{
-		elem->next = tmp;
-		tmp->prev = elem;
+		(opt) ? free(opt) : 0;
+		return (0);
 	}
-	ft_memdel((void *)cmd);
+	(opt) ? free(opt) : 0;
+	return (1);
 }

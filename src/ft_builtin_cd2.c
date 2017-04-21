@@ -17,6 +17,8 @@
 **	qui ne sont pas des options, afin de remplacer s1 dans s2.
 */
 
+extern t_core *g_core;
+
 char	*ft_switch_path(char *s1, char *s2)
 {
 	char		*path;
@@ -63,6 +65,8 @@ char	*ft_create_oldpath(char *f_path, t_lst *env)
 			if ((f_path = ft_strdup(elem->value)) == NULL)
 				return (NULL);
 		}
+		else
+			ft_print_error("cd -", ERR_OLDPWD_NOT_SET, ERR_NEW_CMD);
 	}
 	return (f_path);
 }
@@ -75,17 +79,22 @@ char	*ft_create_oldpath(char *f_path, t_lst *env)
 char	*ft_create_absolute_path(char *f_path, char *arg1)
 {
 	char	*cwd;
+	t_elem	*elem;
 
-	cwd = NULL;
-	if ((cwd = getcwd(NULL, PATH_MAX)) == NULL)
-	{
-		return (NULL);
-	}
 	if ((f_path = ft_strnew(PATH_MAX)) != NULL)
 	{
-		f_path = ft_multi_concat(f_path, cwd, "/", arg1);
+		cwd = getcwd(NULL, PATH_MAX);
+		if (cwd)
+		{
+			f_path = ft_multi_concat(f_path, cwd, "/", arg1);
+			ft_strdel(&cwd);
+		}
+		else
+		{
+			if ((elem = ft_find_elem("PWD", g_core->env)) && elem->value)
+				f_path = ft_multi_concat(f_path, elem->value, "/", arg1);
+		}
 	}
-	ft_strdel(&cwd);
 	return (f_path);
 }
 

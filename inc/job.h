@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 17:03:19 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/14 19:54:25 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 18:34:53 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,12 @@ void				format_job_info(t_job *job, const char *status);
 t_node_p			create_redir(t_tree *node_redir, t_node_p left_node);
 char				*iter_iolist_cmd(t_list *io_list);
 int					ft_env_binary(char **args);
+
+t_node_p			new_node(t_type_node type, size_t size);
+void				*delete_node(t_node_p node);
+void				*iter_pre_order(t_node_p node, t_list **stack);
+void				delete_condition_if(t_condition_if_p condition_if);
+void				delete_process(t_process_p process);
+t_condition_if_p	new_condition_if(t_type_if type);
 
 #endif

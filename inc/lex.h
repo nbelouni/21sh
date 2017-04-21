@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/15 21:01:49 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:10:46 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define ISAMP(x) (x->type == DIR_L_AMP || x->type == DIR_R_AMP)
 # define NEXTISCMD(x) (x->next->type == CMD || x->next->type == ARG)
 # define PREVISCMD(x) (x->prev->type == CMD || x->prev->type == ARG)
+# define ISREDIR(x) ((x > START && x < OR) || (x > AND && x < DIR_L_AMP))
 
 typedef struct		s_pt
 {
@@ -90,7 +91,6 @@ void				sort_list_token(t_token **list, t_completion *c, t_lst *h);
 int					ft_swap_in(t_token **list);
 int					check_error_out(t_token *elem);
 void				check_target_place(t_token **list);
-void				ft_print_token_list(t_token **list);
 
 int					return_new_prompt(int ret);
 int					here_doc(t_token *elemi, t_completion *c, t_lst *hist);
@@ -101,7 +101,15 @@ void				ft_push_ast(t_token *list, t_tree **ast);
 void				free_ast(t_tree *ast);
 void				print_tab(char **tabol);
 void				print_debug_ast(t_tree *node);
-void 				print_t(t_tree *tree);
+void				print_t(t_tree *tree);
 t_list				*concate_argv(t_token *lst);
+
+int					priority(t_token *node_lst, t_token *tmp);
+char				**copy_fd(t_token *tmp);
+char				**concate_cmd(t_token *lst);
+t_token				*search_toke(t_token *lst);
+t_token				*search_toke_prev(t_token *lst);
+t_tree				*new_tree(t_token *lst);
+t_tree				*add_tree(t_token *lst);
 
 #endif

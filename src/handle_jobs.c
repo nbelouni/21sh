@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/20 20:57:07 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:22:31 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_process_p		get_process_by_pid(pid_t pid)
 	return (NULL);
 }
 
-t_job	*get_job_from_pid(pid_t pid)
+t_job			*get_job_from_pid(pid_t pid)
 {
 	t_list		*ptr_job;
 	t_list		*ptr_process;
@@ -86,13 +86,7 @@ int		mark_process_status(pid_t pid, int status, int *last)
 			{
 				p->completed = 1;
 				*last = WEXITSTATUS(status);
-/*				if (WIFSIGNALED(status))
-				{
-					ft_putstr_fd("21sh: Terminated by signal ", 2);
-					ft_putnbr_fd(WTERMSIG(status), 2);
-					ft_putchar_fd('\n', 2);
-				}
-*/			}
+			}
 			return (0);
 		}
 		else
@@ -111,7 +105,7 @@ int		mark_process_status(pid_t pid, int status, int *last)
 
 int		job_is_complete(t_job *j)
 {
-	t_process *p;
+	t_process	*p;
 	t_list		*ptr;
 
 	ptr = j->wait_process_list;
@@ -169,6 +163,18 @@ t_node_p	iter_in_order(t_node_p ptr, t_list **stock)
 	return (NULL);
 }
 
+void	do_pipe_in(t_io **io_in, int *io_pipe)
+{
+	io_in[0] = new_io();
+	io_in[1] = new_io();
+	io_in[0]->tab_fd[0] = dup(STDOUT_FILENO);
+	io_in[0]->flag = DUP | CLOSE;
+	io_in[1]->flag = CLOSE;
+	io_in[0]->dup_src = io_pipe[1];
+	io_in[0]->dup_target = STDOUT_FILENO;
+	io_in[1]->dup_src = io_pipe[0];
+}
+
 int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 {
 	t_io	*io_in[2];
@@ -176,26 +182,15 @@ int		do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 
 	if (pipe(io_pipe) == -1)
 		exit(ft_print_error("21sh", ERR_PIPE, ERR_EXIT));
-	io_in[0] = new_io();
-	io_in[1] = new_io();
+	do_pipe_in(io_in, io_pipe);
 	io_out[0] = new_io();
 	io_out[1] = new_io();
-
-	io_in[0]->tab_fd[0] = dup(STDOUT_FILENO);
 	io_out[0]->tab_fd[1] = dup(STDIN_FILENO);
-
-	io_in[0]->flag = DUP | CLOSE;
-	io_in[1]->flag = CLOSE;
 	io_out[0]->flag = DUP | CLOSE;
 	io_out[1]->flag = CLOSE;
-
-	io_in[0]->dup_src = io_pipe[1];
-	io_in[0]->dup_target = STDOUT_FILENO;
-	io_in[1]->dup_src = io_pipe[0];
 	io_out[0]->dup_src = io_pipe[0];
 	io_out[0]->dup_target = STDIN_FILENO;
 	io_out[1]->dup_src = io_pipe[1];
-
 	PUSH(&(p1->io_list), io_in[0]);
 	PUSH(&(p1->io_list), io_in[1]);
 	PUSH(&(p2->io_list), io_out[0]);
@@ -261,23 +256,43 @@ void	do_pipeline(t_job *job, t_list *pipeline)
 		out = (pipeline->next) ? do_pipe(pipeline->content,
 		pipeline->next->content, io_pipe) : STDOUT_FILENO;
 		exec_simple_command(pipeline->content, dofork);
-		list_iter_int(((t_process_p)pipeline->content)->io_list, (void *)restore_fd, dofork);
+		list_iter_int(((t_process_p)pipeline->content)->io_list,
+			(void *)restore_fd, dofork);
 		if (out != STDOUT_FILENO)
 			close(out);
 		if (in != STDIN_FILENO)
 			close(in);
 		in = io_pipe[0];
 		delete_list(&(((t_process_p)pipeline->content)->io_list), &free);
-		insert_link_bottom(&job->wait_process_list, new_link(memcpy(malloc(pipeline->content_size), pipeline->content, pipeline->content_size), pipeline->content_size));
+		insert_link_bottom(&job->wait_process_list,
+			new_link(memcpy(malloc(pipeline->content_size), pipeline->content,
+				pipeline->content_size), pipeline->content_size));
 		pipeline = pipeline->next;
 	}
 }
- 
+
+int		exec_pipeline(int last, t_job *j, t_node_p *current)
+{
+	char		*s;
+
+	s = NULL;
+	do_pipeline(j, (*current)->data);
+	(*current) = (*current)->right;
+	last = wait_for_job(j);
+	if (last > 0)
+	{
+		ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
+		free(s);
+	}
+	return (last);
+}
+
 void	launch_job(t_job *j)
 {
 	t_node_p	current;
 	t_list		*stack;
 	int			last;
+	t_elem		*elem;
 
 	last = 0;
 	current = j->process_tree;
@@ -287,15 +302,13 @@ void	launch_job(t_job *j)
 	{
 		if (current->type == IF)
 		{
+			elem = ft_find_elem("RET", g_core->set);
+			last = ft_atoi(elem->value);
 			current = ((((t_condition_if_p)current->data)->type == IF_OR &&
 				last) || (((t_condition_if_p)current->data)->type == IF_AND &&
 					!last)) ? current->right : NULL;
 		}
 		else
-		{
-			do_pipeline(j, current->data);
-			current = current->right;
-			last = wait_for_job(j);
-		}
+			last = exec_pipeline(last, j, &current);
 	}
 }

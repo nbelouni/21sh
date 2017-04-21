@@ -81,22 +81,6 @@ static t_lst	*ft_getlst_env(t_lst *env, int *opt)
 **	partant de la fin des options.
 */
 
-int					ft_env_binary(char **args)
-{
-	int	*opt;
-
-	opt = NULL;
-	if ((opt = ft_opt_parse(ENV_OPT, args + 1, 0, 1)) == NULL)
-		return (0);
-	if (opt[0] < 0 || !args[opt[0] + 1])
-	{
-		(opt) ? free(opt) : 0;
-		return (0);
-	}
-	(opt) ? free(opt) : 0;
-	return (1);
-}
-
 int				ft_exec_env_binary(t_lst *env, char **args)
 {
 	t_lst		*env_tmp;
