@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/11 12:30:14 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/21 19:46:48 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:03:18 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define ISAMP(x) (x->type == DIR_L_AMP || x->type == DIR_R_AMP)
 # define NEXTISCMD(x) (x->next->type == CMD || x->next->type == ARG)
 # define PREVISCMD(x) (x->prev->type == CMD || x->prev->type == ARG)
+# define ISREDIR(x) ((x > START && x < OR) || (x > AND && x < DIR_L_AMP))
 
 typedef struct		s_pt
 {

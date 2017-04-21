@@ -82,6 +82,7 @@ SRCS = 	ft_builtin_cd.c		\
 		is_local_var.c		\
 		ft_print.c			\
 		list.c				\
+		list2.c				\
 		io.c				\
 		handle_jobs.c		\
 		init_shell.c		\

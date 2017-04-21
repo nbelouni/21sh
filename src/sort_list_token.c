@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 16:51:24 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/20 17:08:14 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/21 21:04:04 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,6 @@ int		ft_find_fd(t_token *list)
 /*
 **Faut faire des check avant de trier la liste, pour l'instant on garde ca
 */
-
-void	sort_list_token2(t_token **list, t_completion *completion, t_lst *hist)
-{
-	t_token		*elem;
-
-	elem = *list;
-	while (elem)
-	{
-		if (((elem->type > START && elem->type < OR) || (elem->type > AND
-		&& elem->type < DIR_L_AMP)) && elem->next && elem->next->type == CMD)
-			elem->next->type = TARGET;
-		if (elem->type == CMD && elem->prev && (elem->prev->type == CMD
-		|| elem->prev->type == ARG))
-			elem->type = ARG;
-		if (elem->type == DL_DIR)
-			here_doc(elem->next, completion, hist);
-		elem = elem->next;
-	}
-	while ((*list) && (*list)->prev)
-		(*list) = (*list)->prev;
-	return ;
-}
 
 int		create_cmd(t_token **list)
 {
@@ -85,8 +63,7 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			create_cmd(&elem) ? *list : (*list = elem);
 		if (ISAMP(elem) && elem->next && check_error_out(elem->next))
 			return ;
-		if (((elem->type > START && elem->type < OR) || (elem->type > AND
-		&& elem->type < DIR_L_AMP)) && elem->next && elem->next->type == CMD)
+		if ((ISREDIR(elem->type)) && elem->next && elem->next->type == CMD)
 			elem->next->type = TARGET;
 		if (elem->type == TARGET && elem->next && NEXTISCMD(elem))
 			check_target_place(&elem);
@@ -100,5 +77,4 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 	}
 	while ((*list) && (*list)->prev)
 		(*list) = (*list)->prev;
-	return ;
 }
