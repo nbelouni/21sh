@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/21 21:20:41 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:16:42 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,24 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 {
 	struct stat	st;
 
-	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
+	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR && access(av[0], X_OK) == 0)
 		execve(av[0], av, envp);
-	if (lstat(s2, &st) == 0 && st.st_mode & S_IXUSR)
+	if (s2 && lstat(s2, &st) == 0 && st.st_mode & S_IXUSR && access(s2, X_OK) == 0)
 		execve(s2, av, envp);
-	if (!s)
+	if (!s || ft_strcmp(s, "") == 0)
 	{
+		(s) ? free(s) : 0 ;
+		(s2) ? free(s2) : 0 ;
+		(envp) ? ft_tabdel(envp) : 0;
 		if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
 			ft_putstr_fd("21sh: exec format error: ", 2);
 		else if (lstat(av[0], &st) == 0)
 			ft_putstr_fd("21sh: permission denied: ", 2);
-		else
+		else if (!s)
 			ft_putstr_fd("21sh: no such file or directory: ", 2);
+		else
+			ft_putstr_fd("21sh: command not found: ", 2);
 		ft_putendl_fd(av[0], 2);
-		free(s);
-		free(s2);
-		ft_tabdel(envp);
-		s = NULL;
 		exit(1);
 	}
 }
@@ -84,18 +85,22 @@ void			ft_exec(char **av)
 	char		**envp;
 	t_elem		*tmp;
 
+	s2 = NULL;
 	close_termios();
 	envp = ft_env_to_tab(g_core->env);
 	if (!(tmp = ft_find_elem("PATH", g_core->env)) || !tmp->value)
 		s = ft_strdup("");
 	else
 		s = ft_strdup(tmp->value);
+	if (av && av[0] && av[0][0] && ((av[0][0] == '.' && av[0][1] == '/') ||
+			(av[0][0] == '/')))
+		not_binary(NULL, NULL, av, envp);
 	while (true)
 	{
 		s2 = ft_cut_path(&s, av[0]);
 		not_binary(s, s2, av, envp);
 		(s2) ? ft_strdel(&s2) : 0;
-		if (ft_strcmp(s, "") == 0)
+		if (!s)
 			break ;
 	}
 	ft_putstr_fd("21sh: command not found: ", 2);
