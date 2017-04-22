@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 22:32:29 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/21 22:33:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 20:18:01 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	home_tild(t_buf *buf, int *begin)
 		*begin = find_word_begin(buf->line, c_pos);
 	}
 }
-

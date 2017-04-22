@@ -85,6 +85,8 @@ SRCS = 	ft_builtin_cd.c		\
 		list2.c				\
 		io.c				\
 		handle_jobs.c		\
+		handle_jobs2.c		\
+		handle_jobs3.c		\
 		init_shell.c		\
 		ft_get_history.c	\
 		ft_set_history.c	\
@@ -108,8 +110,7 @@ SRCS = 	ft_builtin_cd.c		\
 		ft_env_dup_operations.c\
 		home_tild.c			\
 		apply_redir.c		\
-		ft_check_env_fork.c	\
-		printdebugast.c
+		ft_check_env_fork.c	
 
 SRCC = $(addprefix $(SDIR),$(SRCS))
 
