@@ -35,6 +35,7 @@ SRCS = 	ft_builtin_cd.c		\
 		ft_list_tools2.c	\
 		ft_list_tools3.c	\
 		ft_opt_parse.c		\
+		ft_tools.c			\
 		read.c				\
 		buf.c				\
 		term.c				\

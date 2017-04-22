@@ -128,4 +128,12 @@ void				ft_extract_elem(t_elem **elem, t_lst *lst);
 void				ft_clear_elem(t_elem **elem);
 void				ft_del_elem(t_elem **elem, t_lst *lst);
 
+void				launch_job(t_job *j);
+void				export_job(t_tree *root, t_list **g_job_list);
+void				print_job_list(t_list *g_job_list);
+
+int					parse_builtins(t_core *core, char *cmd, char **cmd_args);
+int					up_shlvl(t_elem **elem);
+int					ft_creat_core(char **envp);
+
 #endif
