@@ -53,14 +53,15 @@ int			parse_builtins(t_core *core, char *cmd, char **cmd_args)
 **   si l'entree est different du terminal va lire ligne par ligne GNL
 */
 
-static int	launch_execution(int ret, t_buf *buf, t_token *list)
+static int	launch_execution(int ret, t_token *list)
 {
 	t_list	*job_list_bis;
 	t_tree	*ast;
 
 	job_list_bis = NULL;
 	ast = NULL;
-	if ((ret = ft_cmd_to_history(g_core->hist, buf->final_line)) == ERR_EXIT)
+	ret = ft_cmd_to_history(g_core->hist, g_core->buf->final_line);
+	if (ret == ERR_EXIT)
 	{
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	}
@@ -76,14 +77,14 @@ static int	launch_execution(int ret, t_buf *buf, t_token *list)
 	return (ret);
 }
 
-static int	pre_core(t_buf *buf, t_completion *completion, char **envp)
+static int	pre_core(t_buf **buf, t_completion *completion, char **envp)
 {
 	struct termios termio;
 
 	tcgetattr(0, &termio);
 	if (ft_creat_core(envp) == ERR_EXIT)
 		return (ERR_EXIT);
-	if (!(buf = init_buf()))
+	if (!(*buf = init_buf()))
 		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	if (init_completion(completion, g_core) == ERR_EXIT)
 		return (-1);
@@ -91,12 +92,12 @@ static int	pre_core(t_buf *buf, t_completion *completion, char **envp)
 		return (ft_print_error("21sh", " : Input not from a tty", ERR_NEW_CMD));
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
-	g_core->buf = buf;
+	g_core->buf = *buf;
 	init_curs();
 	return (0);
 }
 
-static int	exec_core(int ret, t_completion *completion, t_buf *buf)
+static int	exec_core(int ret, t_completion *completion)
 {
 	int				ret_subs;
 	t_token			*list;
@@ -108,9 +109,9 @@ static int	exec_core(int ret, t_completion *completion, t_buf *buf)
 	ret_subs = bang_substitution(&(g_core->buf->final_line), g_core);
 	ret = parse_buf(&list, g_core->buf->final_line, completion, g_core->hist);
 	if (ret > 0 && list && ret_subs == 0)
-		ret = launch_execution(ret, buf, list);
+		ret = launch_execution(ret, list);
 	else if (ret_subs == 2)
-		ft_putendl(buf->final_line);
+		ft_putendl(g_core->buf->final_line);
 	if (ret != ERR_NEW_PROMPT && g_core->buf->final_line)
 		ft_strdel(&(g_core->buf->final_line));
 	else
@@ -134,16 +135,17 @@ int			main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	cplt.hostname = NULL;
+	cplt.command = NULL;
+	cplt.username = NULL;
+	cplt.variable = NULL;
 	buf = NULL;
-	ft_memset(&cplt, 0, sizeof(t_completion) * 4);
-	ret = pre_core(buf, &cplt, envp);
+	ret = pre_core(&buf, &cplt, envp);
 	while ((read = read_line(g_core->buf, &cplt, g_core->hist)) != ERR_NEW_CMD)
 	{
 		close_termios();
 		if (read != TAB)
-		{
-			ret = exec_core(ret, &cplt, buf);
-		}
+			ret = exec_core(ret, &cplt);
 		if (read == END_EOT)
 			break ;
 	}
