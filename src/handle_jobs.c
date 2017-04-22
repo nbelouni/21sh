@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 18:15:02 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/21 21:22:31 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:49:20 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,7 +279,7 @@ int		exec_pipeline(int last, t_job *j, t_node_p *current)
 	do_pipeline(j, (*current)->data);
 	(*current) = (*current)->right;
 	last = wait_for_job(j);
-	if (last > 0)
+	if (last >= 0)
 	{
 		ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
 		free(s);

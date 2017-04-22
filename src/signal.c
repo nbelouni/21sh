@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/21 19:23:35 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 20:17:04 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,29 @@ t_bool		get_win(void)
 	g_curs.win_col = windows.ws_col;
 	g_curs.win_row = windows.ws_row;
 	return (TRUE);
+}
+
+void		get_sigwinch(int sig)
+{
+//	char	*tmp;
+//	int		i;
+//	signal(SIGWINCH, SIG_IGN);
+//	tmp = ft_strdup(g_core->buf->line);
+//	vb_del(g_core->buf, CTRL_K);
+//	clean_pos_curs();
+//	signal(SIGWINCH, SIG_DFL);
+//	kill(pid, 28);
+	if (sig == SIGWINCH)
+		get_win();
+//	i = -1;
+//	while (tmp[++i])
+//		vb_insert(g_core->buf, tmp + i);
+//	ft_strdel(&tmp);
+//	sleep(10);
+//	t_puts("cl");
+	//print_post_curs(g_core->buf);
+//	m_right(g_core->buf->size);
+	return ;
 }
 
 void		get_sigint(int sig)

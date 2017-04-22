@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 13:08:28 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/22 18:16:42 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/22 20:12:14 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 {
 	struct stat	st;
 
-	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR && access(av[0], X_OK) == 0)
+	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR
+			&& access(av[0], X_OK) == 0)
 		execve(av[0], av, envp);
-	if (s2 && lstat(s2, &st) == 0 && st.st_mode & S_IXUSR && access(s2, X_OK) == 0)
+	if (s2 && lstat(s2, &st) == 0 && st.st_mode & S_IXUSR
+			&& access(s2, X_OK) == 0)
 		execve(s2, av, envp);
 	if (!s || ft_strcmp(s, "") == 0)
 	{
-		(s) ? free(s) : 0 ;
-		(s2) ? free(s2) : 0 ;
+		(s) ? free(s) : 0;
+		(s2) ? free(s2) : 0;
 		(envp) ? ft_tabdel(envp) : 0;
 		if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR)
 			ft_putstr_fd("21sh: exec format error: ", 2);
@@ -103,12 +105,7 @@ void			ft_exec(char **av)
 		if (!s)
 			break ;
 	}
-	ft_putstr_fd("21sh: command not found: ", 2);
-	(s) ? free(s) : 0;
-	(s2) ? free(s2) : 0;
-	(envp) ? ft_tabdel(envp) : 0;
-	ft_putendl_fd(av[0], 2);
-	exit(37);
+	exit(1);
 }
 
 /*
