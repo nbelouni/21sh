@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 20:17:36 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/02/13 19:00:56 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/25 21:24:57 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		ft_is_valid_dir(const char *dirname)
 	struct stat st;
 
 	dir = NULL;
+	ft_bzero(&st, sizeof(st));
 	lstat(dirname, &st);
 	if (S_ISDIR(st.st_mode) || S_ISLNK(st.st_mode))
 	{
