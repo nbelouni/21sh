@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/24 16:57:46 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/25 22:48:45 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ static int	pre_core(t_buf **buf, t_completion *completion, char **envp)
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	init_shell();
 	g_core->buf = *buf;
+	signal(SIGWINCH, get_sigwinch);
+	g_curs.win_row = 0;
+	g_curs.win_col = 0;
+	g_curs.row = 0;
+	g_curs.col = 0;
 	init_curs();
 	return (0);
 }
@@ -142,7 +147,6 @@ int			main(int argc, char **argv, char **envp)
 	cplt.username = NULL;
 	cplt.variable = NULL;
 	buf = NULL;
-	signal(SIGWINCH, get_sigwinch);
 	ret = pre_core(&buf, &cplt, envp);
 	while ((read = read_line(g_core->buf, &cplt, g_core->hist)) != ERR_EXIT)
 	{

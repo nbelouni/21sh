@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 21:36:00 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/25 22:53:00 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	m_right(size_t len)
 {
-	int		cursor;
-
-	cursor = (g_curs.win_col * g_curs.row) + g_curs.col;
+	if ((int)len <= 0)
+		return ;
 	while (len > 0)
 	{
 		if (g_curs.col + 1 < g_curs.win_col)
@@ -33,7 +32,6 @@ void	m_right(size_t len)
 		}
 		len--;
 	}
-	cursor = (g_curs.win_col * g_curs.row) + g_curs.col;
 }
 
 void	m_left(size_t len)
@@ -41,6 +39,8 @@ void	m_left(size_t len)
 	int		cursor;
 	int		w_col;
 
+	if ((int)len < 0)
+		return ;
 	w_col = g_curs.win_col;
 	cursor = (w_col * g_curs.row) + g_curs.col;
 	while (len > 0)
@@ -64,7 +64,8 @@ void	m_left(size_t len)
 
 void	m_up(void)
 {
-	if (g_curs.row > 0)
+	PUT2("cursor : ");E((g_curs.win_col * g_curs.row) + g_curs.col);X('\n');
+	if (get_curs_add(-(get_prompt_len())) > g_curs.win_col)
 	{
 		t_puts("up", 1);
 		g_curs.row--;

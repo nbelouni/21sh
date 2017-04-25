@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:25:06 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:51 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/25 22:57:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 void		clean_pos_curs(void)
 {
-	g_curs.col = get_prompt_len();
-	g_curs.row = 0;
+	if (g_curs.win_col >= (int)get_prompt_len())
+	{
+		g_curs.col = get_prompt_len();
+		g_curs.row = 0;
+	}
+	else
+	{
+		g_curs.row = get_prompt_len() / g_curs.win_col;
+		g_curs.col = get_prompt_len() % g_curs.win_col;
+	}
 }
 
 t_bool		init_curs(void)
@@ -24,4 +32,14 @@ t_bool		init_curs(void)
 		return (FALSE);
 	clean_pos_curs();
 	return (TRUE);
+}
+
+int			get_curs(void)
+{
+	return (g_curs.win_col * g_curs.row + g_curs.col);
+}
+
+int			get_curs_add(int n)
+{
+	return (g_curs.win_col * g_curs.row + g_curs.col + n);
 }
