@@ -6,14 +6,14 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/22 20:30:02 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 20:17:39 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 #include "read.h"
 
-int		cpy_cut_paste(t_buf *buf, int x)
+int			cpy_cut_paste(t_buf *buf, int x)
 {
 	if (x == CTRL_F || x == CTRL_N || x == CTRL_A || x == CTRL_L)
 	{
@@ -42,7 +42,7 @@ int		cpy_cut_paste(t_buf *buf, int x)
 	return (0);
 }
 
-int		read_modul(int x, t_buf *buf)
+int			read_modul(int x, t_buf *buf)
 {
 	if (buf->size + 1 < BUFF_SIZE && (x > 31 && x < 127))
 	{
@@ -56,7 +56,7 @@ int		read_modul(int x, t_buf *buf)
 	return (0);
 }
 
-int		mv_and_read(t_buf *buf, int x, int ret)
+int			mv_and_read(t_buf *buf, int x, int ret)
 {
 	if (ret < 0)
 		return (ft_print_error("\n21sh", ERR_READ, ERR_EXIT));
@@ -79,7 +79,7 @@ int		mv_and_read(t_buf *buf, int x, int ret)
 **	Y faut trouver un autre moyen de recuperer les caracteres speciaux
 */
 
-void	init_line(t_buf *buf)
+void		init_line(t_buf *buf)
 {
 	init_termios();
 	ft_putstr_fd(get_prompt_str(), 1);
@@ -91,12 +91,12 @@ void	init_line(t_buf *buf)
 **  integre les copier coller a la souris
 */
 
-int		classic_read(t_buf *buf, int x)
+int			classic_read(t_buf *buf, int x)
 {
 	int tmp;
 
 	tmp = x & 0xff;
-	if (x ==  25)
+	if (x == 25)
 		return (0);
 	if (tmp < 31 || tmp > 127)
 		return (1);
@@ -109,7 +109,7 @@ int		classic_read(t_buf *buf, int x)
 	return (1);
 }
 
-static int norme(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
+static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 {
 	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) < 0 ||
 	(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
@@ -128,10 +128,10 @@ static int norme(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 		return (2);
 }
 
-int		read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
+int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 {
-	int				tabi[3];
-	int				ret;
+	int	tabi[3];
+	int	ret;
 
 	tabi[0] = 0;
 	tabi[1] = 0;
@@ -142,7 +142,7 @@ int		read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 	{
 		if (classic_read(buf, tabi[0]) == 1)
 		{
-			ret = norme(tabi, cplt, hist, buf);
+			ret = check_ret(tabi, cplt, hist, buf);
 			if (ret == TAB || ret < 1)
 				return (ret);
 		}
