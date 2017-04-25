@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/21 22:27:11 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 20:30:02 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int		classic_read(t_buf *buf, int x)
 static int norme(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 {
 	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) < 0 ||
-			(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
-			((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0)
-			|| (tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
+	(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
+	((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0)
+	|| (tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
 		return (tabi[2]);
 	else if (tabi[0] == RETR)
 	{

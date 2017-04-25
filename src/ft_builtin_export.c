@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/05 10:39:48 by dogokar           #+#    #+#             */
-/*   Updated: 2017/04/13 17:46:52 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 18:05:37 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int			insert_to_env(t_elem *node, char *arg, t_lst *env, t_lst *type_env)
 		node->value = ft_strdup(val);
 		ft_strdel(&val);
 	}
+	else
+		node->value = NULL;
 	if (type_env)
 		move_to_env(node, env, type_env);
 	return (0);

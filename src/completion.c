@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 15:10:02 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/21 22:33:09 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/22 19:04:29 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	print_slist(t_slist *lst, int n, char c)
 	close_termios();
 	tmp = lst;
 	max_len = max_len_sort_lst(lst, n) + 3;
+	if (max_len > g_curs.win_col)
+		max_len = g_curs.win_col;
 	word_per_line = g_curs.win_col / max_len;
 	ft_putchar_fd('\n', 1);
 	while (n-- && tmp)
