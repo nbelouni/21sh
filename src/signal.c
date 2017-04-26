@@ -56,9 +56,9 @@ void		get_sigint(int sig)
 		ft_strdel(&(g_core->buf->final_line));
 		set_prompt(PROMPT1, ft_strlen(PROMPT1));
 		clean_pos_curs();
+		ft_putchar('\n');
 		if (pid == -1)
 		{
-			ft_putchar('\n');
 			ft_putstr_fd(get_prompt_str(), 1);
 		}
 	}

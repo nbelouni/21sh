@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/17 20:31:42 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:20:08 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			is_new_prompt(t_token *prev)
 		if (is_dir_type(prev->type))
 			return (print_err_message("newline"));
 		if ((is_separator_type(prev->type) && prev->type != DOT) ||
-	(count_prev_char(prev->word, strlen(prev->word), '\\') % 2 == 1))
+	(count_prev_char(prev->word, ft_strlen(prev->word), '\\') % 2 == 1))
 		{
 			set_prompt(PROMPT2, ft_strlen(PROMPT2));
 			return (ERR_NEW_PROMPT);
@@ -72,7 +72,7 @@ int			can_create_tree(t_token *lst)
 		tmp = tmp->next;
 	}
 	if (!prev &&
-	(count_prev_char(lst->word, strlen(lst->word) - 1, '\\') % 2 == 1))
+	(count_prev_char(lst->word, ft_strlen(lst->word) - 1, '\\') % 2 == 1))
 	{
 		set_prompt(PROMPT2, ft_strlen(PROMPT2));
 		return (ERR_NEW_PROMPT);

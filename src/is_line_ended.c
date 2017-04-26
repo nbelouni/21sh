@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:00 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:11 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:20:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		complete_final_line(t_buf *buf, t_token *lst)
 	tmp = lst;
 	while (tmp->next)
 		tmp = tmp->next;
-	if (count_prev_char(tmp->word, strlen(tmp->word) - 1, '\\') % 2 == 1)
+	if (count_prev_char(tmp->word, ft_strlen(tmp->word) - 1, '\\') % 2 == 1)
 		return (0);
 	if (!(tmp2 = ft_strjoin(buf->final_line, " ")))
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));

@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:07:15 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:07 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 20:25:03 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void			ft_exec(char **av)
 	t_elem		*tmp;
 
 	s2 = NULL;
-	close_termios();
 	envp = ft_env_to_tab(g_core->env);
 	if (!(tmp = ft_find_elem("PATH", g_core->env)) || !tmp->value)
 		s = ft_strdup("");

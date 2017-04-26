@@ -135,5 +135,6 @@ void				print_job_list(t_list *g_job_list);
 int					parse_builtins(t_core *core, char *cmd, char **cmd_args);
 int					up_shlvl(t_elem **elem);
 int					ft_creat_core(char **envp);
+void				get_sigwinch(int sig);
 
 #endif

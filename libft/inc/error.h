@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:15:19 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:15:34 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 20:46:16 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@
 # define ERR_BADF				": Bad file descriptor"
 # define ERR_PIPE				": Error pipe"
 # define ERR_FORK				": Error fork"
+# define ERR_IS_DIR				": Is a directory"
 
 #endif

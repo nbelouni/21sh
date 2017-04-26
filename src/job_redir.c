@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:38 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:16:55 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
 				io->dup_src = left;
 			}
 			else if (i == 5 || i == 6)
+			{
 				io->dup_src = ft_atoi((node_redir->right->cmd)[0]);
+				PUT2("io->dup_src : ");E(io->dup_src);X('\n');
+			}
 		}
 		i++;
 	}
@@ -71,26 +74,20 @@ int				restore_fd(t_io *io, int dofork)
 {
 	if (!io)
 		return (0);
-	if (io->tab_fd[0] != -1)
-	{
+	if (io->tab_fd[0] != -1 && io->tab_fd[0] != io->dup_target)
 		dup2(io->tab_fd[0], io->dup_target);
-		close(io->tab_fd[0]);
-	}
 	if (!dofork && io->dup_target > 2)
 		close(io->dup_target);
-	if (io->tab_fd[1] != -1)
-	{
+	if (io->tab_fd[1] != -1 && io->tab_fd[1] != io->dup_src)
 		dup2(io->tab_fd[1], io->dup_src);
-		close(io->tab_fd[1]);
-	}
 	return (0);
 }
 
 static void		save_fd(t_io *io, int type_redir)
 {
-	io->tab_fd[0] = dup(io->dup_target);
+	io->tab_fd[0] = io->dup_target;
 	if (type_redir == DIR_L_AMP || type_redir == DIR_R_AMP)
-		io->tab_fd[1] = dup(io->dup_src);
+		io->tab_fd[1] = (io->dup_src);
 }
 
 t_node_p		create_redir(t_tree *node_redir, t_node_p left_node)

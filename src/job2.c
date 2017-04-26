@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:46 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:29:33 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_node_p		new_node(t_type_node type, size_t size)
 	t_node_p	ptr;
 
 	ptr = malloc(sizeof(*ptr));
-	bzero(ptr, sizeof(*ptr));
+	ft_bzero(ptr, sizeof(*ptr));
 	ptr->type = type;
 	ptr->size = size;
 	return (ptr);
@@ -37,7 +37,7 @@ t_process_p		new_process(char **argv)
 	t_process_p ptr;
 
 	ptr = malloc(sizeof(*ptr));
-	bzero(ptr, sizeof(*ptr));
+	ft_bzero(ptr, sizeof(*ptr));
 	ptr->argv = argv;
 	return (ptr);
 }

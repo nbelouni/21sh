@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:48 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:30:34 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_job				*create_job(t_tree *root, int foreground)
 	t_job	*job;
 
 	job = ft_memalloc(sizeof(t_job));
-	bzero(job, sizeof(*job));
+	ft_bzero(job, sizeof(*job));
 	job->foreground = foreground;
 	job->process_tree = create_process_tree(root);
 	return (job);
@@ -93,7 +93,7 @@ t_condition_if_p	new_condition_if(t_type_if type)
 	t_condition_if_p	ptr;
 
 	ptr = malloc(sizeof(*ptr));
-	bzero(ptr, sizeof(*ptr));
+	ft_bzero(ptr, sizeof(*ptr));
 	ptr->type = type;
 	return (ptr);
 }

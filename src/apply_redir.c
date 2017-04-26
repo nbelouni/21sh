@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:04:03 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:04:20 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 21:08:54 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static int	return_or_exit(char *error, int dofork)
 
 static int	redir_open(t_io *io, int dofork)
 {
+	struct stat	stat;
+
+	lstat(io->str, &stat);
+	if (S_ISDIR(stat.st_mode))
+	{
+		return (ft_print_error("21sh", ERR_IS_DIR,
+			return_or_exit(ERR_IS_DIR, dofork)));
+	}
 	if (io->flag & CLOSE && access(io->str, X_OK) == -1)
 		io->dup_src = open(io->str, io->mode, DEF_FILE);
 	if (access(io->str, 0) == 0 && access(io->str, R_OK | W_OK) == -1)

@@ -20,25 +20,25 @@
 
 typedef struct	s_io
 {
-	int		flag;
-	int		mode;
-	int		dup_src;
-	int		dup_target;
-	int		tab_fd[2];
-	char	*str;
+	int			flag;
+	int			mode;
+	int			dup_src;
+	int			dup_target;
+	int			tab_fd[2];
+	char		*str;
 }				t_io;
 
 typedef struct	s_mode
 {
-	int		redir;
-	int		mode;
-	int		flag;
+	int			redir;
+	int			mode;
+	int			flag;
 }				t_mode;
 
 typedef struct	s_redir
 {
-	char	*redir;
-	int		mode;
+	char		*redir;
+	int			mode;
 }				t_redir;
 
 t_io			*new_io();
