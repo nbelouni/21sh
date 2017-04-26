@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 21:36:00 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/25 22:53:00 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/25 23:35:30 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	m_left(size_t len)
 
 void	m_up(void)
 {
-	PUT2("cursor : ");E((g_curs.win_col * g_curs.row) + g_curs.col);X('\n');
 	if (get_curs_add(-(get_prompt_len())) > g_curs.win_col)
 	{
 		t_puts("up", 1);

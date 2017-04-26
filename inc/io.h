@@ -6,7 +6,7 @@
 /*   By: llaffile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 11:02:12 by llaffile          #+#    #+#             */
-/*   Updated: 2017/04/17 21:45:35 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/25 23:46:27 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,30 @@ int				is_builtin(char **args);
 **	handle_jobs.c
 */
 
-void				exec_simple_command(t_process_p p, int dofork);
-int					shouldfork(t_job *j, t_list *pipeline);
-void				do_pipeline(t_job *job, t_list *pipeline);
-int					exec_pipeline(int last, t_job *j, t_node_p *current);
-void				launch_job(t_job *j);
+void			exec_simple_command(t_process_p p, int dofork);
+int				shouldfork(t_job *j, t_list *pipeline);
+void			do_pipeline(t_job *job, t_list *pipeline);
+int				exec_pipeline(int last, t_job *j, t_node_p *current);
+void			launch_job(t_job *j);
 
 /*
 **	handle_jobs2.c
 */
 
-t_process_p			get_process_by_pid(pid_t pid);
-t_job				*get_job_from_pid(pid_t pid);
-int					mark_process_status(pid_t pid, int status, int *last);
-int					job_is_complete(t_job *j);
-int					wait_for_job(t_job *j);
+t_process_p		get_process_by_pid(pid_t pid);
+t_job			*get_job_from_pid(pid_t pid);
+int				mark_process_status(pid_t pid, int status, int *last);
+int				job_is_complete(t_job *j);
+int				wait_for_job(t_job *j);
 
 /*
 **	handle_jobs3.c
 */
 
-void				launch_process(t_process_p process, int dofork);
-t_node_p			iter_in_order(t_node_p ptr, t_list **stock);
-void				do_pipe_in(t_io **io_in, int *io_pipe);
-int					do_pipe(t_process_p p1, t_process_p p2, int *io_pipe);
-int					make_children(t_process_p p);
+void			launch_process(t_process_p process, int dofork);
+t_node_p		iter_in_order(t_node_p ptr, t_list **stock);
+void			do_pipe_in(t_io **io_in, int *io_pipe);
+int				do_pipe(t_process_p p1, t_process_p p2, int *io_pipe);
+int				make_children(t_process_p p);
 
 #endif
