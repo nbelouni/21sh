@@ -90,7 +90,7 @@ int			edit_history(t_buf *buf, t_lst *hist, int x)
 		if (ft_mv_up(buf, &(buf->cur_hist), &(buf->last_cmd)) == ERR_EXIT)
 			return (ERR_EXIT);
 	}
-	if (x == DOWN)
+	if (x == DOWN && buf->cur_hist != NULL)
 	{
 		if (buf->cur_hist != NULL)
 			buf->cur_hist = buf->cur_hist->next;

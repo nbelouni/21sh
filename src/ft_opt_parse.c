@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:43 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:07 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 22:55:06 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	ft_is_opt(int *opt, char *opts, char *arg, int *tabi)
 	}
 	if (arg[1] == '-')
 	{
-		return ((arg[2] != '\0') ? print_opt_err(opts, arg[2]) : 2);
+		return ((arg[2] && tabi[1] == 0) ? print_opt_err(opts, arg[2]) : 2);
 	}
 	else
 	{
