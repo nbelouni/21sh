@@ -79,7 +79,9 @@ static int		ft_exec_env(t_lst *env, int *opt, char **args)
 			break ;
 	}
 	if (ret >= 0)
+	{
 		(args[i]) ? ft_exec_env_binary(dup, &(args[i])) : ft_print_lst(dup);
+	}
 	(dup) ? ft_del_list(dup) : 0;
 	return (ret);
 }
@@ -103,7 +105,7 @@ int				ft_builtin_env(t_core *core, char **args)
 		ret = opt[0];
 	else
 	{
-		if (args[opt[0]] == NULL)
+		if (args[opt[0]] != NULL)
 			ret = ft_exec_env(core->env, opt, &(args[opt[0]]));
 	}
 	free(opt);
