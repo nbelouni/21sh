@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:47:51 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/15 15:17:52 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/26 15:17:11 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ void				print_job_list(t_list *g_job_list);
 int					parse_builtins(t_core *core, char *cmd, char **cmd_args);
 int					up_shlvl(t_elem **elem);
 int					ft_creat_core(char **envp);
+void				get_sigwinch(int sig);
 
 #endif
