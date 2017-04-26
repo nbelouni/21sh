@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/02 18:10:58 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/25 22:57:23 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/26 13:17:39 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void		get_sigint(int sig)
 		ft_strdel(&(g_core->buf->final_line));
 		set_prompt(PROMPT1, ft_strlen(PROMPT1));
 		clean_pos_curs();
+		ft_putchar('\n');
 		if (pid == -1)
 		{
-			ft_putchar('\n');
 			ft_putstr_fd(get_prompt_str(), 1);
 		}
 	}

@@ -14,6 +14,21 @@
 
 extern t_core	*g_core;
 
+int				ft_exec_env_binary(t_lst *env, char **args)
+{
+	t_lst	*env_tmp;
+
+	env_tmp = NULL;
+	if (args && args[0])
+	{
+		env_tmp = g_core->env;
+		g_core->env = env;
+		ft_exec(args);
+		g_core->env = env_tmp;
+	}
+	return (0);
+}
+
 /*
 **	Ft_getlst_env permet simplement d'initialisé et/ou de de copier la liste
 **	dans dup, puis de la retourner, selon si env est remplis ou non.
@@ -47,21 +62,6 @@ static t_lst	*ft_getlst_env(t_lst *env, int *opt)
 **	partant de la fin des options.
 */
 
-int				ft_exec_env_binary(t_lst *env, char **args)
-{
-	t_lst		*env_tmp;
-
-	env_tmp = NULL;
-	if (args && args[0])
-	{
-		env_tmp = g_core->env;
-		g_core->env = env;
-		ft_exec(args);
-		g_core->env = env_tmp;
-	}
-	return (0);
-}
-
 static int		ft_exec_env(t_lst *env, int *opt, char **args)
 {
 	t_lst	*dup;
@@ -91,7 +91,7 @@ int				ft_builtin_env(t_core *core, char **args)
 
 	ret = 0;
 	opt = NULL;
-	if (!args || !args[0])
+	if (args == NULL || args[0] == NULL)
 	{
 		if (core->env && core->env->head)
 			ft_print_lst(core->env);
@@ -103,7 +103,7 @@ int				ft_builtin_env(t_core *core, char **args)
 		ret = opt[0];
 	else
 	{
-		if (args[opt[0]])
+		if (args[opt[0]] == NULL)
 			ret = ft_exec_env(core->env, opt, &(args[opt[0]]));
 	}
 	free(opt);

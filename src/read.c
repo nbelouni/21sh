@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 16:47:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/22 20:17:39 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/25 23:46:00 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,40 +73,6 @@ int			mv_and_read(t_buf *buf, int x, int ret)
 	if (x == RIGHT || x == END || x == ALT_RIGHT)
 		m_right(calc_len(buf, x));
 	return (0);
-}
-
-/*
-**	Y faut trouver un autre moyen de recuperer les caracteres speciaux
-*/
-
-void		init_line(t_buf *buf)
-{
-	init_termios();
-	ft_putstr_fd(get_prompt_str(), 1);
-	print_pre_curs(buf);
-	print_post_curs(buf);
-}
-
-/*
-**  integre les copier coller a la souris
-*/
-
-int			classic_read(t_buf *buf, int x)
-{
-	int tmp;
-
-	tmp = x & 0xff;
-	if (x == 25)
-		return (0);
-	if (tmp < 31 || tmp > 127)
-		return (1);
-	while (x)
-	{
-		tmp = x & 0xff;
-		x >>= 8;
-		read_modul(tmp, buf);
-	}
-	return (1);
 }
 
 static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)

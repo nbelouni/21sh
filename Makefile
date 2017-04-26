@@ -73,6 +73,7 @@ SRCS = 	ft_builtin_cd.c		\
 		ast_create3.c		\
 		ast_create4.c		\
 		find_quote_end.c	\
+		supp_quotes.c		\
 		globbing.c			\
 		here_doc.c			\
 		job.c				\
