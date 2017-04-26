@@ -6,7 +6,7 @@
 /*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 17:54:58 by maissa-b          #+#    #+#             */
-/*   Updated: 2017/04/22 17:54:59 by maissa-b         ###   ########.fr       */
+/*   Updated: 2017/04/25 23:47:16 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,50 @@ int		up_shlvl(t_elem **elem)
 	if (((*elem)->value = ft_itoa(lvl)) == NULL)
 		return (ERR_EXIT);
 	return (0);
+}
+
+int		init_begin_end(char *s, int *begin, int *end)
+{
+	int		i;
+
+	*begin = find_next_char(s, 0, '$');
+	if (*begin < 0 || !ft_isalpha(s[*begin + 1]) ||
+	which_quotes(s, *begin) == S_QUOTE)
+		return (TRUE);
+	*begin += 1;
+	i = *begin;
+	*end = 0;
+	while (s[i + *end] && ft_isalnum(s[i + *end]))
+		*end += 1;
+	return (FALSE);
+}
+
+void	init_line(t_buf *buf)
+{
+	init_termios();
+	ft_putstr_fd(get_prompt_str(), 1);
+	print_pre_curs(buf);
+	print_post_curs(buf);
+}
+
+/*
+**  integre les copier coller a la souris
+*/
+
+int		classic_read(t_buf *buf, int x)
+{
+	int tmp;
+
+	tmp = x & 0xff;
+	if (x == 25)
+		return (0);
+	if (tmp < 31 || tmp > 127)
+		return (1);
+	while (x)
+	{
+		tmp = x & 0xff;
+		x >>= 8;
+		read_modul(tmp, buf);
+	}
+	return (1);
 }

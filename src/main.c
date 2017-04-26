@@ -6,7 +6,7 @@
 /*   By: maissa-b <maissa-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/01 17:16:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/25 22:48:45 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/25 23:44:30 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,6 @@ static int	exec_core(int ret, t_completion *completion)
 		return (-1);
 	return (ret);
 }
-
-void		get_sigwinch(int sig);
 
 int			main(int argc, char **argv, char **envp)
 {
