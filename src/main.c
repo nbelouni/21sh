@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 20:59:30 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,8 @@ int			main(int argc, char **argv, char **envp)
 	cplt.username = NULL;
 	cplt.variable = NULL;
 	buf = NULL;
-	ret = pre_core(&buf, &cplt, envp);
+	if ((ret = pre_core(&buf, &cplt, envp)) < 0)
+		return (ret);
 	while ((read = read_line(g_core->buf, &cplt, g_core->hist)) != ERR_EXIT)
 	{
 		close_termios();
