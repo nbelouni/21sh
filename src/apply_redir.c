@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:04:03 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/27 21:34:52 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 01:16:00 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int			redir_open(t_io *io, int dofork)
 
 static int	check_close_fd(t_io *io, int dofork)
 {
-	if (io->dup_src > 0)
+	if (io->dup_src > 2)
 		close(io->dup_src);
-	if (io->dup_target > 0)
+	if (io->dup_target > 2)
 		close(io->dup_target);
-	if (io->tab_fd[0] > 0)
+	if (io->tab_fd[0] > 2)
 		close(io->tab_fd[0]);
-	if (io->tab_fd[1] > 0)
+	if (io->tab_fd[1] > 2)
 		close(io->tab_fd[1]);
 	return (ft_print_error("21sh", ERR_BADF,
 		return_or_exit(ERR_BADF, dofork)));
@@ -89,7 +89,7 @@ int			apply_redir(t_io *io, int dofork, int token)
 		write(pipefd[1], io->str, ft_strlen(io->str));
 		close(pipefd[1]);
 	}
-	save_fd(io, token);
+	save_fd(io, token, dofork);
 	if (io->flag & DUP)
 	{
 		if ((io->tab_fd[0] == io->dup_src)

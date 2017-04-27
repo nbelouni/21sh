@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 23:16:47 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 00:46:56 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int		sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			elem->type = ARG;
 		if (elem->type == CMD)
 			elem = is_local_var(elem);
-		if (elem->type == DL_DIR && !elem->next)
-			return (0);
-		if (elem->type == DL_DIR)
+		if (elem->type == DL_DIR && elem->next && elem->next->type == TARGET)
 			if (here_doc(elem->next, completion, hist) == ERR_NEW_CMD)
 				return (ERR_NEW_CMD);
 		elem = elem->next;

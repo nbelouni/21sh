@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:38 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/27 21:32:43 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 00:51:41 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ int				restore_fd(t_io *io, int dofork)
 	return (0);
 }
 
-void			save_fd(t_io *io, int type_redir)
+void			save_fd(t_io *io, int type_redir, int dofork)
 {
-	if (io->dup_target >= 0)
+	if (io->dup_target >= 0 && !dofork)
 		io->tab_fd[0] = dup(io->dup_target);
-	if (type_redir == DIR_L_AMP || type_redir == DIR_R_AMP)
+	if ((type_redir == DIR_L_AMP || type_redir == DIR_R_AMP) && !dofork)
 		io->tab_fd[1] = dup(io->dup_src);
 }
 

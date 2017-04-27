@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:17 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 21:08:38 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 00:49:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ t_node_p		iter_in_order(t_node_p ptr, t_list **stock);
 void			do_pipe_in(t_io **io_in, int *io_pipe);
 int				do_pipe(t_process_p p1, t_process_p p2, int *io_pipe);
 int				make_children(t_process_p p);
-void			save_fd(t_io *io, int type_redir);
+void			save_fd(t_io *io, int type_redir, int dofork);
 
 #endif
