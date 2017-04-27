@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:07:15 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 20:25:03 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 21:30:41 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void			not_binary(char *s, char *s2, char **av, char **envp)
 {
 	struct stat	st;
 
-	if (lstat(av[0], &st) == 0 && st.st_mode & S_IXUSR
-			&& access(av[0], X_OK) == 0)
+	if (ft_strchr(av[0], '/') && lstat(av[0], &st) == 0 &&
+	st.st_mode & S_IXUSR && access(av[0], X_OK) == 0)
 		execve(av[0], av, envp);
 	if (s2 && lstat(s2, &st) == 0 && st.st_mode & S_IXUSR
 			&& access(s2, X_OK) == 0)
