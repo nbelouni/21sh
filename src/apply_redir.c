@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:04:03 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 21:08:54 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:04:03 by alallema          #+#    #+#             */
+/*   Updated: 2017/04/27 21:34:52 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 #include "io.h"
 #include "job.h"
+
+int			list_int2(t_list *list, int (*f)(void *, int, int), int d, int t)
+{
+	int		ret;
+
+	while (list)
+	{
+		if ((ret = f(list->content, d, t)))
+			return (ret);
+		list = list->next;
+	}
+	return (0);
+}
 
 static int	return_or_exit(char *error, int dofork)
 {
@@ -21,7 +34,7 @@ static int	return_or_exit(char *error, int dofork)
 	return (1);
 }
 
-static int	redir_open(t_io *io, int dofork)
+int			redir_open(t_io *io, int dofork)
 {
 	struct stat	stat;
 
@@ -46,7 +59,21 @@ static int	redir_open(t_io *io, int dofork)
 	return (0);
 }
 
-int			apply_redir(t_io *io, int dofork)
+static int	check_close_fd(t_io *io, int dofork)
+{
+	if (io->dup_src > 0)
+		close(io->dup_src);
+	if (io->dup_target > 0)
+		close(io->dup_target);
+	if (io->tab_fd[0] > 0)
+		close(io->tab_fd[0]);
+	if (io->tab_fd[1] > 0)
+		close(io->tab_fd[1]);
+	return (ft_print_error("21sh", ERR_BADF,
+		return_or_exit(ERR_BADF, dofork)));
+}
+
+int			apply_redir(t_io *io, int dofork, int token)
 {
 	int		pipefd[2];
 	int		ret;
@@ -62,13 +89,14 @@ int			apply_redir(t_io *io, int dofork)
 		write(pipefd[1], io->str, ft_strlen(io->str));
 		close(pipefd[1]);
 	}
+	save_fd(io, token);
 	if (io->flag & DUP)
 	{
-		if (dup2(io->dup_src, io->dup_target) == -1 && dofork)
-			return (ft_print_error("21sh", ERR_BADF,
-				return_or_exit(ERR_BADF, dofork)));
+		if ((io->tab_fd[0] == io->dup_src)
+				|| (dup2(io->dup_src, io->dup_target) == -1 && dofork))
+			return (check_close_fd(io, dofork));
 	}
-	if (io->flag & CLOSE && io->flag ^ WRITE)
+	if (io->flag & CLOSE && io->flag ^ WRITE && io->dup_target != io->dup_src)
 		close(io->dup_src);
 	return (0);
 }

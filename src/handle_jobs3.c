@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_jobs3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:06:16 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 21:09:21 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/22 20:38:21 by alallema          #+#    #+#             */
+/*   Updated: 2017/04/27 21:35:04 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ extern	t_core	*g_core;
 
 void			launch_process(t_process_p process, int dofork)
 {
-	if (list_iter_int(process->io_list, (void *)apply_redir, dofork))
+	if (list_int2(process->io_list,
+				(void *)apply_redir, dofork, process->token))
 		return ;
 	ft_check_exec(&process->argv);
 	if (dofork)

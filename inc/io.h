@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:17 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:12:38 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 21:08:38 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ char			*copy_redir(t_io *io);
 char			*copy_process(t_process_p process);
 char			*ft_fix_join(char *s, char *buf);
 int				list_iter_int(t_list *list, int (*f)(void *, int), int d);
-int				apply_redir(t_io *io, int dofork);
+int				list_int2(t_list *list, int (*f)(void *, int, int),
+				int d, int b);
+int				apply_redir(t_io *io, int dofork, int token);
 int				restore_fd(t_io *io, int dofork);
 int				is_builtin(char **args);
+int				redir_open(t_io *io, int dofork);
 
 /*
 **	handle_jobs.c
@@ -79,5 +82,6 @@ t_node_p		iter_in_order(t_node_p ptr, t_list **stock);
 void			do_pipe_in(t_io **io_in, int *io_pipe);
 int				do_pipe(t_process_p p1, t_process_p p2, int *io_pipe);
 int				make_children(t_process_p p);
+void			save_fd(t_io *io, int type_redir);
 
 #endif

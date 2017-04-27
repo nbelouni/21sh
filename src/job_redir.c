@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:05:38 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 21:16:55 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:05:38 by alallema          #+#    #+#             */
+/*   Updated: 2017/04/27 21:32:43 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
 			io->mode = g_tab_mode[i].mode;
 			if ((i == 5 || i == 6) && (node_redir->right->cmd)[0][0] == '-')
 			{
-				io->flag |= CLOSE;
+				io->flag = CLOSE;
 				io->dup_src = left;
+				io->dup_target = -2;
 			}
 			else if (i == 5 || i == 6)
 			{
 				io->dup_src = ft_atoi((node_redir->right->cmd)[0]);
-				PUT2("io->dup_src : ");E(io->dup_src);X('\n');
 			}
 		}
 		i++;
@@ -74,20 +74,27 @@ int				restore_fd(t_io *io, int dofork)
 {
 	if (!io)
 		return (0);
-	if (io->tab_fd[0] != -1 && io->tab_fd[0] != io->dup_target)
+	if (io->tab_fd[0] != -1)
+	{
 		dup2(io->tab_fd[0], io->dup_target);
+		close(io->tab_fd[0]);
+	}
 	if (!dofork && io->dup_target > 2)
 		close(io->dup_target);
-	if (io->tab_fd[1] != -1 && io->tab_fd[1] != io->dup_src)
+	if (io->tab_fd[1] != -1)
+	{
 		dup2(io->tab_fd[1], io->dup_src);
+		close(io->tab_fd[0]);
+	}
 	return (0);
 }
 
-static void		save_fd(t_io *io, int type_redir)
+void			save_fd(t_io *io, int type_redir)
 {
-	io->tab_fd[0] = io->dup_target;
+	if (io->dup_target >= 0)
+		io->tab_fd[0] = dup(io->dup_target);
 	if (type_redir == DIR_L_AMP || type_redir == DIR_R_AMP)
-		io->tab_fd[1] = (io->dup_src);
+		io->tab_fd[1] = dup(io->dup_src);
 }
 
 t_node_p		create_redir(t_tree *node_redir, t_node_p left_node)
@@ -106,7 +113,6 @@ t_node_p		create_redir(t_tree *node_redir, t_node_p left_node)
 		left = ft_atoi((node_redir->cmd)[0]);
 	io->dup_target = left;
 	set_mode_redir(node_redir, io, left);
-	save_fd(io, TOKEN(node_redir));
 	process = ((t_list *)left_node->data)->content;
 	insert_link_bottom(&(process->io_list), new_link(io, sizeof(*io)));
 	return (left_node);
