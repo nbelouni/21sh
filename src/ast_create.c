@@ -52,7 +52,7 @@ t_tree			*add_tree(t_token *lst)
 	return (node);
 }
 
-t_lib			*cheak_lib(t_token *node)
+static t_lib	*check_lib(t_token *node)
 {
 	int i;
 
@@ -76,9 +76,9 @@ int				compare_token_op(t_token *node_lst, t_token *tmp)
 	t_lib	*lib_tmp;
 
 	lib_lst = NULL;
-	lib_lst = cheak_lib(node_lst);
+	lib_lst = check_lib(node_lst);
 	lib_tmp = NULL;
-	lib_tmp = cheak_lib(tmp);
+	lib_tmp = check_lib(tmp);
 	if (!lib_lst && lib_tmp)
 		return (1);
 	else if (lib_lst && lib_tmp)

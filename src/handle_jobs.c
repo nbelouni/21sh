@@ -76,6 +76,7 @@ void			do_pipeline(t_job *job, t_list *pipeline)
 
 int				exec_pipeline(int last, t_job *j, t_node_p *current)
 {
+	t_elem		*e;
 	char		*s;
 
 	s = NULL;
@@ -84,8 +85,15 @@ int				exec_pipeline(int last, t_job *j, t_node_p *current)
 	last = wait_for_job(j);
 	if (last >= 0)
 	{
-		ft_setenv(g_core->set, "RET", (s = ft_itoa(last)));
-		free(s);
+		if ((e = ft_find_elem("?", g_core->set)))
+		{
+			s = ft_itoa(last);
+			if (e->value)
+				e->value = ft_free_and_dup(e->value, s);
+			else
+				e->value = ft_strdup(s);
+		}
+		(s) ? free(s) : 0;
 	}
 	return (last);
 }
@@ -105,7 +113,7 @@ void			launch_job(t_job *j)
 	{
 		if (current->type == IF)
 		{
-			elem = ft_find_elem("RET", g_core->set);
+			elem = ft_find_elem("?", g_core->set);
 			last = ft_atoi(elem->value);
 			current = ((((t_condition_if_p)current->data)->type == IF_OR &&
 				last) || (((t_condition_if_p)current->data)->type == IF_AND &&

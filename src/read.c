@@ -78,10 +78,12 @@ int			mv_and_read(t_buf *buf, int x, int ret)
 static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 {
 	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) < 0 ||
-	(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
-	((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0)
-	|| (tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
+		(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
+		((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0) ||
+		(tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
+	{
 		return (tabi[2]);
+	}
 	else if (tabi[0] == RETR)
 	{
 		m_right(calc_len(buf, END));

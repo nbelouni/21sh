@@ -19,6 +19,7 @@ LIBS = -lft
 SDIR = ./src/
 SRCS = 	ft_builtin_cd.c		\
 		ft_builtin_cd2.c	\
+		ft_builtin_cd3.c	\
 		ft_builtin_locale.c	\
 		ft_builtin_echo.c	\
 		ft_builtin_env.c	\

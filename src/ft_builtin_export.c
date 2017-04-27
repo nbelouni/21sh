@@ -93,7 +93,7 @@ int			insert_to_exp(char *argv, t_core *m_env)
 **	si non il va la cree avec insert_to_exp
 */
 
-int			multi_var_cheak(char *argv, t_core *m_env)
+static int	multi_var_check(char *argv, t_core *m_env)
 {
 	t_elem	*tmp;
 
@@ -134,7 +134,7 @@ int			ft_builtin_export(t_core *m_env, char **argv)
 		ft_print_export(m_env);
 	while (argv[i] != NULL)
 	{
-		if (multi_var_cheak(argv[i], m_env) == -1)
+		if (multi_var_check(argv[i], m_env) == -1)
 			result = ERR_NEW_CMD;
 		++i;
 	}

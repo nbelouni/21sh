@@ -69,6 +69,14 @@ char	*ft_create_path2(t_lst *env, char *arg1);
 char	*ft_create_path(t_lst *env, char *arg1, char *arg2);
 
 /*
+**	ft_builtin_cd3.c
+*/
+
+void	supp_file(char **files);
+int		file_len(char **files);
+char	*concat_path(char *s);
+
+/*
 **	ft_builtin_echo.c
 */
 

@@ -22,10 +22,8 @@ t_token			*search_toke(t_token *lst)
 {
 	t_token	*tmp;
 	t_token	*node_lst;
-	int		first_time;
 
 	tmp = lst;
-	first_time = 0;
 	node_lst = NULL;
 	if (lst == NULL)
 		return (NULL);
@@ -33,10 +31,6 @@ t_token			*search_toke(t_token *lst)
 		tmp = tmp->next;
 	while (tmp && tmp->select == 0)
 	{
-		if (first_time == 0)
-		{
-			first_time = 1;
-		}
 		if (priority(node_lst, tmp))
 			node_lst = tmp;
 		tmp = tmp->next;
@@ -108,21 +102,4 @@ char			**concate_cmd(t_token *lst)
 	}
 	argv[count] = NULL;
 	return (argv);
-}
-
-/*
-** print le char ** pour le debug
-*/
-
-void			print_tab(char **tabol)
-{
-	int		i;
-
-	i = 0;
-	while (tabol[i] != NULL)
-	{
-		PUT2(tabol[i]);
-		PUT2("   ");
-		++i;
-	}
 }

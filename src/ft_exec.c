@@ -114,6 +114,7 @@ void			ft_exec(char **av)
 
 int				ft_check_exec(char ***cmd)
 {
+	t_elem		*e;
 	int			ret;
 	char		*s;
 
@@ -125,8 +126,15 @@ int				ft_check_exec(char ***cmd)
 		ft_exec(*cmd);
 	else
 	{
-		ft_setenv(g_core->set, "RET", (s = ft_itoa(ret)));
-		free(s);
+		if ((e = ft_find_elem("?", g_core->set)))
+		{
+			s = ft_itoa(ret);
+			if (e->value)
+				e->value = ft_free_and_dup(e->value, s);
+			else
+				e->value = ft_strdup(s);
+		}
+		(s) ? free(s) : 0;
 	}
 	return (ret);
 }

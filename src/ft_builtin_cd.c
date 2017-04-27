@@ -6,73 +6,37 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:08:22 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:07 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 19:58:23 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 /*
-**	change le chemin qu'empruntera chdir si une option est spécifié
-**	et que le chemin passé a chdir est un lien symbolique
 **	opt -> {fin options, 'L', 'P'}
 */
-
-static char	*ft_cd_opt(char *path, mode_t mode, int *opt)
-{
-	char	*buf;
-	char	*tmp;
-
-	tmp = NULL;
-	buf = NULL;
-	if ((buf = ft_strnew(PATH_MAX)) == NULL)
-	{
-		return (NULL);
-	}
-	if (S_ISLNK(mode) && opt != NULL && opt[2])
-	{
-		if ((tmp = ft_strnew(PATH_MAX)) == NULL)
-		{
-			ft_strdel(&buf);
-			return (NULL);
-		}
-		readlink(path, tmp, PATH_MAX);
-	}
-	ft_strncpy(buf, path, (ft_strlen(path) - ft_strlen(ft_strlchr(path, '/'))));
-	buf = (tmp) ? ft_strcat(buf, tmp) : ft_strcat(buf, ft_strlchr(path, '/'));
-	(tmp) ? ft_strdel(&tmp) : 0;
-	return (buf);
-}
 
 /*
 **	ft_cd est l'etape finale du builtin cd, permettant de changer de dossier
 **	et actualisant/creant le PWD et l'OLDPWD
 */
 
-static int	ft_cd(t_lst *env, int *opt, char *s, mode_t m)
+static int	ft_cd(t_lst *env, int *opt, char *s)
 {
-	char	*buf;
-	char	*b2;
-	char	*owd;
 	int		ret;
+	char	*owd;
+	char	*cwd;
 
-	if ((buf = ft_cd_opt(s, m, opt)) == NULL)
+	ret = 0;
+	if (ft_is_valid_dir(s) == -1)
 		return (-1);
-	if (ft_is_valid_dir(buf) == -1)
-		return (ft_free_and_return(-1, buf, NULL, NULL));
 	owd = getcwd(NULL, PATH_MAX);
-	chdir(buf);
-	if ((b2 = getcwd(NULL, PATH_MAX)) == NULL)
-		return (ft_free_and_return(-1, owd, NULL, NULL));
-	if (S_ISLNK(m) != 0 && opt != NULL && opt[0] > 0 && opt[1] > 0)
-	{
-		ft_memset(ft_strlchr(b2, '/'), 0, ft_strlen(ft_strlchr(b2, '/')));
-		if ((b2 = ft_free_and_join(b2, ft_strlchr(s, '/'))) == NULL)
-			return (ft_free_and_return(ERR_EXIT, owd, b2, NULL));
-	}
-	ret = ft_pwd_swap(env, owd, b2);
-	(buf) ? ft_strdel(&buf) : NULL;
-	return (ft_free_and_return(ret, owd, b2, NULL));
+	chdir(s);
+	cwd = (opt && opt[2]) ? getcwd(NULL, PATH_MAX) : concat_path(s);
+	ret = ft_pwd_swap(env, owd, cwd);
+	(owd) ? ft_strdel(&owd) : 0;
+	(cwd) ? ft_strdel(&cwd) : 0;
+	return (ret);
 }
 
 /*
@@ -160,7 +124,7 @@ int			ft_builtin_cd(t_core *core, char **args)
 	i = -1;
 	if ((s = ft_builtin_cd_norm(core->env, &(args[opt[0]]))) != NULL)
 	{
-		i = ((lstat(s, &st)) != -1) ? ft_cd(core->env, opt, s, st.st_mode) :\
+		i = ((lstat(s, &st)) != -1) ? ft_cd(core->env, opt, s) :\
 			ft_print_error(s, ERR_NO_FILE, ERR_NEW_CMD);
 		ft_strdel(&s);
 	}

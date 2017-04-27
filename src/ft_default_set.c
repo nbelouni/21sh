@@ -66,6 +66,6 @@ t_lst	*ft_init_lstset(void)
 	ft_multi_free(pwd, histfilepath, NULL, NULL);
 	ft_setenv(set, "HISTSIZE", "500");
 	ft_setenv(set, "HISTFILESIZE", "500");
-	ft_setenv(set, "RET", "0");
+	ft_add_elem(set, "?=0");
 	return (set);
 }
