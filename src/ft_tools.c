@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 21:18:41 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 21:44:35 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		init_begin_end(char *s, int *begin, int *end)
 
 	*begin = find_next_char(s, 0, '$');
 	if (*begin < 0 || (!ft_isalpha(s[*begin + 1]) && s[*begin + 1] != '?' &&
-	 s[*begin + 1] != '_') || which_quotes(s, *begin) == S_QUOTE)
+	s[*begin + 1] != '_') || which_quotes(s, *begin) == S_QUOTE)
 		return (TRUE);
 	*begin += 1;
 	i = *begin;

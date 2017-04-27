@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:38 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 21:16:55 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 21:44:49 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void		set_mode_redir(t_tree *node_redir, t_io *io, int left)
 			else if (i == 5 || i == 6)
 			{
 				io->dup_src = ft_atoi((node_redir->right->cmd)[0]);
-				PUT2("io->dup_src : ");E(io->dup_src);X('\n');
 			}
 		}
 		i++;
