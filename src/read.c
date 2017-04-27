@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:19 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 22:43:48 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int			mv_and_read(t_buf *buf, int x, int ret)
 {
 	if (ret < 0)
 		return (ft_print_error("\n21sh", ERR_READ, ERR_EXIT));
-	if (x == CTRL_D && buf->size == 0)
-		return (ERR_EXIT);
+	if (x == CTRL_D)
+		return (CTRL_D);
 	if (x == DEL)
 		vb_del(buf, x);
 	if (x == ALT_UP)
@@ -77,8 +77,8 @@ int			mv_and_read(t_buf *buf, int x, int ret)
 
 static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 {
-	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) < 0 ||
-		(tabi[2] = cpy_cut_paste(buf, tabi[0])) < 0 ||
+	if ((tabi[2] = mv_and_read(buf, tabi[0], tabi[1])) != 0 ||
+		(tabi[2] = cpy_cut_paste(buf, tabi[0])) != 0 ||
 		((tabi[2] = complete_line(buf, cplt, tabi[0])) != 0) ||
 		(tabi[2] = edit_history(buf, hist, tabi[0]) != 0))
 	{
@@ -96,7 +96,7 @@ static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 		return (2);
 }
 
-int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
+int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist, int is_hd)
 {
 	int	tabi[3];
 	int	ret;
@@ -113,6 +113,10 @@ int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 			ret = check_ret(tabi, cplt, hist, buf);
 			if (ret == TAB || ret < 1)
 				return (ret);
+			if (ret == CTRL_D && is_hd == FALSE && buf->size == 0)
+				return (ERR_EXIT);
+			if (is_hd == TRUE && ret == CTRL_D)
+				return (CTRL_D);
 		}
 		tabi[0] = 0;
 	}

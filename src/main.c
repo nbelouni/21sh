@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 20:59:30 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 22:43:50 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int			main(int argc, char **argv, char **envp)
 	t_completion	cplt;
 	t_buf			*buf;
 	int				ret;
-	int				read;
+	int				r;
 
 	(void)argc;
 	(void)argv;
@@ -147,12 +147,12 @@ int			main(int argc, char **argv, char **envp)
 	buf = NULL;
 	if ((ret = pre_core(&buf, &cplt, envp)) < 0)
 		return (ret);
-	while ((read = read_line(g_core->buf, &cplt, g_core->hist)) != ERR_EXIT)
+	while ((r = read_line(g_core->buf, &cplt, g_core->hist, FALSE)) != ERR_EXIT)
 	{
 		close_termios();
-		if (read != TAB)
+		if (r != TAB)
 			ret = exec_core(ret, &cplt);
-		if (read == END_EOT)
+		if (r == END_EOT)
 			break ;
 	}
 	close_termios();

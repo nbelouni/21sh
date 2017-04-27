@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 23:16:47 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		create_cmd(t_token **list)
 	return (ret);
 }
 
-void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
+int		sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 {
 	t_token		*elem;
 
@@ -62,7 +62,7 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 		if (is_dir_type(elem->type) && ft_find_fd(elem))
 			create_cmd(&elem) ? *list : (*list = elem);
 		if (ISAMP(elem) && elem->next && check_error_out(elem->next))
-			return ;
+			return (0);
 		if ((ISREDIR(elem->type)) && elem->next && elem->next->type == CMD)
 			elem->next->type = TARGET;
 		if (elem->type == TARGET && elem->next && NEXTISCMD(elem))
@@ -71,10 +71,14 @@ void	sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			elem->type = ARG;
 		if (elem->type == CMD)
 			elem = is_local_var(elem);
+		if (elem->type == DL_DIR && !elem->next)
+			return (0);
 		if (elem->type == DL_DIR)
-			here_doc(elem->next, completion, hist);
+			if (here_doc(elem->next, completion, hist) == ERR_NEW_CMD)
+				return (ERR_NEW_CMD);
 		elem = elem->next;
 	}
 	while ((*list) && (*list)->prev)
 		(*list) = (*list)->prev;
+	return (0);
 }

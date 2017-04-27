@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:13 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:12:38 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 23:06:36 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				ft_tokenclear(t_token **lst);
 void				ft_tokendestroy(t_token **begin);
 t_token				*ft_tokenew(int type, char *word);
 void				ft_tokenpush(t_token **begin, t_token *new);
-void				sort_list_token(t_token **list, t_completion *c, t_lst *h);
+int					sort_list_token(t_token **list, t_completion *c, t_lst *h);
 int					ft_swap_in(t_token **list);
 int					check_error_out(t_token *elem);
 void				check_target_place(t_token **list);

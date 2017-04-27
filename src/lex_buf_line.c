@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:36 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/27 23:05:55 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ int			parse_buf(t_token **lst, char *s, t_completion *compl, t_lst *hist)
 				return (return_new_prompt(ret_lex));
 		}
 	}
-	sort_list_token(lst, compl, hist);
+	if (sort_list_token(lst, compl, hist) == ERR_NEW_CMD)
+		return (ERR_NEW_CMD);
 	set_prompt(PROMPT1, ft_strlen(PROMPT1));
 	return (can_create_tree(*lst));
 }
