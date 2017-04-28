@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 22:43:50 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 18:47:23 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_list	*g_job_list = NULL;
 t_core	*g_core = NULL;
+t_bool	g_is_here_doc;
 
 static t_builtin_array g_builtin_array[] =
 {
@@ -81,6 +82,7 @@ static int	pre_core(t_buf **buf, t_completion *completion, char **envp)
 {
 	struct termios termio;
 
+	g_is_here_doc = FALSE;
 	tcgetattr(0, &termio);
 	if (ft_creat_core(envp) == ERR_EXIT)
 		return (ERR_EXIT);
@@ -147,10 +149,10 @@ int			main(int argc, char **argv, char **envp)
 	buf = NULL;
 	if ((ret = pre_core(&buf, &cplt, envp)) < 0)
 		return (ret);
-	while ((r = read_line(g_core->buf, &cplt, g_core->hist, FALSE)) != ERR_EXIT)
+	while ((r = read_line(g_core->buf, &cplt, g_core->hist)) != ERR_EXIT)
 	{
 		close_termios();
-		if (r != TAB)
+		if (r != TAB && r != ERR_NEW_CMD)
 			ret = exec_core(ret, &cplt);
 		if (r == END_EOT)
 			break ;

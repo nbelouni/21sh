@@ -6,13 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:13 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/28 13:55:22 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 19:16:19 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 extern t_core	*g_core;
+extern t_bool	g_is_here_doc;
 
 int		join_lines(t_buf *buf)
 {
@@ -39,10 +40,11 @@ int		read_here_doc(t_buf *buf, t_completion *c, t_token *elem, t_lst *hist)
 	int		ret_read;
 
 	ret_read = 0;
-	while ((ret_read = read_line(buf, c, hist, TRUE)) != ERR_EXIT)
+	while ((ret_read = read_line(buf, c, hist)) != ERR_EXIT)
 	{
 		close_termios();
-		if (!ft_strcmp(elem->word, buf->line) || ret_read == CTRL_D)
+		if (!ft_strcmp(elem->word, buf->line) ||
+		ret_read == CTRL_D || ret_read == ERR_NEW_CMD)
 		{
 			ft_strdel(&(elem->word));
 			if (buf->final_line)
@@ -67,21 +69,26 @@ int		here_doc(t_token *elem, t_completion *completion, t_lst *hist)
 	t_buf	*buf;
 	int		ret;
 
+	g_is_here_doc = TRUE;
 	set_prompt(PROMPT2, ft_strlen(PROMPT2));
 	clean_pos_curs();
 	if (!(buf = init_buf()))
-		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
-	if ((ret = read_here_doc(buf, completion, elem, hist)) == ERR_EXIT)
-		return (ERR_EXIT);
-	if (ret == ERR_NEW_CMD)
-		return (ERR_NEW_CMD);
-	if (!elem->word)
 	{
-		if (!(elem->word = ft_strdup("")))
-			return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
+		g_is_here_doc = FALSE;
+		return (ft_print_error("21sh", ERR_MALLOC, ERR_EXIT));
 	}
-	set_prompt(PROMPT1, ft_strlen(PROMPT1));
-	close_termios();
+	if ((ret = read_here_doc(buf, completion, elem, hist)) < 0)
+	{
+		free_buf(buf);
+		g_is_here_doc = FALSE;
+		return (ret == ERR_EXIT ? ERR_EXIT : ERR_NEW_CMD);
+	}
+	if (!elem->word && !(elem->word = ft_strdup("")))
+	{
+		g_is_here_doc = FALSE;
+		return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
+	}
+	set_prompt(PROMPT1, ft_strlen(PROMPT1) + close_termios());
 	free_buf(buf);
-	return (0);
+	return ((g_is_here_doc = FALSE));
 }

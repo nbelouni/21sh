@@ -6,13 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:07 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:12 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/28 18:46:53 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
 extern t_core	*g_core;
+extern t_bool	g_is_here_doc;
 
 t_bool		get_win(void)
 {
@@ -57,10 +58,6 @@ void		get_sigint(int sig)
 		set_prompt(PROMPT1, ft_strlen(PROMPT1));
 		clean_pos_curs();
 		ft_putchar('\n');
-		if (pid == -1)
-		{
-			ft_putstr_fd(get_prompt_str(), 1);
-		}
 	}
 	return ;
 }

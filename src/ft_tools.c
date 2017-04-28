@@ -6,13 +6,14 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 21:44:35 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/28 19:11:43 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 
-extern t_core *g_core;
+extern t_core	*g_core;
+extern t_bool	g_is_here_doc;
 
 int		ft_creat_core(char **envp)
 {

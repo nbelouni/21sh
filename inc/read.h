@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:00 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 22:43:51 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 17:09:35 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int				close_termios(void);
 /*
 **	Lit et edite ligne (visuel) + buffer (buf.line) si changements necessaires
 */
-int				read_line(t_buf *buf, t_completion *co, t_lst *h, int hd);
+int				read_line(t_buf *buf, t_completion *co, t_lst *h);
 
 /*
 **	*********************************************************************

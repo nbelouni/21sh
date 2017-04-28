@@ -6,12 +6,15 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:19 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 22:43:48 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 18:46:44 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_21sh.h"
 #include "read.h"
+#include <errno.h>
+
+extern t_bool	g_is_here_doc;
 
 int			cpy_cut_paste(t_buf *buf, int x)
 {
@@ -96,7 +99,7 @@ static int	check_ret(int *tabi, t_completion *cplt, t_lst *hist, t_buf *buf)
 		return (2);
 }
 
-int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist, int is_hd)
+int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 {
 	int	tabi[3];
 	int	ret;
@@ -108,15 +111,15 @@ int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist, int is_hd)
 	init_line(buf);
 	while ((tabi[1] = read(0, &tabi[0], sizeof(int))))
 	{
+		if (tabi[1] < 0 && errno == EINTR)
+			return (ERR_NEW_CMD);
 		if (classic_read(buf, tabi[0]) == 1)
 		{
 			ret = check_ret(tabi, cplt, hist, buf);
 			if (ret == TAB || ret < 1)
 				return (ret);
-			if (ret == CTRL_D && is_hd == FALSE && buf->size == 0)
-				return (ERR_EXIT);
-			if (is_hd == TRUE && ret == CTRL_D)
-				return (CTRL_D);
+			if (ret == CTRL_D && buf->size == 0)
+				return (g_is_here_doc == TRUE ? CTRL_D : ERR_EXIT);
 		}
 		tabi[0] = 0;
 	}
