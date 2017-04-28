@@ -6,7 +6,7 @@
 /*   By: alallema <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/22 20:38:21 by alallema          #+#    #+#             */
-/*   Updated: 2017/04/27 21:35:04 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 13:44:07 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int				do_pipe(t_process_p p1, t_process_p p2, int *io_pipe)
 	do_pipe_in(io_in, io_pipe);
 	io_out[0] = new_io();
 	io_out[1] = new_io();
-	io_out[0]->tab_fd[1] = dup(STDIN_FILENO);
 	io_out[0]->flag = DUP | CLOSE;
 	io_out[1]->flag = CLOSE;
 	io_out[0]->dup_src = io_pipe[0];

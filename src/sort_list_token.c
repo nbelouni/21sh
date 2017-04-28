@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:01 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/28 00:46:56 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 13:54:34 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int		create_cmd(t_token **list)
 	return (ret);
 }
 
+void	sort_list(t_token *elem)
+{
+	if ((ISREDIR(elem->type)) && elem->next && elem->next->type == CMD)
+		elem->next->type = TARGET;
+	if (elem->type == TARGET && elem->next && NEXTISCMD(elem))
+		check_target_place(&elem);
+}
+
 int		sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 {
 	t_token		*elem;
@@ -63,10 +71,7 @@ int		sort_list_token(t_token **list, t_completion *completion, t_lst *hist)
 			create_cmd(&elem) ? *list : (*list = elem);
 		if (ISAMP(elem) && elem->next && check_error_out(elem->next))
 			return (0);
-		if ((ISREDIR(elem->type)) && elem->next && elem->next->type == CMD)
-			elem->next->type = TARGET;
-		if (elem->type == TARGET && elem->next && NEXTISCMD(elem))
-			check_target_place(&elem);
+		sort_list(elem);
 		if (elem->type == CMD && elem->prev && PREVISCMD(elem))
 			elem->type = ARG;
 		if (elem->type == CMD)

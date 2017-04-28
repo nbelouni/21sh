@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:13 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 23:12:11 by alallema         ###   ########.fr       */
+/*   Updated: 2017/04/28 13:55:22 by alallema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ int		read_here_doc(t_buf *buf, t_completion *c, t_token *elem, t_lst *hist)
 		{
 			ft_strdel(&(elem->word));
 			if (buf->final_line)
-			{
 				if (!(elem->word = ft_strjoin(buf->final_line, "\n")))
 					return (ft_print_error("\n21sh", ERR_MALLOC, ERR_EXIT));
-			}
 			break ;
 		}
 		else if (buf->line[0])
