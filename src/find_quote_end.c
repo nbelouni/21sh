@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:08:42 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:07 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/28 19:25:42 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int		find_quote_end(char *s)
 
 	i = -1;
 	n_dquote = 0;
+	if (count_prev_char(s, ft_strlen(s) - 1, '\\') % 2 == 1)
+		return (FALSE);
 	while (++i < (int)ft_strlen(s))
 	{
 		if (is_end(s, &i, '\'') == FALSE)
