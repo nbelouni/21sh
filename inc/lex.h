@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:13 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/27 23:06:36 by alallema         ###   ########.fr       */
+/*   Updated: 2017/05/02 20:52:49 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct		s_lib
 }					t_lib;
 
 int					is_char(char *s, int i, char c);
+int					is_number(char *s, int len);
 int					find_prev_char(char *s, int len, char c);
 int					find_next_char(char *s, int len, char c);
 int					count_prev_char(char *s, int i, char c);

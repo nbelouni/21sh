@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:19 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/28 18:46:44 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/29 21:46:17 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 			ret = check_ret(tabi, cplt, hist, buf);
 			if (ret == TAB || ret < 1)
 				return (ret);
-			if (ret == CTRL_D && buf->size == 0)
+			if (ret == CTRL_D && buf->size == 0 && !ft_strlen(buf->final_line))
 				return (g_is_here_doc == TRUE ? CTRL_D : ERR_EXIT);
 		}
 		tabi[0] = 0;

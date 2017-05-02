@@ -112,6 +112,7 @@ SRCS = 	ft_builtin_cd.c		\
 		ft_env_dup_operations.c\
 		home_tild.c			\
 		apply_redir.c		\
+		which_sequence_type.c	\
 		ft_check_env_fork.c	
 
 SRCC = $(addprefix $(SDIR),$(SRCS))

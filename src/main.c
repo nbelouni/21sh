@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:05:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/28 19:21:33 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/04/30 16:07:36 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static int	exec_core(int ret, t_completion *completion)
 	else
 		complete_final_line(g_core->buf, list);
 	if (list)
-		ft_tokendestroy(&list);
+	   	ft_tokendestroy(&list);
 	ft_bzero(g_core->buf->line, BUFF_SIZE);
 	g_core->buf->size = 0;
 	clean_pos_curs();
