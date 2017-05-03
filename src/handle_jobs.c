@@ -49,23 +49,24 @@ int				shouldfork(t_job *j, t_list *pipeline)
 void			do_pipeline(t_job *job, t_list *pipeline)
 {
 	int			io_pipe[2];
-	int			in;
-	int			out;
+	int			fd_in_out[2];
 	int			dofork;
 
 	dofork = 0;
-	in = STDIN_FILENO;
+	fd_in_out[0] = STDIN_FILENO;
 	dofork |= shouldfork(job, pipeline);
 	while (pipeline)
 	{
-		out = (pipeline->next) ? do_pipe(pipeline->content,
+		list_int2(((t_process_p)pipeline->content)->io_list, (void *)save_fd,
+			((t_process_p)pipeline->content)->token, dofork);
+		fd_in_out[1] = (pipeline->next) ? do_pipe(pipeline->content,
 		pipeline->next->content, io_pipe) : STDOUT_FILENO;
 		exec_simple_command(pipeline->content, dofork);
 		list_iter_int(((t_process_p)pipeline->content)->io_list,
 			(void *)restore_fd, dofork);
-		(out != STDOUT_FILENO) ? close(out) : 0;
-		(in != STDIN_FILENO) ? close(in) : 0;
-		in = io_pipe[0];
+		(fd_in_out[1] != STDOUT_FILENO) ? close(fd_in_out[1]) : 0;
+		(fd_in_out[0] != STDIN_FILENO) ? close(fd_in_out[0]) : 0;
+		fd_in_out[0] = io_pipe[0];
 		delete_list(&(((t_process_p)pipeline->content)->io_list), &free);
 		insert_link_bottom(&job->wait_process_list,
 			new_link(memcpy(malloc(pipeline->content_size), pipeline->content,

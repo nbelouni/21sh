@@ -27,6 +27,16 @@ int			list_int2(t_list *list, int (*f)(void *, int, int), int d, int t)
 	return (0);
 }
 
+void			list_iter_int2(t_list *list, int (*f)(void *, int, int),
+int token, int dofork)
+{
+	while (list)
+	{
+		f(list->content, token, dofork);
+		list = list->next;
+	}
+}
+
 static int	return_or_exit(char *error, int dofork)
 {
 	if (dofork)
@@ -73,7 +83,7 @@ static int	check_close_fd(t_io *io, int dofork)
 		return_or_exit(ERR_BADF, dofork)));
 }
 
-int			apply_redir(t_io *io, int dofork, int token)
+int			apply_redir(t_io *io, int dofork)
 {
 	int		pipefd[2];
 	int		ret;
@@ -89,7 +99,6 @@ int			apply_redir(t_io *io, int dofork, int token)
 		write(pipefd[1], io->str, ft_strlen(io->str));
 		close(pipefd[1]);
 	}
-	save_fd(io, token, dofork);
 	if (io->flag & DUP)
 	{
 		if ((io->tab_fd[0] == io->dup_src)

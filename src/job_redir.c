@@ -89,12 +89,13 @@ int				restore_fd(t_io *io, int dofork)
 	return (0);
 }
 
-void			save_fd(t_io *io, int type_redir, int dofork)
+int				save_fd(t_io *io, int type_redir, int dofork)
 {
 	if (io->dup_target >= 0 && !dofork)
 		io->tab_fd[0] = dup(io->dup_target);
 	if ((type_redir == DIR_L_AMP || type_redir == DIR_R_AMP) && !dofork)
 		io->tab_fd[1] = dup(io->dup_src);
+	return (0);
 }
 
 t_node_p		create_redir(t_tree *node_redir, t_node_p left_node)

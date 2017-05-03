@@ -20,8 +20,8 @@ extern	t_core	*g_core;
 
 void			launch_process(t_process_p process, int dofork)
 {
-	if (list_int2(process->io_list,
-				(void *)apply_redir, dofork, process->token))
+	if (list_iter_int(process->io_list,
+				(void *)apply_redir, dofork))
 		return ;
 	ft_check_exec(&process->argv);
 	if (dofork)

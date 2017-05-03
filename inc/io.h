@@ -48,7 +48,7 @@ char			*ft_fix_join(char *s, char *buf);
 int				list_iter_int(t_list *list, int (*f)(void *, int), int d);
 int				list_int2(t_list *list, int (*f)(void *, int, int),
 				int d, int b);
-int				apply_redir(t_io *io, int dofork, int token);
+int				apply_redir(t_io *io, int dofork);
 int				restore_fd(t_io *io, int dofork);
 int				is_builtin(char **args);
 int				redir_open(t_io *io, int dofork);
@@ -82,6 +82,6 @@ t_node_p		iter_in_order(t_node_p ptr, t_list **stock);
 void			do_pipe_in(t_io **io_in, int *io_pipe);
 int				do_pipe(t_process_p p1, t_process_p p2, int *io_pipe);
 int				make_children(t_process_p p);
-void			save_fd(t_io *io, int type_redir, int dofork);
+int				save_fd(t_io *io, int type_redir, int dofork);
 
 #endif
