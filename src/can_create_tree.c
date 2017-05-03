@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 15:29:18 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/05/02 21:00:02 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/05/02 21:04:03 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			is_parse_error(t_token *tmp, t_token *prev)
 	if (prev && is_dir_type(prev->type) &&
 	tmp && (is_dir_type(tmp->type) || tmp->type == TARGET))
 	{
-		if (is_number(tmp->word, 0))
+		if (is_number(tmp->word, ft_strlen(tmp->word)) == TRUE)
 			return (print_err_message(tmp->word));
 	}
 	if (is_separator_type(tmp->type) &&
