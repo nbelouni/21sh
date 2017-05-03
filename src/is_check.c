@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:06:04 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:11 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/05/03 18:12:33 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,5 @@ int		is_or_and(char *s, int i)
 				return (PIPE);
 		}
 	}
-	return (0);
-}
-
-int		is_arg(char *s, int i)
-{
-	if (i < 0)
-		return (1);
-	while (i >= 0 && is_char(s, i, ' '))
-		i--;
-	if (i >= 0 && !is_separator(s, i))
-		return (1);
 	return (0);
 }

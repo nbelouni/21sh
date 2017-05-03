@@ -6,7 +6,7 @@
 /*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/26 18:12:13 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/05/02 20:52:49 by nbelouni         ###   ########.fr       */
+/*   Updated: 2017/05/03 18:12:59 by nbelouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int					is_redir(char *s, int i);
 int					is_agreg(char *s, int i);
 int					is_or_and(char *s, int i);
 int					is_cmd(char *s, int i);
-int					is_arg(char *s, int i);
 
 int					is_separator_type(int type);
 int					is_dir_type(int type);
@@ -94,7 +93,7 @@ int					check_error_out(t_token *elem);
 void				check_target_place(t_token **list);
 
 int					return_new_prompt(int ret);
-int					here_doc(t_token *elemi, t_completion *c, t_lst *hist);
+int					here_doc(t_token *elem, t_completion *c, t_lst *hist);
 
 t_tree				*creat_left(t_token *lst);
 t_tree				*creat_right(t_token *lst);
