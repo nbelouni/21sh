@@ -21,23 +21,22 @@ int			insert_to_env(t_elem *node, char *arg, t_lst *env, t_lst *type_env)
 {
 	char	*val;
 	int		ret;
+	char 	*i;
 
 	ret = 0;
 	val = NULL;
-	if ((ft_strlen(node->name) + 1) < ft_strlen(arg))
+	i = ft_strchr(arg, '=');
+	if ((ft_strlen(node->name)  + 1) < ft_strlen(arg) && i)
 	{
 		if ((val = ft_strsub(arg, ft_strlen(node->name) + 1,
-						(ft_strlen(arg) - ft_strlen(node->name) + 1))) == NULL)
-			return (ft_free_and_return(ERR_EXIT, node->name, NULL, NULL));
-	}
-	if (val)
-	{
+					(ft_strlen(arg) - ft_strlen(node->name) + 1))) == NULL)
+				return (ft_free_and_return(ERR_EXIT, node->name, NULL, NULL));
 		ft_strdel(&(node->value));
 		node->value = ft_strdup(val);
 		ft_strdel(&val);
 	}
-	else
-		node->value = NULL;
+	else if (node->value && i)
+		ft_strdel(&node->value);
 	if (type_env)
 		move_to_env(node, env, type_env);
 	return (0);
