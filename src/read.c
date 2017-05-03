@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:05:19 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/29 21:46:17 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:05:19 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/05/03 22:51:05 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ int			read_line(t_buf *buf, t_completion *cplt, t_lst *hist)
 			ret = check_ret(tabi, cplt, hist, buf);
 			if (ret == TAB || ret < 1)
 				return (ret);
-			if (ret == CTRL_D && buf->size == 0 && !ft_strlen(buf->final_line))
+			if (ret == CTRL_D && buf->size == 0 && ((g_is_here_doc == FALSE
+			&& !ft_strlen(buf->final_line)) || g_is_here_doc == TRUE))
 				return (g_is_here_doc == TRUE ? CTRL_D : ERR_EXIT);
 		}
 		tabi[0] = 0;

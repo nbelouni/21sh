@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:06:08 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/28 19:12:05 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:06:08 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/05/03 21:11:05 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		init_shell(void)
 {
 	struct sigaction act;
 
-	memset(&act, '\0', sizeof(act));
+	ft_memset(&act, '\0', sizeof(act));
 	act.sa_flags = 0;
 	act.sa_handler = &get_sigint;
 	sigaction(SIGINT, &act, NULL);

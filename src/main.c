@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:05:24 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/30 16:07:36 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:05:24 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/05/03 20:37:48 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ static int	launch_execution(int ret, t_token *list)
 
 	job_list_bis = NULL;
 	ast = NULL;
-	ret = ft_cmd_to_history(g_core->hist, g_core->buf->final_line);
-	if (ret == ERR_EXIT)
-	{
-		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
-	}
 	if ((ret = ft_check_history_var(g_core)) == ERR_EXIT)
 	{
 		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
@@ -114,6 +109,8 @@ static int	exec_core(int ret, t_completion *completion)
 	if (is_line_ended(g_core->buf) < 0)
 		return (-1);
 	ret_subs = bang_substitution(&(g_core->buf->final_line), g_core);
+	if ((ft_cmd_to_history(g_core->hist, g_core->buf->final_line)) == ERR_EXIT)
+		return (ft_print_error("21sh: ", ERR_MALLOC, ERR_EXIT));
 	ret = parse_buf(&list, g_core->buf->final_line, completion, g_core->hist);
 	if (ret > 0 && list && ret_subs == 0)
 		ret = launch_execution(ret, list);
@@ -123,14 +120,11 @@ static int	exec_core(int ret, t_completion *completion)
 		ft_strdel(&(g_core->buf->final_line));
 	else
 		complete_final_line(g_core->buf, list);
-	if (list)
-	   	ft_tokendestroy(&list);
+	(list) ? ft_tokendestroy(&list) : 0;
 	ft_bzero(g_core->buf->line, BUFF_SIZE);
 	g_core->buf->size = 0;
 	clean_pos_curs();
-	if (init_completion(completion, g_core) == ERR_EXIT)
-		return (-1);
-	return (ret);
+	return ((init_completion(completion, g_core) == ERR_EXIT) ? -1 : ret);
 }
 
 int			main(int argc, char **argv, char **envp)

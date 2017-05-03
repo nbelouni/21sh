@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin_bang.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:08:31 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:07 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:08:31 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/05/03 20:37:45 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,14 @@ char	*ft_gets_cmd_except_firstword(char *str)
 	{
 		return (NULL);
 	}
-	ptr = ft_strchr(tmp, ' ');
-	ret = (ptr == NULL) ? "" : ft_strtrim(ptr);
+	if ((ptr = ft_strrchr(tmp, ' ')))
+	{
+		ret = ft_strsub(str, 0, ft_strlen(str) - ft_strlen(ptr));
+	}
+	else
+	{
+		ret = ft_strdup("");
+	}
 	ft_strdel(&tmp);
 	return (ret);
 }

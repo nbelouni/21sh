@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_jobs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nbelouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maissa-b <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/26 18:06:21 by nbelouni          #+#    #+#             */
-/*   Updated: 2017/04/26 18:10:10 by nbelouni         ###   ########.fr       */
+/*   Created: 2017/04/26 18:06:21 by maissa-b          #+#    #+#             */
+/*   Updated: 2017/05/03 21:13:43 by maissa-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			do_pipeline(t_job *job, t_list *pipeline)
 		fd_in_out[0] = io_pipe[0];
 		delete_list(&(((t_process_p)pipeline->content)->io_list), &free);
 		insert_link_bottom(&job->wait_process_list,
-			new_link(memcpy(malloc(pipeline->content_size), pipeline->content,
+		new_link(ft_memcpy(malloc(pipeline->content_size), pipeline->content,
 				pipeline->content_size), pipeline->content_size));
 		pipeline = pipeline->next;
 	}
